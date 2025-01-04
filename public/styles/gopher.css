@@ -1,0 +1,174 @@
+/* Container with a fixed-size display */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+body {
+  font-family: 'VT323', Courier New, monospace;
+  background-color: #00ffff;
+  color: black;
+  font-size: 16px;
+}
+
+div {
+  font-family: 'VT323', 'Courier New', monospace;
+}
+
+/* Navbar styled like the Gopher client */
+nav {
+  background-color: #d3d3d3;
+  border-bottom: 2px solid black;
+  font-family: 'VT323', 'Courier New', monospace;
+  color: black;
+  display: flex;
+  justify-content: start;
+  font-size: 18px;
+}
+
+/* Parent UL */
+nav > ul {
+  font-family: 'VT323', 'Courier New', monospace;
+  list-style-type: none;
+  display: flex;
+  justify-content: start;
+}
+
+/* Navbar Items */
+nav > ul > li {
+  font-family: 'VT323', Courier New, monospace;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  transition: none;
+}
+
+/* Parent Links */
+nav > ul > li > a {
+  font-family: 'VT323', 'Courier New', monospace;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin: 0;
+  padding-left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 4px;
+  transition: none;
+}
+
+/* Hover Effect */
+nav > ul > li:hover > a {
+  font-family: 'VT323', 'Courier New', monospace;
+  background-color: #000080;
+  color: white;
+  border: 1px solid #000;
+  transition: none;
+}
+
+nav > ul > li:hover {
+  background-color: #000080;
+  transition: none;
+}
+
+
+/* Child UL (Hidden by default) */
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #c0c0c0;
+  border: 2px solid black;
+  list-style-type: none;
+  min-width: 120px;
+  z-index: 100;
+  transition: none;
+  font-size:small;
+}
+
+/* Show Dropdown on Hover */
+nav > ul > li:hover > ul {
+  transition: none;
+  background-color: #c0c0c0;
+  display: block;
+}
+
+/* Child Links */
+nav ul ul li a {
+  font-family: 'VT323', 'Courier New', monospace;
+  display: block;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  transition: none;
+}
+
+nav ul li ul li a {
+  font-size:medium;
+  padding: 0
+}
+
+nav ul ul li a:hover {
+  transition: none;
+  background-color: #000080;
+  color: white;
+}
+
+.App {
+  background-color: #00ffff;
+}
+
+/* Main content area */
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #00ffff;
+  color: #00ff00;
+}
+
+/* Title */
+.title {
+  font-family: 'VT323', Courier New, monospace;
+  font-size: xx-large;
+  font-weight: bold;
+  color: black;
+}
+
+/* Date */
+.date {
+  font-size: 14px;
+  color: #aaaaaa;
+  margin-bottom: 0;
+}
+
+/* Body */
+.content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: black;
+}
+
+/* Images */
+.image {
+  display: block;
+  margin: 0;
+  max-width: 100%;
+  border: 2px solid black;
+}
+
+/* Footer */
+.footer {
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Buttons */
+.button {
+  background-color: #d3d3d3;
+  border: 2px solid black;
+  cursor: pointer;
+  transition: none;
+}
+
+.button:hover {
+  transition: none;
+  background-color: #aaaaaa;
+}

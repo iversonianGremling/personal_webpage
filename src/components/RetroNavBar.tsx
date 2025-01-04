@@ -1,9 +1,9 @@
 import React from 'react';
-import '../App.css';
+import '../styles/retro.css'; // Import the CSS file for styling
 
-function NavBar() {
+const RetroNavbar: React.FC = () => {
   return (
-    <nav>
+    <nav className="retro-navbar">
       <ul>
         <li>
           <a>Music</a>
@@ -71,6 +71,6 @@ function NavBar() {
       </ul>
     </nav>
   );
-}
+};
 
-export default NavBar;
+export default RetroNavbar;

@@ -12,7 +12,7 @@ const PostContainer: React.FC<Props> = ({ posts: posts, className }) => {
     <div className={`${className} mt-8 w-7/12`}>
       {posts.map((child, i) => (
         <PostCard
-          id={i}
+          id={child.id}
           key={i} // Provide a unique key for each item
           title={child.title}
           content={child.content}

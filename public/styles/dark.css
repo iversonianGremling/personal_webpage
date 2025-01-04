@@ -1,0 +1,135 @@
+/* Background */
+.custom-bg {
+  background-color: #121212; /* Dark grey */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  color: #d3d3d3; /* Light grey text for contrast */
+}
+
+/* Post Card */
+.post-card {
+  background-color: #333333; /* Dark grey */
+  color: #d3d3d3; /* Light grey */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 1.5rem 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.post-card:hover {
+  background-color: #666666; /* Medium grey on hover */
+  color: black;
+}
+
+/* Title */
+.title {
+  font-size: 2rem;
+  text-align: left;
+  color: #e0e0e0; /* Lighter grey */
+}
+
+/* Date */
+.date {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: #b0b0b0; /* Medium grey */
+}
+
+/* Tags */
+.tag {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border: 2px solid #888888; /* Light grey border */
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #d3d3d3; /* Light grey */
+}
+
+.tag:hover {
+  background-color: #555555; /* Dark grey on hover */
+  color: white;
+}
+
+/* Navbar Container */
+nav {
+  background-color: #1e1e1e; /* Very dark grey */
+  color: #d3d3d3; /* Light grey */
+  display: flex;
+  justify-content: center;
+  padding: 0 20px; /* Padding for spacing at edges */
+}
+
+/* Parent UL */
+nav > ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between; /* Distributes items across full width */
+  width: 100%;
+}
+
+/* Navbar Items */
+nav > ul > li {
+  position: relative; /* For dropdown positioning */
+}
+
+/* Parent Links */
+nav > ul > li > a,
+nav > ul > li {
+  display: block;
+  padding: 15px 20px;
+  color: #d3d3d3; /* Light grey */
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+nav > ul > li > ul > li > a {
+  font-size: x-large;
+  color: #b0b0b0; /* Medium grey */
+}
+
+nav > ul > li:hover {
+  background-color: #444444; /* Medium grey on hover */
+}
+
+/* Child UL (Hidden by default) */
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  left: 0;
+  background-color: #333333; /* Dark grey */
+  flex-direction: column;
+  min-width: 200px;
+  padding: 0;
+  z-index: 100; /* Ensures dropdown appears above other content */
+}
+
+/* Child Links */
+nav ul ul li {
+  list-style-type: none;
+}
+
+nav ul ul li a {
+  display: block;
+  padding: 10px 15px;
+  color: #d3d3d3; /* Light grey */
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+nav ul ul li a:hover {
+  background-color: #444444; /* Medium grey on hover */
+  color: black;
+}
+
+/* Show Dropdown on Hover */
+nav > ul > li:hover > ul {
+  display: flex;
+}

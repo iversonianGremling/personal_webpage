@@ -1,76 +1,107 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import React from 'react';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import NavBar from './components/NavBar';
 import PostContainer from './components/PostContainer';
 import Login from './login';
 import Post from './types';
+import PostDetail from './components/PostDetail';
 // Other imports...
 
 function App() {
-  const posts: Post[] = [ //Api call
-    {
-      title: 'La funcionalidad de los lenguajes funcionales',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Donec euismod, nisl eget ultrices ultrices, nunc nisl ultricies nunc, auctor nunc nisl eu nisl. Nulla facilisi. Donec euismod, nisl eget ultrices ultrices, nunc nisl ultricies nunc, auctor nunc nisl eu nisl. Nulla facilisi. Donec euismod, nisl eget ultrices ultrices, nunc nisl ultricies nunc, auctor nunc nisl eu nisl.',
-      tags: ['react', 'typescript'],
-      image: 'image1.png',
-      date: '2024-12-22',
-      type: 'blog',
-    },
-    {
-      title: 'Second Post',
-      content: 'Another post with different content.',
-      tags: ['css', 'javascript'],
-      image: 'image2.png',
-      date: '2024-12-21',
-      type: 'blog',
-    },
-    {
-      title: 'Exploring React Hooks',
-      content: 'React Hooks are a powerful feature introduced in React 16.8. They allow function components to use state and other React features.',
-      tags: ['react', 'hooks'],
-      image: 'image3.png',
-      date: '2024-12-20',
-      type: 'blog',
-    },
-    {
-      title: 'Styling Components in React',
-      content: 'CSS-in-JS libraries like Styled Components and Emotion have gained popularity for their ability to scope styles to components.',
-      tags: ['css', 'react'],
-      image: 'image4.png',
-      date: '2024-12-19',
-      type: 'blog',
-    },
-    {
-      title: 'Understanding TypeScript',
-      content: 'TypeScript brings static typing to JavaScript, helping developers catch errors early and write better code.',
-      tags: ['typescript', 'javascript'],
-      image: 'image5.png',
-      date: '2024-12-18',
-      type: 'blog',
-    },
-  ];
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [theme, setTheme] = useState('artsy');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Load CSS based on the current route path
+    window.addEventListener('popstate', () => {
+      const path = window.location.pathname;
+      console.log(path);
+      loadRouteCSS(theme);
+    });
+
+  }, [location]);
+
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/posts/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+        const data: Post[] = await response.json();
+        setPosts(data);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (isLoading) {
+    return <div className="text-white text-center mt-20">Loading posts...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-20">Error: {error}</div>;
+  }
+
+
+  function loadRouteCSS(route: string) {
+    const existingLink = document.getElementById('route-stylesheet') as HTMLLinkElement;
+
+    // Remove existing stylesheet if present
+    if (existingLink) {
+      existingLink.parentNode?.removeChild(existingLink);
+    }
+
+    const routeToCSSMap: { [key: string]: string } = {
+      '/': 'artsy.css',
+      '/retro': 'retro.css',
+      '/elegant': 'elegant.css',
+    };
+
+    const cssFile = routeToCSSMap[route] || 'artsy';
+
+    // Create a new link element for the current route's CSS
+    const link = document.createElement('link');
+    link.id = 'route-stylesheet';
+    link.rel = 'stylesheet';
+    link.href = `/${cssFile}`; // Assumes CSS files are named after the routes in public folder
+    document.head.appendChild(link);
+  }
 
   return (
     <div className="App min-h-screen bg-black bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/" element={
-            <>
-              <Sidebar />
-              <NavBar />
-              <div className="left-14">
-                <div className="title text-7xl text-red-600 text-center font-serif mt-6 transition-colors hover:text-white ml-80">LAST POSTS</div>
-                <div className="flex flex-col justify-center items-center text-center ">
-                  <PostContainer posts={posts} className="post-container" />
-                </div>
+      <Routes>
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/" element={
+          <>
+            <Sidebar />
+            <button
+              onClick={() => navigate('/auth/login')}
+              style={{ position: 'absolute', top: '80px', left: '0', width: '10px', height: '10px', background: 'transparent', border: 'none' }}
+            ></button>
+            <NavBar />
+            <div className="left-14">
+              <div className="title text-7xl text-red-600 font-serif mt-6 transition-colors hover:text-white ml-80">LAST POSTS</div>
+              <div className="flex flex-col justify-center items-center text-center ">
+                <PostContainer posts={posts} className="post-container" />
               </div>
-            </>
-          } />
-          {/* Add other routes as needed */}
-        </Routes>
-      </BrowserRouter>
+            </div>
+          </>
+        } />
+        {/* Add other routes as needed */}
+        <Route path="/posts/:id" element={<PostDetail />} />
+      </Routes>
     </div>
   );
 }

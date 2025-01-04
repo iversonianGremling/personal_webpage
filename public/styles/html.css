@@ -1,0 +1,121 @@
+html {
+  background-color: white;
+  font-family: sans-serif;
+}
+body {
+  background-color: white;
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: x-large;
+
+  font-family: sans-serif;
+}
+
+div {
+  font-size: medium;
+}
+
+.App {
+  background-color: white;
+}
+
+.custom-bg {
+  background-color: white;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+
+/* Navbar Container */
+nav {
+  background-color: #fff;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 0; /* Padding for spacing at edges */
+  color: blue;
+}
+
+/* Parent UL */
+nav > ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: left; /* Distributes items across full width */
+  width: 100%;
+}
+
+nav > ul > li {
+  position: relative; /* For dropdown positioning */
+}
+
+/* Parent Links */
+nav > ul > li > a,
+nav > ul > li {
+  display: block;
+  padding: 2px 2px;
+  color: blue;
+  font-weight:100;
+  cursor: pointer;
+  transition: none;
+}
+
+nav > ul > li > ul > li > a {
+  font-size:x-large
+}
+
+nav > ul > li:hover {
+  background-color: white;
+  color: blue;
+  text-decoration: underline;
+}
+
+/* Child UL (Hidden by default) */
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  left: 0;
+  background-color: #fff;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 0;
+  z-index: 100; /* Ensures dropdown appears above other content */
+}
+
+/* Child Links */
+nav ul ul li {
+  list-style-type: none;
+}
+
+nav ul ul li a {
+  display: block;
+  padding: 10px 15px;
+  color: blue;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+nav ul ul li a:hover {
+  background-color: white;
+  color: blue;
+}
+
+/* Show Dropdown on Hover */
+nav > ul > li:hover > ul {
+  display: flex;
+}
+
+button {
+  background-color: white;
+  color: blue;
+  text-decoration: underline;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: medium;
+  font-weight: 100;
+}
