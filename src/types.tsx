@@ -6,6 +6,7 @@ interface Post {
   image: string;
   date: string;
   type: string;
+  visibility: string;
 }
 
 export default Post;

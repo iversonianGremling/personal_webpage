@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const Login: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -21,13 +23,13 @@ const Login: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage('');
+
     try {
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
+        credentials: 'include', // Ensures cookies are sent with the request
       });
 
       if (!response.ok) {
@@ -35,10 +37,8 @@ const Login: React.FC = () => {
         throw new Error(errorData.message || 'Login failed');
       }
 
-      const data = await response.json();
-      console.log('Login successful:', data);
-
-      localStorage.setItem('token', data.token);
+      console.log('Login successful');
+      navigate('/'); // Navigate back to the main page
     } catch (error) {
       setErrorMessage((error as Error).message);
     } finally {
@@ -54,9 +54,11 @@ const Login: React.FC = () => {
           className="bg-gray-700 p-8 rounded-lg shadow-lg"
         >
           <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+
           {errorMessage && (
             <p className="mb-4 text-red-500 text-center">{errorMessage}</p>
           )}
+
           <div className="mb-4">
             <label htmlFor="username" className="block text-sm font-medium mb-1">
               Username
@@ -70,6 +72,7 @@ const Login: React.FC = () => {
               required
             />
           </div>
+
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium mb-1">
               Password
@@ -83,6 +86,7 @@ const Login: React.FC = () => {
               required
             />
           </div>
+
           <button
             type="submit"
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
