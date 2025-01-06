@@ -104,7 +104,7 @@ function App() {
                   </button>
                 </div>
               )}
-              {/* <SaladFingersText /> */}
+              <SaladFingersText />
             </>
           }
         />

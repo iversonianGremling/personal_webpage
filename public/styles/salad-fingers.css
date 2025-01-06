@@ -1,0 +1,25 @@
+body {
+  background-color: #1e1e1e;
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.salad-fingers-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.salad-fingers-text {
+  font-size: 3rem;
+  display: inline-block;
+  position: relative;
+  color: white;
+}
+
+/* Wobble effect for each character */
+.char {
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1), 
+               -2px -2px 0px rgba(0, 0, 0, 0.1),
+               1px -1px 0px rgba(0, 0, 0, 0.1),
+               -1px 1px 0px rgba(0, 0, 0, 0.1);
+}
