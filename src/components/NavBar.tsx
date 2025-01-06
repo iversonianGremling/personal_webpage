@@ -6,24 +6,7 @@ function NavBar() {
     <nav>
       <ul>
         <li>
-          <a>Music</a>
-          <ul>
-            <li><a>Soundcloud</a></li>
-            <li><a>Bandcamp</a></li>
-            <li><a>Youtube</a></li>
-            <li><a>Twitch</a></li>
-            <li><a>TikTok</a></li>
-          </ul>
-        </li>
-        <li><a>Programming</a></li>
-        <li>
-          <a>Videos</a>
-          <ul>
-            <li><a>Video Essays</a></li>
-          </ul>
-        </li>
-        <li>
-          <a>Articles</a>
+          <a>Posts</a>
           <ul>
             <li><a>Programming</a></li>
             <li><a>Arts</a></li>
@@ -33,6 +16,26 @@ function NavBar() {
             <li><a>Gaming</a></li>
             <li><a>Literature</a></li>
           </ul>
+        </li>
+
+        <li>
+          <a>Music</a>
+          <ul>
+            <li><a>Soundcloud</a></li>
+            <li><a>Bandcamp</a></li>
+            <li><a>Youtube</a></li>
+            <li><a>Twitch</a></li>
+            <li><a>TikTok</a></li>
+          </ul>
+        </li>
+        <li><a>Programming</a>
+          <ul>
+            <li><a>Articles</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a>Videos</a>
         </li>
         <li>
           <a>Streaming</a>
@@ -50,24 +53,15 @@ function NavBar() {
           </ul>
         </li>
         <li>
-          <a>Visual Art</a>
+          <a>Visual Media</a>
           <ul>
+            <li><a>Articles</a></li>
             <li><a>Photography</a></li>
             <li><a>Collages</a></li>
             <li><a>Digital Art</a></li>
             <li><a>Drawings</a></li>
           </ul>
         </li>
-        <li>
-          <a>Social Media</a>
-          <ul>
-            <li><a>Twitter</a></li>
-            <li><a>Instagram</a></li>
-            <li><a>TikTok</a></li>
-          </ul>
-        </li>
-        <li><a>Patreon</a></li>
-        <li><a>Contact</a></li>
       </ul>
     </nav>
   );

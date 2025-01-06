@@ -68,6 +68,7 @@ nav > ul {
 
 nav > ul > li {
   position: relative; /* For dropdown positioning */
+  width: 100%;
 }
 
 /* Parent Links */
@@ -88,6 +89,7 @@ nav > ul > li > ul > li > a {
 
 nav > ul > li:hover {
   background-color: red;
+  width: 100%;
 }
 
 /* Child UL (Hidden by default) */
@@ -124,4 +126,27 @@ nav ul ul li a:hover {
 /* Show Dropdown on Hover */
 nav > ul > li:hover > ul {
   display: flex;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Track background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #5b21b6; /* Thumb color */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #fbbf24; /* Thumb color on hover */
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-color: #5b21b6 #1e1e1e; /* Thumb and track colors */
+  scrollbar-width: thin;
 }

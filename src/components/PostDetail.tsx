@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Post from '../types';
 import NavBar from './NavBar';
+import ReactMarkdown from 'react-markdown';
+import rehypeSanitize from 'rehype-sanitize';
 
 const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -88,8 +90,19 @@ const PostDetail: React.FC = () => {
       <div className="">
         <h1 className="">{post.title}</h1>
         <div className="">Date: {post.date}</div>
-        <div className="">{post.content}</div>
-        {post.image && <img src={post.image} alt={post.title} className="" />}
+
+        {post.tags.includes('@style-markdown') ? (
+        // Render Markdown if the @style-markdown tag is present
+          <ReactMarkdown rehypePlugins={[rehypeSanitize]} className="prose prose-invert">
+            {post.content}
+          </ReactMarkdown>
+        ) : (
+        // Render plain HTML content if @style-markdown is not present
+          <div className="">{post.content}</div>
+        )}
+
+        {post.image && <img src={post.image} alt="image" className="" />}
+
         <div className="mt-4">
           <button
             onClick={() => {
@@ -97,12 +110,13 @@ const PostDetail: React.FC = () => {
               loadTheme('default'); // Reset theme on go back
             }}
           >
-            Go Back
+          Go Back
           </button>
         </div>
       </div>
     </div>
   );
+
 };
 
 export default PostDetail;

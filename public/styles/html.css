@@ -1,16 +1,21 @@
+:root {
+  --font-family: sans-serif;
+}
+
+div, p, span, h1, h2, h3, h4, h5, h6, input, textarea, select, button, a, li, ul, nav {
+  font-family: var(--font-family);
+}
+
 html {
   background-color: white;
-  font-family: sans-serif;
 }
 body {
   background-color: white;
-  font-family: sans-serif;
 }
 
 h1 {
   font-size: x-large;
 
-  font-family: sans-serif;
 }
 
 div {

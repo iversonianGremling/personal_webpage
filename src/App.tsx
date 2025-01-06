@@ -1,17 +1,18 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './components/AuthContext';
-import Sidebar from './components/Sidebar';
+import About from './components/About';
 import NavBar from './components/NavBar';
 import PostContainer from './components/PostContainer';
 import Login from './login';
 import Post from './types';
 import PostDetail from './components/PostDetail';
 import SaladFingersText from './components/SaladFingers';
-import CreatePost from './components/CreatePost'; // Import CreatePost
+import CreatePost from './components/CreatePost';
 import SeeAllPosts from './components/SeeAllPosts';
 import EditPost from './components/EditPost';
-// Other imports...
+import MovingTitle from './components/MovingTitle';
+import CircleObjects from './components/CircleObjects';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -20,16 +21,7 @@ function App() {
   const [theme, setTheme] = useState('artsy');
   const location = useLocation();
   const navigate = useNavigate();
-  const {isAdmin} = useAuth();
-
-
-  useEffect(() => {
-    window.addEventListener('popstate', () => {
-      const path = window.location.pathname;
-      console.log(path);
-      loadRouteCSS(theme);
-    });
-  }, [location]);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -49,6 +41,10 @@ function App() {
 
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+
+  });
 
   function loadRouteCSS(route: string) {
     const existingLink = document.getElementById('route-stylesheet') as HTMLLinkElement;
@@ -71,45 +67,48 @@ function App() {
     document.head.appendChild(link);
   }
 
-
   return (
-    <div className="App min-h-screen bg-black bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}>
+    <div
+      className="App min-h-screen bg-black bg-cover bg-center bg-no-repeat bg-fixed"
+      style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}
+    >
       <Routes>
         <Route path="/auth/login" element={<Login />} />
         <Route
           path="/"
           element={
             <>
-              <Sidebar />
               <NavBar />
-              <div className="left-14">
-                <div className="title text-7xl text-red-600 font-serif mt-6 transition-colors hover:text-white ml-80">LAST POSTS</div>
-                <div className="flex flex-col justify-center items-center text-center ">
+              <div className="flex flex-row flex-grow justify-between">
+                <div className="left-14 relative w-1/2">
+                  <MovingTitle />
                   <PostContainer posts={posts} className="post-container" />
                 </div>
-              </div>
-              {isAdmin && (
-                <div className="fixed bottom-10 right-10 space-y-4">
-                  <button
-                    onClick={() => navigate('/create-post')}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
-                  >
+                {isAdmin && (
+                  <div className="fixed bottom-10 right-10 space-y-4">
+                    <button
+                      onClick={() => navigate('/create-post')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >
                     Create Post
-                  </button>
-                  <button
-                    onClick={() => navigate('/posts/admin')}
-                    className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 w-full"
-                  >
+                    </button>
+                    <button
+                      onClick={() => navigate('/posts/admin')}
+                      className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 w-full"
+                    >
                     See All Posts
-                  </button>
-                </div>
-              )}
+                    </button>
+                  </div>
+                )}
+                <About/>
+              </div>
+
               <SaladFingersText />
             </>
           }
         />
         <Route path="/posts/:id" element={<PostDetail />} />
-        <Route path="/create-post" element={<CreatePost />} /> {/* Add CreatePost route */}
+        <Route path="/create-post" element={<CreatePost />} />
         <Route path="/posts/admin" element={<SeeAllPosts />} />
         <Route path="/edit-post/:id" element={<EditPost />} />
       </Routes>
@@ -118,5 +117,3 @@ function App() {
 }
 
 export default App;
-
-
