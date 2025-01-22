@@ -1,82 +1,89 @@
+// src/components/PostContainer.tsx
 import React, { useRef, useEffect } from 'react';
 import PostCard from './PostCard';
 import Post from '../types';
 
 interface Props {
-  posts: Post[]; // Define an array of Post objects
+  posts: Post[];
   className?: string;
 }
 
 const PostContainer: React.FC<Props> = ({ posts, className }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationFrameId = useRef<number | null>(null); // To store requestAnimationFrame ID
+  const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
     let scrollVelocity = 0;
+    let isScrolling = true;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const container = containerRef.current;
-      if (!container) return;
+      if (!containerRef.current) return;
 
-      const { top, height } = container.getBoundingClientRect();
-      const mouseY = e.clientY; // Mouse Y position relative to viewport
-      const containerCenter = top + height / 2; // Center of the container
+      const rect = containerRef.current.getBoundingClientRect();
+      const mouseY = e.clientY - rect.top;
+      const containerHeight = rect.height;
+      const scrollZoneHeight = containerHeight * 0.4;
 
-      // Calculate the distance from the mouse to the center of the container
-      const distanceFromCenter = mouseY - containerCenter;
-
-      // Set scroll velocity based on the distance (larger distance => faster scrolling)
-      const maxSpeed = 40; // Maximum scroll speed
-      scrollVelocity = (distanceFromCenter / height) * maxSpeed;
+      if (mouseY < scrollZoneHeight) {
+        scrollVelocity = -10 * (1 - mouseY / scrollZoneHeight);
+      } else if (mouseY > containerHeight - scrollZoneHeight) {
+        scrollVelocity = 10 * (mouseY - (containerHeight - scrollZoneHeight)) / scrollZoneHeight;
+      } else {
+        scrollVelocity = 0;
+      }
     };
 
     const animateScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
+      if (!containerRef.current || !isScrolling) return;
 
-      // Scroll the container by the calculated velocity
-      container.scrollBy({ top: scrollVelocity });
+      containerRef.current.scrollBy({
+        top: scrollVelocity * 10,
+        behavior: 'auto'
+      });
 
-      // Request the next frame
       animationFrameId.current = requestAnimationFrame(animateScroll);
     };
 
-    // Start the animation loop
     animationFrameId.current = requestAnimationFrame(animateScroll);
-
-    // Add mousemove listener
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Cleanup on unmount
     return () => {
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+      isScrolling = false;
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
   return (
     <div
-      className={`mt-8  ${className}`}
       ref={containerRef}
+      className={`mt-8 ${className}`}
       style={{
         height: '600px',
-        overflow: 'hidden', // Hide scrollbar
+        overflowY: 'auto',
+        scrollBehavior: 'smooth',
         position: 'relative',
-        border: '2px solid black',
+        border: '2px solid #000',
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}
     >
-      {posts.map((child, i) => (
-        <PostCard
-          id={child.id}
-          key={i} // Provide a unique key for each item
-          title={child.title}
-          content={child.content}
-          tags={child.tags}
-          image={child.image}
-          date={child.date}
-          type={child.type}
-        />
-      ))}
+      <div className="space-y-6 pr-4">
+        {posts.map((post) => (
+          <PostCard
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            content={post.content}
+            tags={post.tags}
+            image={post.image}
+            date={post.date}
+            type={post.type}
+          />
+        ))}
+      </div>
     </div>
   );
 };

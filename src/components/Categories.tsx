@@ -1,30 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import SaladFingersText from './SaladFingers';
 
-const About = () => {
+const Categories = () => {
   const radius = 120; // Radius of the circle
   const iconSize = 60; // Size of each icon
   const innerBoundary = radius - iconSize / 2 - 50; // Inner boundary for interactive zone
   const outerBoundary = radius + iconSize / 2; // Outer boundary for interactive zone
   const [rotation, setRotation] = useState(0); // Current rotation angle
-  const [prevAngle, setPrevAngle] = useState(null); // Previous angle of the mouse relative to the center
+  const [prevAngle, setPrevAngle] = useState<number | null>(null); // Previous angle of the mouse relative to the center
   const [isInside, setIsInside] = useState(false); // Whether the mouse is inside the interactive zone
-  const circleRef = useRef(null); // Ref for the circle container
+  const circleRef = useRef<HTMLDivElement | null>(null); // Ref for the circle container
 
-  const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/733/733553.png', alt: 'GitHub', label: 'GitHub' },
-    { href: 'https://linkedin.com/in/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/733/733561.png', alt: 'LinkedIn', label: 'LinkedIn' },
-    { href: 'mailto:your-email@example.com', imgSrc: 'https://cdn-icons-png.flaticon.com/512/732/732200.png', alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111463.png', alt: 'Instagram', label: 'Instagram' },
-    { href: 'https://tiktok.com/@yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3046/3046125.png', alt: 'TikTok', label: 'TikTok' },
-    { href: 'https://youtube.com/yourchannel', imgSrc: 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png', alt: 'YouTube', label: 'YouTube' },
-    { href: 'https://bandcamp.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111621.png', alt: 'Bandcamp', label: 'Bandcamp' },
-    { href: 'https://soundcloud.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/145/145809.png', alt: 'SoundCloud', label: 'SoundCloud' },
-    { href: 'https://twitch.tv/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111670.png', alt: 'Twitch', label: 'Twitch' },
+  const categories = [
+    { to: '/music', imgSrc: 'https://cdn-icons-png.flaticon.com/512/727/727245.png', alt: 'Music', label: 'Music' },
+    { to: '/gaming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/7329/7329743.png', alt: 'Gaming', label: 'Gaming' },
+    { to: '/philosophy', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2913/2913490.png', alt: 'Philosophy', label: 'Philosophy' },
+    { to: '/writings', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Writings', label: 'Writings' },
+    { to: '/articles', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2617/2617315.png', alt: 'Articles', label: 'Articles' },
+    { to: '/intersectionality', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2883/2883859.png', alt: 'Intersectionality', label: 'Intersectionality' },
+    { to: '/programming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/4712/4712015.png', alt: 'Programming', label: 'Programming' },
+    { to: '/working', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Working', label: 'Working' },
   ];
 
   useEffect(() => {
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: MouseEvent) => {
       if (!circleRef.current) return;
 
       const rect = circleRef.current.getBoundingClientRect();
@@ -77,11 +77,13 @@ const About = () => {
         className="circle-container relative"
         style={{ width: `${2 * radius}px`, height: `${2 * radius}px` }}
       >
-        {/* Render social media icons in a rotated position */}
-        {socialMediaLinks.map((link, index) => {
-          const angle = -2 * ((index * 2 * Math.PI) / socialMediaLinks.length + (rotation * Math.PI) / 180);
-          const x = radius + radius * Math.cos(angle) - iconSize / 2;
-          const y = radius + radius * Math.sin(angle) - iconSize / 2;
+        {/* Render category icons in a rotated position */}
+        {categories.map((category, index) => {
+          // Calculate the initial angle for each icon
+          const angle = (index * 360) / categories.length; // Distribute icons evenly around the circle
+          const radians = -2 * (angle/2 + rotation) * (Math.PI / 180); // Convert to radians and apply rotation
+          const x = radius + radius * Math.cos(radians) - iconSize / 2;
+          const y = radius + radius * Math.sin(radians) - iconSize / 2;
 
           return (
             <div
@@ -94,23 +96,17 @@ const About = () => {
                 height: `${iconSize + 20}px`, // Extra height for label text
               }}
             >
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full h-full"
-              >
+              <Link to={category.to} className="w-full h-full">
                 <img
-                  src={link.imgSrc}
-                  alt={link.alt}
+                  src={category.imgSrc}
+                  alt={category.alt}
                   className="w-full h-full rounded-full hover:opacity-80 bg-white"
                 />
-              </a>
-              <span className="text-xs mt-1">{link.label}</span>
+              </Link>
+              <span className="text-xs mt-1">{category.label}</span>
             </div>
           );
         })}
-
         {/* Center text */}
         <div
           className="absolute text-center font-bold text-white"
@@ -120,11 +116,15 @@ const About = () => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <SaladFingersText enableHoverEffect={true} />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4712/4712015.png"
+            alt="Programming"
+            className="w-full h-full rounded-full hover:opacity-80"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default About;
+export default Categories;

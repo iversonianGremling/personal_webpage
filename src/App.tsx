@@ -7,12 +7,42 @@ import PostContainer from './components/PostContainer';
 import Login from './login';
 import Post from './types';
 import PostDetail from './components/PostDetail';
-import SaladFingersText from './components/SaladFingers';
 import CreatePost from './components/CreatePost';
 import SeeAllPosts from './components/SeeAllPosts';
 import EditPost from './components/EditPost';
 import MovingTitle from './components/MovingTitle';
-import CircleObjects from './components/CircleObjects';
+import Categories from './components/Categories';
+import ScrollToPosts from './components/ScrollToPosts';
+import Background from './components/Background';
+import Writings from './components/routes/Writings/Writings';
+import Programming from './components/routes/Programming/Programming';
+import Music from './components/routes/Music';
+import GamingPage from './components/routes/Gaming';
+import PhilosophyBlog from './components/routes/Philosophy';
+import IntersectionalityPage from './components/routes/Intersectionality';
+import ArticlesPage from './components/routes/Articles';
+import Poetry from './components/routes/Writings/Poetry';
+import Fiction from './components/routes/Writings/Fiction';
+import NonFiction from './components/routes/Writings/NonFiction';
+
+const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
+  useEffect(() => {
+    // Set the background color of the body
+    document.body.style.backgroundColor = backgroundColor || 'black';
+
+    // Clean up: Restore original background on unmount
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, [backgroundColor]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center text-white" style={{ backgroundColor: 'transparent' }}>
+      <h1 className="text-4xl">{title}</h1>
+      <Background />
+    </div>
+  );
+};
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -43,8 +73,15 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Set the background color of the body
+    document.body.style.backgroundColor = 'transparent';
 
-  });
+
+    // Clean up: Restore original background on unmount
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, []);
 
   function loadRouteCSS(route: string) {
     const existingLink = document.getElementById('route-stylesheet') as HTMLLinkElement;
@@ -58,6 +95,8 @@ function App() {
       '/retro': 'retro.css',
       '/elegant': 'elegant.css',
     };
+    console.log('I\'m in');
+    console.log(route);
 
     const cssFile = routeToCSSMap[route] || 'artsy';
     const link = document.createElement('link');
@@ -69,7 +108,7 @@ function App() {
 
   return (
     <div
-      className="App min-h-screen bg-black bg-cover bg-center bg-no-repeat bg-fixed"
+      className="App min-h-screen  bg-cover bg-center bg-no-repeat bg-fixed"
       style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}
     >
       <Routes>
@@ -79,11 +118,10 @@ function App() {
           element={
             <>
               <NavBar />
-              <div className="flex flex-row flex-grow justify-between">
-                <div className="left-14 relative w-1/2">
-                  <MovingTitle />
-                  <PostContainer posts={posts} className="post-container" />
-                </div>
+
+              <div className="flex flex-row justify-center gap-52">
+
+                <About/>
                 {isAdmin && (
                   <div className="fixed bottom-10 right-10 space-y-4">
                     <button
@@ -100,17 +138,70 @@ function App() {
                     </button>
                   </div>
                 )}
-                <About/>
+                <ScrollToPosts/>
+                <Categories/>
               </div>
-
-              <SaladFingersText />
+              <div className='flex flex-row justify-center content-center text-center'>
+                <div className="w-1/2 pb-20">
+                  <MovingTitle />
+                  <PostContainer posts={posts} className="post-container" />
+                </div>
+              </div>
             </>
           }
         />
-        <Route path="/posts/:id" element={<PostDetail />} />
+        {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/posts/admin" element={<SeeAllPosts />} />
         <Route path="/edit-post/:id" element={<EditPost />} />
+
+        {/* Posts routes */}
+        <Route path="/posts/:id" element={<PostDetail />} />
+        <Route path="/posts/programming" element={<Placeholder title="Programming Posts" />} />
+        <Route path="/posts/arts" element={<Placeholder title="Arts Posts" />} />
+        <Route path="/posts/opinion" element={<Placeholder title="Opinion Posts" />} />
+        <Route path="/posts/philosophy" element={<Placeholder title="Philosophy Posts" />} />
+        <Route path="/posts/mathematics" element={<Placeholder title="Mathematics Posts" />} />
+        <Route path="/posts/gaming" element={<Placeholder title="Gaming Posts" />} />
+        <Route path="/posts/literature" element={<Placeholder title="Literature Posts" />} />
+
+        {/* Music routes */}
+        <Route path="/music" element={<Music/>} />
+        <Route path="/music/soundcloud" element={<Placeholder title="Soundcloud" />} />
+        <Route path="/music/bandcamp" element={<Placeholder title="Bandcamp" />} />
+        <Route path="/music/youtube" element={<Placeholder title="YouTube" />} />
+        <Route path="/music/twitch" element={<Placeholder title="Twitch" />} />
+        <Route path="/music/tiktok" element={<Placeholder title="TikTok" />} />
+
+        {/* Programming routes */}
+        <Route path="/programming" element={<Programming />} />
+        <Route path="/programming/articles" element={<Placeholder title="Programming Articles" />} />
+
+        {/* Videos routes */}
+        <Route path="/videos" element={<Placeholder title="Videos" />} />
+
+        {/* Streaming routes */}
+        <Route path="/streaming" element={<Placeholder title="Streaming" />} />
+        <Route path="/streaming/twitch" element={<Placeholder title="Twitch Streaming" />} />
+
+        {/* Writings routes */}
+        <Route path="/writings" element={< Writings />} />
+        <Route path="/writings/poetry" element={<Poetry />} />
+        <Route path="/writings/fiction" element={<Fiction />} />
+        <Route path="/writings/non-fiction" element={<NonFiction />} />
+
+        {/* Visual Media routes */}
+        <Route path="/visual-media" element={<Placeholder title="Visual Media" />} />
+        <Route path="/visual-media/articles" element={<Placeholder title="Visual Media Articles" />} />
+        <Route path="/visual-media/photography" element={<Placeholder title="Photography" />} />
+        <Route path="/visual-media/collages" element={<Placeholder title="Collages" />} />
+        <Route path="/visual-media/digital-art" element={<Placeholder title="Digital Art" />} />
+        <Route path="/visual-media/drawings" element={<Placeholder title="Drawings" />} />
+
+        <Route path="/gaming" element={<GamingPage />} />
+        <Route path="/philosophy" element={<PhilosophyBlog />} />
+        <Route path="/intersectionality" element={<IntersectionalityPage />} />
+        <Route path="/articles" element={<ArticlesPage />} />
       </Routes>
     </div>
   );

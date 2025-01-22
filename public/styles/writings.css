@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Lithops';
+  src: url('../../../public/fonts/Lithops-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.lithops-text {
+  font-family: 'Lithops', sans-serif;
+}
+
+.section-card:hover {
+  background-color: rgba(40, 40, 40, 0.9); /* Brighter background on hover */
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.section-image:hover {
+  transform: scale(1.1); /* Image zoom effect */
+}
+
+@keyframes wobble {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(calc(-1px * var(--random-x)), calc(1px * var(--random-y))) scale(1.02);
+  }
+  50% {
+    transform: translate(calc(1px * var(--random-x)), calc(-1px * var(--random-y))) scale(1.03);
+  }
+  75% {
+    transform: translate(calc(-0.5px * var(--random-x)), calc(0.5px * var(--random-y))) scale(1.01);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.wobble-letter {
+  display: inline-block;
+  animation: wobble calc(2s + var(--random-duration)) infinite ease-in-out;
+  animation-delay: calc(0.1s * var(--char-index));
+  --random-x: calc(1 + (rand() * 2)); /* Random horizontal intensity */
+  --random-y: calc(1 + (rand() * 2)); /* Random vertical intensity */
+  --random-duration: calc(rand() * 1s); /* Random duration variation */
+}
+
+@keyframes background-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animated-background {
+  animation: background-scale 20s infinite ease-in-out;
+}

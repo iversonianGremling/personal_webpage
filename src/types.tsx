@@ -7,6 +7,8 @@ interface Post {
   date: string;
   type: string;
   visibility: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default Post;

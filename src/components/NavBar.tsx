@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // <-- Import Link
 import '../App.css';
 
 function NavBar() {
@@ -6,60 +7,55 @@ function NavBar() {
     <nav>
       <ul>
         <li>
-          <a>Posts</a>
+          <Link to="/">Home</Link>
+        </li>
+
+        <li>
+          <Link to="/music">Music</Link>
           <ul>
-            <li><a>Programming</a></li>
-            <li><a>Arts</a></li>
-            <li><a>Opinion</a></li>
-            <li><a>Philosophy</a></li>
-            <li><a>Mathematics</a></li>
-            <li><a>Gaming</a></li>
-            <li><a>Literature</a></li>
+            <li><Link to="/music/soundcloud">Soundcloud</Link></li>
+            <li><Link to="/music/bandcamp">Bandcamp</Link></li>
+            <li><Link to="/music/youtube">YouTube</Link></li>
+            <li><Link to="/music/twitch">Twitch</Link></li>
+            <li><Link to="/music/tiktok">TikTok</Link></li>
           </ul>
         </li>
 
         <li>
-          <a>Music</a>
+          <Link to="/programming">Programming</Link>
           <ul>
-            <li><a>Soundcloud</a></li>
-            <li><a>Bandcamp</a></li>
-            <li><a>Youtube</a></li>
-            <li><a>Twitch</a></li>
-            <li><a>TikTok</a></li>
+            <li><Link to="/programming/articles">Articles</Link></li>
           </ul>
         </li>
-        <li><a>Programming</a>
+
+        <li>
+          <Link to="http://www.youtube.com/@Vdevelasko">Videos</Link>
+        </li>
+
+        <li>
+          <Link to="/streaming">Streaming</Link>
           <ul>
-            <li><a>Articles</a>
-            </li>
+            <li><Link to="/streaming/twitch">Twitch</Link></li>
           </ul>
         </li>
+
         <li>
-          <a>Videos</a>
-        </li>
-        <li>
-          <a>Streaming</a>
+          <Link to="/writings">Writings</Link>
           <ul>
-            <li><a>Twitch</a></li>
+            <li><Link to="/writings/poems">Poems</Link></li>
+            <li><Link to="/writings/fiction">Fiction</Link></li>
+            <li><Link to="/writings/nonfiction">Fanfiction</Link></li>
           </ul>
         </li>
+
         <li>
-          <a>Writings</a>
+          <Link to="/visual-media">Visual Media</Link>
           <ul>
-            <li><a>Poems</a></li>
-            <li><a>Fiction</a></li>
-            <li><a>Fanfiction</a></li>
-            <li><a>Vent Writing</a></li>
-          </ul>
-        </li>
-        <li>
-          <a>Visual Media</a>
-          <ul>
-            <li><a>Articles</a></li>
-            <li><a>Photography</a></li>
-            <li><a>Collages</a></li>
-            <li><a>Digital Art</a></li>
-            <li><a>Drawings</a></li>
+            <li><Link to="/visual-media/articles">Articles</Link></li>
+            <li><Link to="/visual-media/photography">Photography</Link></li>
+            <li><Link to="/visual-media/collages">Collages</Link></li>
+            <li><Link to="/visual-media/digital-art">Digital Art</Link></li>
+            <li><Link to="/visual-media/drawings">Drawings</Link></li>
           </ul>
         </li>
       </ul>

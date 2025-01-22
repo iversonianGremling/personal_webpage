@@ -1,0 +1,71 @@
+.container-non-fiction {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+.header-non-fiction {
+  font-family: 'Lithops', serif;
+  font-size: 6rem;
+  margin-bottom: 40px;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+  animation: non-fiction-scale 10s infinite ease-in-out;
+}
+
+.posts-container-non-fiction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.post-card-non-fiction {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card-non-fiction:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
+}
+
+.post-title-non-fiction {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: rgba(255, 200, 200, 0.9);
+}
+
+.post-content-non-fiction {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.post-meta-non-fiction {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+@keyframes non-fiction-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

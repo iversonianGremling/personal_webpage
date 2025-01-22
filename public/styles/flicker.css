@@ -1,0 +1,12 @@
+.flicker-effect {
+  animation: color-flicker 0.15s infinite;
+}
+
+@keyframes color-flicker {
+  0%, 50% {
+    color: #ff6600;
+  }
+  51%, 100% {
+    color: #00ff00;
+  }
+}
