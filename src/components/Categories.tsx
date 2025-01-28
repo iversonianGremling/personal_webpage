@@ -13,15 +13,16 @@ const Categories = () => {
   const circleRef = useRef<HTMLDivElement | null>(null); // Ref for the circle container
 
   const categories = [
-    { to: '/music', imgSrc: 'https://cdn-icons-png.flaticon.com/512/727/727245.png', alt: 'Music', label: 'Music' },
-    { to: '/gaming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/7329/7329743.png', alt: 'Gaming', label: 'Gaming' },
-    { to: '/philosophy', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2913/2913490.png', alt: 'Philosophy', label: 'Philosophy' },
-    { to: '/writings', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Writings', label: 'Writings' },
-    { to: '/articles', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2617/2617315.png', alt: 'Articles', label: 'Articles' },
-    { to: '/intersectionality', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2883/2883859.png', alt: 'Intersectionality', label: 'Intersectionality' },
-    { to: '/programming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/4712/4712015.png', alt: 'Programming', label: 'Programming' },
-    { to: '/working', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Working', label: 'Working' },
+    { to: '/music', imgSrc: 'https://cdn-icons-png.flaticon.com/512/727/727245.png', alt: 'Music', label: 'Music' }, // Music note icon
+    { to: '/gaming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/7329/7329743.png', alt: 'Gaming', label: 'Gaming' }, // Gamepad icon
+    { to: '/philosophy', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2913/2913490.png', alt: 'Philosophy', label: 'Philosophy' }, // The Thinker statue icon
+    { to: '/writings', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Writings', label: 'Writings' }, // Book icon
+    { to: '/articles', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2617/2617315.png', alt: 'Articles', label: 'Articles' }, // Academic article icon
+    { to: '/intersectionality', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2883/2883859.png', alt: 'Intersectionality', label: 'Intersectionality' }, // Scales icon
+    { to: '/programming', imgSrc: 'https://cdn-icons-png.flaticon.com/512/4712/4712015.png', alt: 'Programming', label: 'Programming' }, // Computer icon
+    { to: '/thoughts', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png', alt: 'Thoughts', label: 'Thoughts' } // Brain icon
   ];
+
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -71,11 +72,12 @@ const Categories = () => {
   }, [innerBoundary, outerBoundary, prevAngle]);
 
   return (
-    <div className="flex items-center justify-center text-white shadow-lg h-screen pb-32">
+    <div className="items-center justify-center text-white h-screen scroll-pt-32 block absolute top-12"
+      style={{ left: '-4rem'}}>
       <div
         ref={circleRef}
-        className="circle-container relative"
-        style={{ width: `${2 * radius}px`, height: `${2 * radius}px` }}
+        className="circle-container relative "
+        style={{ width: `${2 * radius}px`, height: `${2 * radius}px` ,backgroundColor: 'black', borderRadius: '50%' }}
       >
         {/* Render category icons in a rotated position */}
         {categories.map((category, index) => {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import Post from '../types';
 import DOMPurify from 'dompurify';
+import NavBar from './NavBar';
 
 const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +14,7 @@ const PostDetail: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/posts/${id}`);
+        const response = await fetch(`http://localhost:3000/api/posts/${Number(id)}`);
         if (!response.ok) throw new Error('Post not found');
         const data = await response.json();
         setPost(data);
@@ -64,24 +65,37 @@ const PostDetail: React.FC = () => {
   if (!post) return <div className="p-6">Post not found</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-8 px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
-      >
-        ← Back
-      </button>
+    <div className="">
+      <NavBar/>
+      <div className='flex flex-row'>
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-violet-950 text-white m-6 p-6 hover:bg-red-600 transition-colors duration-300"
+        >Back</button>
+        <h1 className="text-6xl font-bold mb-2 text-center content-center text-white">{post.title}</h1>
+      </div>
 
-      <article className="bg-gray-800 p-6 rounded-lg shadow-xl max-w-4xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-
+      <article className="bg-violet-950 text-white px-6 mx-6 pb-6">
+        <header className="mb-8 pt-2">
+          {post.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag, index) => (
+                <Link
+                  key={index}
+                  to={`/tag/${tag}`}
+                  className="px-3 py-1 bg-violet-950 text-white text-sm hover:bg-red-600 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent parent link navigation
+                    e.nativeEvent.stopImmediatePropagation(); // For React event bubbling
+                  }}
+                >
+                #{tag}
+                </Link>
+              ))}
+            </div>
+          )}
           <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
             <time>{formatDate(post.date)}</time>
-            <span>•</span>
-            <span className="capitalize">{post.type}</span>
-            <span>•</span>
-            <span className="text-blue-400">Visibility: {post.visibility}</span>
           </div>
 
           {post.image && (
@@ -102,18 +116,7 @@ const PostDetail: React.FC = () => {
           dangerouslySetInnerHTML={createMarkup(post.content)}
         />
 
-        {post.tags?.length > 0 && (
-          <div className="mt-8 flex flex-wrap gap-2">
-            {post.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm hover:bg-blue-500/30 transition-colors"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
+
       </article>
     </div>
   );

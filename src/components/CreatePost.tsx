@@ -46,7 +46,7 @@ const CreatePost: React.FC = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:3000/upload/image', {
+      const response = await fetch('http://localhost:3000/api/upload/image', {
         method: 'POST',
         body: formData,
         credentials: 'include',
@@ -115,7 +115,7 @@ const CreatePost: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/posts', {
+      const response = await fetch('http://localhost:3000/api/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

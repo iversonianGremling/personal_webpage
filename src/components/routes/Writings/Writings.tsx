@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createNoise2D } from 'simplex-noise';
 import Post from '../../../types';
 import NavBar from '../../NavBar';
@@ -7,28 +7,17 @@ import { Link } from 'react-router-dom';
 
 const Writings: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: 'Post 1',
-      content: 'Content of Post 1',
-      tags: ['tag1', 'tag2'],
-      image: 'https://via.placeholder.com/150',
-      date: '2023-06-01',
-      type: 'writing',
-      visibility: 'public',
-    },
-    {
-      id: 2,
-      title: 'Post 2',
-      content: 'Content of Post 2',
-      tags: ['tag3', 'tag4'],
-      image: 'https://via.placeholder.com/150',
-      date: '2023-06-02',
-      type: 'writing',
-      visibility: 'public',
-    },
-  ];
+  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      const response = await fetch('http://localhost:3000/api/posts/tag/writing/latest');
+      const data = await response.json();
+      console.log(data);
+      setLatestPosts(data);
+    };
+    fetchLatestPosts();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -270,24 +259,46 @@ const Writings: React.FC = () => {
           ))}
         </div>
 
-        {posts.map((post) => (
-          <div
+        {latestPosts.map((post) => (
+          <Link
             key={post.id}
+            to={`/posts/${post.id}`}
             style={{
-              marginBottom: '20px',
-              padding: '15px',
-              backgroundColor: 'rgba(40, 10, 20, 0.8)',
-              borderRadius: '8px',
-              color: 'rgba(255, 230, 230, 0.9)',
+              display: 'block',
+              textDecoration: 'none',
+              transition: 'transform 0.3s ease'
             }}
           >
-            <h2 style={{ marginBottom: '10px' }}>{post.title}</h2>
-            <p style={{ marginBottom: '10px' }}>{post.content}</p>
-            <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
-              <span>{post.date}</span> | <span>{post.type}</span> |{' '}
-              <span>{post.tags.join(', ')}</span>
+            <div
+              style={{
+                marginBottom: '20px',
+                padding: '15px',
+                backgroundColor: 'rgba(40, 10, 20, 0.8)',
+                borderRadius: '8px',
+                color: 'rgba(255, 230, 230, 0.9)',
+                cursor: 'pointer',
+                ':hover': {
+                  transform: 'scale(1.02)',
+                  backgroundColor: 'rgba(60, 20, 30, 0.9)'
+                }
+              } as React.CSSProperties}
+            >
+              <h2 style={{ marginBottom: '10px' }}>{post.title}</h2>
+              <div
+                dangerouslySetInnerHTML={{ __html: post.content }}
+                style={{
+                  marginBottom: '10px',
+                  maxHeight: '100px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
+              />
+              <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                <span>{post.date}</span> | <span>{post.type}</span> |{' '}
+                <span>{post.tags.join(', ')}</span>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

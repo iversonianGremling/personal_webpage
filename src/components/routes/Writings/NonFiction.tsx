@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../../../public/styles/non-fiction.css';
 import NavBar from '../../NavBar';
+import PostCard from '../../PostCard';
 
 type Post = {
   id: number;
@@ -11,29 +12,16 @@ type Post = {
 };
 
 const NonFiction: React.FC = () => {
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: 'The Art of Mindfulness',
-      content: 'A practical guide to finding peace in a chaotic world...',
-      date: '2023-03-10',
-      tags: ['mindfulness', 'peace', 'self-help'],
-    },
-    {
-      id: 2,
-      title: 'Journey Through History',
-      content: 'Exploring the key events that shaped our modern world...',
-      date: '2023-04-05',
-      tags: ['history', 'events', 'world'],
-    },
-    {
-      id: 3,
-      title: 'Science Behind the Stars',
-      content: 'Unraveling the mysteries of the universe and beyond...',
-      date: '2023-05-15',
-      tags: ['science', 'stars', 'universe'],
-    },
-  ];
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('http://localhost:3000/api/posts/tag/non-fiction');
+      const data = await response.json();
+      console.log(data);
+      setPosts(data);
+    };
+    fetchPosts();
+  });
 
   return (
     <>
@@ -56,13 +44,16 @@ const NonFiction: React.FC = () => {
         <div className="header-non-fiction">NonFiction</div>
         <div className="posts-container-non-fiction">
           {posts.map((post) => (
-            <div key={post.id} className="post-card-non-fiction">
-              <h2 className="post-title-non-fiction">{post.title}</h2>
-              <p className="post-content-non-fiction">{post.content}</p>
-              <div className="post-meta-non-fiction">
-                <span>{post.date}</span> | <span>{post.tags.join(', ')}</span>
-              </div>
-            </div>
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              date={post.date}
+              tags={post.tags}
+              type="blog"
+              variant="nonFiction"
+            />
           ))}
         </div>
       </div>

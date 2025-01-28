@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Fetch user info from the backend
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch('http://localhost:3000/auth/me', {
+        const response = await fetch('http://localhost:3000/api/auth/me', {
           method: 'GET',
           credentials: 'include', // Include the cookie in the request
         });

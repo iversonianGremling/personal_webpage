@@ -1,50 +1,70 @@
-// src/Programming.tsx
-
 import React, { useEffect, useState } from 'react';
 import ProgrammingSidebar from './ProgrammingSidebar';
 import PostDetail from '../../PostDetail';
 import NavBar from '../../NavBar';
+import Post from '../../../types';
+import { Link, Outlet } from 'react-router-dom';
 
 const Programming: React.FC = () => {
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
-
-  const handlePostSelect = (postId: string) => {
-    setSelectedPostId(postId);
-  };
+  const [latestPosts, setLatestPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    // Set background color to white when the component is mounted
-    document.documentElement.style.backgroundColor = 'white';
+    const fetchLatestPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/posts/tag/programming/latest');
+        console.log(response);
+        const data = await response.json();
+        console.table(data);
 
-    // Reset background color to black when the component is unmounted
+        setLatestPosts(data);
+      } catch (error) {
+        console.error('Error fetching latest posts:', error);
+      }
+    };
+
+    fetchLatestPosts();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.backgroundColor = 'white';
     return () => {
       document.documentElement.style.backgroundColor = 'black';
     };
   }, []);
 
+  useEffect(() => {
+    console.log(selectedPostId);
+  });
+
   return (
     <>
       <NavBar />
       <div className="flex h-screen">
-        {/* Sidebar Section */}
-        <ProgrammingSidebar onPostSelect={handlePostSelect} />
+        <ProgrammingSidebar onPostSelect={setSelectedPostId} />
 
-        {/* Main Content Section */}
         <div className="flex-1 p-8 overflow-y-auto">
-          {selectedPostId ? (
-            <PostDetail postId={selectedPostId} />
-          ) : (
+          <Outlet /> {/* This will render PostDetail when on /programming/:id */}
+
+          {/* Show default content only when no post is selected */}
+          {!selectedPostId && (
             <div className="p-8">
               <h1 className="text-3xl font-bold mb-4">Programming</h1>
-              <p style={{}}>printf("And folks, let’s be honest. Sturgeon was an optimist. Way more than 90% of code is crap.")
-– Al viro</p>
-              <p className='text-xl'>Recent posts</p>
+              <p>printf("And folks, let’s be honest...") – Al viro</p>
+              <p className="text-xl">Recent posts</p>
               <ul className="list-disc pl-5 mt-4">
-                <li><a href="/programming/post1" className="text-blue-600 hover:underline" style={{ fontFamily: 'VT323'}}>Understanding Closures in JavaScript</a></li>
-                <li><a href="/programming/post2" className="text-blue-600 hover:underline" style={{ fontFamily: 'VT323'}}>Getting Started with TypeScript</a></li>
-                <li><a href="/programming/post3" className="text-blue-600 hover:underline" style={{ fontFamily: 'VT323'}}>React Hooks: A Beginner's Guide</a></li>
-                <li><a href="/programming/post4" className="text-blue-600 hover:underline" style={{ fontFamily: 'VT323'}}>Building a Simple REST API with Node.js</a></li>
-                <li><a href="/programming/post5" className="text-blue-600 hover:underline" style={{ fontFamily: 'VT323'}}>CSS Grid vs. Flexbox: When to Use Which</a></li>
+                {latestPosts.map(post => (
+                  <li key={post.id}>
+                    <Link
+                      to={`/programming/${post.id}`}
+                      className="text-blue-600 hover:underline"
+                      style={{ fontFamily: 'VT323' }}
+                      onClick={() => setSelectedPostId(post.id.toString())}
+                    >
+                      {post.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           )}

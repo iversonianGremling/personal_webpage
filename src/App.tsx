@@ -24,6 +24,11 @@ import ArticlesPage from './components/routes/Articles';
 import Poetry from './components/routes/Writings/Poetry';
 import Fiction from './components/routes/Writings/Fiction';
 import NonFiction from './components/routes/Writings/NonFiction';
+import SearchBar from './components/SearchBar';
+import { MyName } from './components/MyName';
+import { TagDetail } from './components/TagDetail';
+import AboutThisPage from './components/AboutThisPage';
+import Thoughts from './components/routes/Thoughts';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -56,7 +61,7 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/posts/');
+        const response = await fetch('http://localhost:3000/api/posts/latest');
         if (!response.ok) {
           throw new Error('Failed to fetch posts');
         }
@@ -117,11 +122,19 @@ function App() {
           path="/"
           element={
             <>
-              <NavBar />
+              <NavBar/>
+              <div className='flex flex-row justify-center content-center text-center mt-8'>
+                <div className="w-1/2 pb-20">
+                  <MovingTitle />
+                  <PostContainer posts={posts} className="post-container" />
+                </div>
+              </div>
+
+              <MyName />
+              <Background />
 
               <div className="flex flex-row justify-center gap-52">
 
-                <About/>
                 {isAdmin && (
                   <div className="fixed bottom-10 right-10 space-y-4">
                     <button
@@ -138,15 +151,8 @@ function App() {
                     </button>
                   </div>
                 )}
-                <ScrollToPosts/>
-                <Categories/>
               </div>
-              <div className='flex flex-row justify-center content-center text-center'>
-                <div className="w-1/2 pb-20">
-                  <MovingTitle />
-                  <PostContainer posts={posts} className="post-container" />
-                </div>
-              </div>
+              <AboutThisPage />
             </>
           }
         />
@@ -174,7 +180,9 @@ function App() {
         <Route path="/music/tiktok" element={<Placeholder title="TikTok" />} />
 
         {/* Programming routes */}
-        <Route path="/programming" element={<Programming />} />
+        <Route path="/programming" element={<Programming />}>
+          <Route path=":id" element={<PostDetail />} />
+        </Route>
         <Route path="/programming/articles" element={<Placeholder title="Programming Articles" />} />
 
         {/* Videos routes */}
@@ -202,6 +210,9 @@ function App() {
         <Route path="/philosophy" element={<PhilosophyBlog />} />
         <Route path="/intersectionality" element={<IntersectionalityPage />} />
         <Route path="/articles" element={<ArticlesPage />} />
+        <Route path="/thoughts" element={<Thoughts />} />
+        <Route path="/tag/:tag" element={<TagDetail />} />
+
       </Routes>
     </div>
   );

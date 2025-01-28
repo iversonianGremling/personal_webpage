@@ -59,13 +59,13 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
   return (
     <div
       ref={containerRef}
-      className={`mt-8 ${className}`}
+      className={`${className}`}
       style={{
         height: '600px',
         overflowY: 'auto',
         scrollBehavior: 'smooth',
         position: 'relative',
-        border: '2px solid #000',
+        // border: '2px solid #000',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
       }}
@@ -81,6 +81,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
             image={post.image}
             date={post.date}
             type={post.type}
+            variant='default'
           />
         ))}
       </div>

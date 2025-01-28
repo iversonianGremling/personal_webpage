@@ -18,7 +18,7 @@ const SeeAllPosts: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/posts/admin', {
+      const response = await fetch('http://localhost:3000/api/posts/admin', {
         method: 'GET',
         credentials: 'include', // Ensures cookies are sent with the request
       });
@@ -40,7 +40,7 @@ const SeeAllPosts: React.FC = () => {
     setError(null);
     try {
       const response = await fetch(
-        `http://localhost:3000/posts/search/admin?q=${encodeURIComponent(searchQuery)}`,
+        `http://localhost:3000/api/posts/search/admin?q=${encodeURIComponent(searchQuery)}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -61,7 +61,7 @@ const SeeAllPosts: React.FC = () => {
   const handleDelete = async (postId: number) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
     try {
-      const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+      const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
         method: 'DELETE',
         credentials: 'include',
       });

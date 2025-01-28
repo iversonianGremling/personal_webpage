@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '../NavBar';
+import Post from '../../types';
+import PostCard from '../PostCard';
 
 // Sample articles data
 const articles = [
@@ -10,6 +12,20 @@ const articles = [
 ];
 
 const ArticlesPage: React.FC = () => {
+  const [latestPosts, setLatestPosts] = React.useState<Post[] | null>(null);
+  useEffect(() => {
+    const fetchLatestPost = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/posts/tag/articles/latest');
+        const data = await response.json();
+        console.table(data);
+        setLatestPosts(data);
+      } catch (error) {
+        console.error('Error fetching latest post:', error);
+      }
+    };
+    fetchLatestPost();
+  }, []);
   return (
     <>
       <NavBar />
@@ -33,7 +49,7 @@ const ArticlesPage: React.FC = () => {
             paddingBottom: '8px',
           }}
         >
-        Articles
+          Latest Articles
         </h1>
 
         <div
@@ -45,23 +61,18 @@ const ArticlesPage: React.FC = () => {
             width: '80%',
           }}
         >
-          {articles.map((article, index) => (
-            <div
+          {latestPosts?.map((article, index) => (
+            <PostCard
               key={article.id}
-              className={`article-box article-${index}`}
-              style={{
-                backgroundColor: index % 2 === 0 ? '#d0d0d0' : '#c0c0c0',
-                padding: '20px',
-                border: '4px solid black',
-                transform: `rotate(${index % 2 === 0 ? '-2deg' : '3deg'})`,
-                boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.8)',
-                width: `${70 + index * 5}%`,
-              }}
-            >
-              <h2 className="text-3xl font-bold mb-4">{article.title}</h2>
-              <p className="text-sm text-gray-700 mb-2">{article.date}</p>
-              <p className="text-lg">{article.content}</p>
-            </div>
+              id={article.id}
+              title={article.title}
+              content={article.content}
+              tags={article.tags}
+              image={article.image}
+              date={article.date}
+              type={article.type}
+              variant="magazine"
+            />
           ))}
         </div>
       </div>

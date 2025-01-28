@@ -1,19 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
-// Real images for the collage
-const imageSources = [
-  'https://picsum.photos/800/600',
-  'https://picsum.photos/900/700',
-  'https://picsum.photos/700/500',
-  'https://picsum.photos/850/650',
-  'https://picsum.photos/750/550',
-  'https://picsum.photos/950/750',
-];
-
 const Background = () => {
   const canvasRef = useRef(null);
-  const layers = useRef([]);
-  const numLayers = 3; // Number of layers
+  const text = 'Vela Velucci';
+  const fonts = ['bold 24px Arial', '28px Verdana', 'italic 26px Georgia'];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,78 +11,97 @@ const Background = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const loadImages = () => {
-      for (let i = 0; i < numLayers; i++) {
-        const layerItems = [];
-        for (let j = 0; j < 10; j++) { // 10 items per layer
-          const img = new Image();
-          img.src = imageSources[Math.floor(Math.random() * imageSources.length)];
-
-          img.onload = () => {
-            layerItems.push({
-              x: Math.random() * canvas.width,
-              y: Math.random() * canvas.height,
-              size: Math.random() * 150 + 100, // Random size between 100 and 250px
-              speed: (i + 1) * 0.5, // Different speed for each layer
-              image: img,
-            });
-
-            // Once all images in the layer are loaded, add the layer to layers
-            if (layerItems.length === 10) {
-              layers.current.push(layerItems);
-            }
-          };
-        }
+    // Create three distinct layers with different properties
+    const layers = [
+      { // Closest layer (moves most)
+        items: Array.from({ length: 15 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          baseSize: Math.random() * 10 + 50,
+          speed: 0.5,
+          font: fonts[0],
+          offset: Math.random() * 1000,
+          floatX: 0,
+          floatY: 0
+        })),
+        opacity: 0.3
+      },
+      { // Middle layer
+        items: Array.from({ length: 25 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          baseSize: Math.random() * 10 + 30,
+          speed: 0.3,
+          font: fonts[1],
+          offset: Math.random() * 1000,
+          floatX: 0,
+          floatY: 0
+        })),
+        opacity: 0.2
+      },
+      { // Farthest layer (moves least)
+        items: Array.from({ length: 35 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          baseSize: Math.random() * 10 + 20,
+          speed: 0.1,
+          font: fonts[2],
+          offset: Math.random() * 1000,
+          floatX: 0,
+          floatY: 0
+        })),
+        opacity: 0.1
       }
+    ];
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let animationFrameId;
+
+    const handleMouseMove = (e) => {
+      mouseX = e.clientX - window.innerWidth / 2;
+      mouseY = e.clientY - window.innerHeight / 2;
     };
 
-    loadImages();
+    const animate = (timestamp) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+      layers.forEach(layer => {
+        ctx.globalAlpha = layer.opacity;
+        layer.items.forEach(item => {
+          // Mouse movement effect
+          const moveX = mouseX * 0.02 * layer.speed;
+          const moveY = mouseY * 0.02 * layer.speed;
 
-    window.addEventListener('resize', handleResize);
+          // Floating effect using perlin-like noise
+          const floatOffset = timestamp * 0.001 + item.offset;
+          item.floatX = Math.sin(floatOffset) * 20;
+          item.floatY = Math.cos(floatOffset * 0.8) * 15;
 
-    const handleMouseMove = (event) => {
-      const mouseX = event.clientX / window.innerWidth;
-      const mouseY = event.clientY / window.innerHeight;
+          // Calculate final position
+          const x = (item.x + moveX + item.floatX + canvas.width) % canvas.width;
+          const y = (item.y + moveY + item.floatY + canvas.height) % canvas.height;
 
-      layers.current.forEach((layerItems, layerIndex) => {
-        layerItems.forEach((item) => {
-          item.x += (mouseX - 0.5) * -layerItems[0].speed;
-          item.y += (mouseY - 0.5) * -layerItems[0].speed;
+          // Dynamic size based on floating effect
+          const size = item.baseSize + Math.sin(floatOffset) * 5;
 
-          // Wrap items around the screen edges
-          if (item.x < -item.size) item.x = canvas.width;
-          if (item.x > canvas.width) item.x = -item.size;
-          if (item.y < -item.size) item.y = canvas.height;
-          if (item.y > canvas.height) item.y = -item.size;
+          ctx.font = item.font.replace(/\d+/, size.toString());
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, x, y);
         });
       });
+
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      layers.current.forEach((layerItems) => {
-        layerItems.forEach((item) => {
-          ctx.globalAlpha = 0.8; // Set transparency for the images
-          ctx.drawImage(item.image, item.x, item.y, item.size, item.size);
-        });
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
+    animate(0);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -105,10 +114,10 @@ const Background = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        pointerEvents: 'none', // Allow clicks to pass through
-        zIndex: -1, // Ensure it's behind other content
+        pointerEvents: 'none',
+        zIndex: -1
       }}
-    ></canvas>
+    />
   );
 };
 

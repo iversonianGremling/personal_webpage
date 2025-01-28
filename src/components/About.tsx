@@ -71,10 +71,10 @@ const About = () => {
   }, [innerBoundary, outerBoundary, prevAngle]);
 
   return (
-    <div className="flex items-center justify-center text-white shadow-lg h-screen pb-32">
+    <div className="justify-center text-white shadow-lg h-screen pb-32 pt-10 block absolute top-4 -left-20">
       <div
         ref={circleRef}
-        className="circle-container relative"
+        className="circle-container relative bg-black rounded-full"
         style={{ width: `${2 * radius}px`, height: `${2 * radius}px` }}
       >
         {/* Render social media icons in a rotated position */}
@@ -86,7 +86,7 @@ const About = () => {
           return (
             <div
               key={index}
-              className="absolute flex flex-col items-center"
+              className="absolute flex flex-col items-center "
               style={{
                 left: `${x}px`,
                 top: `${y}px`,

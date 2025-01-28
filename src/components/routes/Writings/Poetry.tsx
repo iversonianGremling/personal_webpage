@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../../../public/styles/poetry.css';
 import NavBar from '../../NavBar';
+import PostCard from '../../PostCard';
 type Post = {
   id: number;
   title: string;
@@ -10,29 +11,16 @@ type Post = {
 };
 
 const Poetry: React.FC = () => {
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: 'The Whispering Wind',
-      content: 'In the quiet of the forest, the wind whispered secrets of old...',
-      date: '2023-05-10',
-      tags: ['nature', 'whisper', 'forest'],
-    },
-    {
-      id: 2,
-      title: 'Echoes of the Night',
-      content: 'Beneath the pale moonlight, echoes of dreams danced in shadows...',
-      date: '2023-06-15',
-      tags: ['night', 'echo', 'dreams'],
-    },
-    {
-      id: 3,
-      title: 'Flames of Solitude',
-      content: 'In the solitude of the mind, flames of thought burned brightly...',
-      date: '2023-07-01',
-      tags: ['solitude', 'flame', 'thought'],
-    },
-  ];
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('http://localhost:3000/api/posts/tag/poetry');
+      const data = await response.json();
+      console.log(data);
+      setPosts(data);
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <>
@@ -42,13 +30,16 @@ const Poetry: React.FC = () => {
         <div className="header-poetry">Poetry</div>
         <div className="posts-container-poetry">
           {posts.map((post) => (
-            <div key={post.id} className="post-card-poetry">
-              <h2 className="post-title-poetry">{post.title}</h2>
-              <p className="post-content-poetry">{post.content}</p>
-              <div className="post-meta-poetry">
-                <span>{post.date}</span> | <span>{post.tags.join(', ')}</span>
-              </div>
-            </div>
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              date={post.date}
+              tags={post.tags}
+              type="blog"
+              variant="poetry"
+            />
           ))}
         </div>
       </div>

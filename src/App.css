@@ -44,8 +44,6 @@
   margin: 1.5rem 0;
 }
 
-css
-Copy
 
 .content-preview {
   overflow: hidden;
@@ -171,4 +169,169 @@ Copy
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 2rem 0;
+}
+
+/* Search Bar Styles */
+.search-bar-li {
+  margin-left: auto;
+  width: 100%;
+}
+
+.search-container {
+  width: 99%;
+  position: relative;
+}
+
+.search-container input {
+  width: 100%;
+  width: 300px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.search-container input:focus {
+  border-color: red;
+  box-shadow: 0 0 3px rgba(0,121,211,0.3);
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.suggestion-item {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #1a1a1a;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:hover {
+  background-color: #f6f7f8;
+}
+
+.suggestion-title {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.suggestion-tags {
+  font-size: 12px;
+  color: white;
+  margin-top: 4px;
+}
+
+.suggestion-date {
+  font-size: 12px;
+  color: white;
+  margin-top: 2px;
+}
+
+.category-group {
+  margin-bottom: 1rem;
+}
+
+.category-header {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.match-type {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.suggestion-item {
+  /* Add any existing styles */
+  padding: 8px 12px;
+}
+
+.search-container {
+  position: relative;
+  padding: 10px 0;
+}
+
+.search-container input {
+  padding: 8px 12px;
+  width: 300px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: black;
+  color: white;
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: black;
+  color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  margin-top: 5px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.category-group {
+  margin-bottom: 1rem;
+}
+
+.category-header {
+  padding: 8px 12px;
+  background-color: black;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-item {
+  display: block;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:hover {
+  background-color: red;
+  transition: background-color 0.3s ease;
+}
+
+.match-type {
+  font-size: 0.75rem;
+  color: white;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.suggestion-title {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.suggestion-tags {
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+
+.suggestion-date {
+  font-size: 0.75rem;
 }

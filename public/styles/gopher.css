@@ -56,10 +56,10 @@ nav > ul > li > a {
   cursor: pointer;
   border: 1px solid transparent;
   margin: 0;
-  padding-left: 0;
+  padding-left: 2rem;
   padding-top: 0;
   padding-bottom: 0;
-  padding-right: 4px;
+  padding-right: 2rem;
   transition: none;
 }
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../../../public/styles/fiction.css';
 import NavBar from '../../NavBar';
+import PostCard from '../../PostCard';
 
 type Post = {
   id: number;
@@ -11,38 +12,25 @@ type Post = {
 };
 
 const Fiction: React.FC = () => {
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: 'The Last Dreamer',
-      content: 'In a world where dreams are forbidden, one man dares to dream...',
-      date: '2023-04-20',
-      tags: ['dreams', 'forbidden', 'adventure'],
-    },
-    {
-      id: 2,
-      title: 'The Forgotten Realm',
-      content: 'A hidden world beyond the veil, waiting to be rediscovered...',
-      date: '2023-05-25',
-      tags: ['realm', 'mystery', 'magic'],
-    },
-    {
-      id: 3,
-      title: 'Shadows of Tomorrow',
-      content: 'As the future unfolds, shadows of the past rise once again...',
-      date: '2023-06-30',
-      tags: ['future', 'shadows', 'time'],
-    },
-  ];
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('http://localhost:3000/api/posts/tag/fiction');
+      const data = await response.json();
+      console.log(data);
+      setPosts(data);
+    };
+    fetchPosts();
+  });
 
   return (
     <>
       <NavBar/>
-      <div className="fiction-container">
+      <div className="container-fiction">
         <img
           src='../../../public/inside_brain.webp'
           alt="fiction"
-          className="fiction-image"
+          className="image-fiction"
           style={{
             position: 'absolute',
             top: 0,
@@ -53,16 +41,19 @@ const Fiction: React.FC = () => {
             zIndex: -1,
           }}
         />
-        <div className="fiction-header">Fiction</div>
+        <div className="header-fiction">Fiction</div>
         <div className="posts-container-fiction">
           {posts.map((post) => (
-            <div key={post.id} className="post-card">
-              <h2 className="post-title-fiction">{post.title}</h2>
-              <p className="post-content-fiction">{post.content}</p>
-              <div className="post-meta-fiction">
-                <span>{post.date}</span> | <span>{post.tags.join(', ')}</span>
-              </div>
-            </div>
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+              date={post.date}
+              tags={post.tags}
+              type="blog"
+              variant="fiction"
+            />
           ))}
         </div>
       </div>

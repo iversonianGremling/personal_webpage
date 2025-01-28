@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar';
+import Post from '../../types';
+import PostCard from '../PostCard';
 
 // Static GIF URLs for decoration
 const sideGifs = {
@@ -10,26 +12,22 @@ const sideGifs = {
 };
 
 const IntersectionalityPage: React.FC = () => {
-  const [posts, setPosts] = useState<string[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   // Simulate API call to fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
-      setLoading(true);
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        const mockPosts = [
-          '🌈 Embrace your fabulous self! Life is too short for boring vibes. 💖✨',
-          '💖 Remember: Glitter isn’t just decoration—it’s a way of life! 🌟',
-          '🔥 Intersectionality means recognizing that we all carry multiple identities that shape our experiences. 🌈✊',
-          '🌟 Love yourself unapologetically, because being different is fabulous! 💅✨',
-        ];
-
-        setPosts(mockPosts);
+        const response = await fetch('http://localhost:3000/api/posts/tag/intersectionality/latest');
+        console.log(response);
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+        const data = await response.json();
+        setPosts(data);
       } catch (error) {
-        console.error('Failed to fetch posts:', error);
+        console.error('Error fetching posts:', error);
       } finally {
         setLoading(false);
       }
@@ -102,23 +100,17 @@ const IntersectionalityPage: React.FC = () => {
             ) : posts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {posts.map((post, index) => (
-                  <div
-                    key={index}
-                    className="p-6 rounded-lg"
-                    style={{
-                      backgroundColor: 'rgba(255, 105, 180, 0.7)',
-                      border: '3px solid #ff69b4',
-                      boxShadow: '4px 4px 10px rgba(255, 20, 147, 0.8)',
-                    }}
-                  >
-                    <h3
-                      className="text-2xl font-bold mb-2"
-                      style={{ color: '#fff', textShadow: '2px 2px #ff00ff' }}
-                    >
-                    ✨ Fabulous Post ✨
-                    </h3>
-                    <p style={{ color: '#fff' }}>{post}</p>
-                  </div>
+                  <PostCard
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    content={post.content}
+                    tags={post.tags}
+                    date={post.date}
+                    variant='pink'
+                    type={post.type}
+                    basePath='/posts'
+                  />
                 ))}
               </div>
             ) : (
