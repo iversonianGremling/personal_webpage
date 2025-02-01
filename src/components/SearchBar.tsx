@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../assets/env-var';
 
 interface Post {
   id: number;
@@ -74,7 +75,7 @@ const SearchBar = () => {
     const lowerQuery = parsed.q.toLowerCase();
 
     try {
-      const response = await axios.get<Post[]>('http://localhost:3000/api/posts/search', {
+      const response = await axios.get<Post[]>(apiUrl + 'posts/search', {
         params: {
           q: parsed.q,
           tags: parsed.tags,

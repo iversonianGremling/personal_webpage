@@ -1,0 +1,152 @@
+html {
+  background-color: black;
+}
+
+.custom-bg {
+  background-color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.post-card {
+  background-color: #5b21b6; /* bg-violet-950 */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding: 1.5rem 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.post-card:hover {
+  background-color: #fbbf24; /* bg-yellow-300 */
+  color: black;
+}
+
+.title {
+  text-align: left;
+}
+
+.date {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.tag {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tag:hover {
+  background-color: #dc2626; /* bg-red-600 */
+  color: white;
+}
+
+/* Navbar Container */
+nav {
+  background-color: #000;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px; /* Padding for spacing at edges */
+}
+
+/* Parent UL */
+nav > ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between; /* Distributes items across full width */
+  width: 100%;
+}
+
+nav > ul > li {
+  position: relative; /* For dropdown positioning */
+  width: 100%;
+}
+
+/* Parent Links */
+nav > ul > li > a,
+nav > ul > li {
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+nav > ul > li > ul > li > a {
+  font-size:x-large
+}
+
+nav > ul > li:hover {
+  background-color: red;
+  width: 100%;
+}
+
+/* Child UL (Hidden by default) */
+nav ul ul {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  left: 0;
+  background-color: #fff;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 0;
+  z-index: 100; /* Ensures dropdown appears above other content */
+}
+
+/* Child Links */
+nav ul ul li {
+  list-style-type: none;
+}
+
+nav ul ul li a {
+  display: block;
+  padding: 10px 15px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+nav ul ul li a:hover {
+  background-color: #000;
+  color: white;
+}
+
+/* Show Dropdown on Hover */
+nav > ul > li:hover > ul {
+  display: flex;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Track background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #5b21b6; /* Thumb color */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #fbbf24; /* Thumb color on hover */
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-color: #5b21b6 #1e1e1e; /* Thumb and track colors */
+  scrollbar-width: thin;
+}

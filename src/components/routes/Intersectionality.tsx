@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import PostCard from '../PostCard';
+import { apiUrl } from '../../assets/env-var';
 
 // Static GIF URLs for decoration
 const sideGifs = {
@@ -19,7 +20,7 @@ const IntersectionalityPage: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/posts/tag/intersectionality/latest');
+        const response = await fetch(apiUrl + 'posts/tag/intersectionality/latest');
         console.log(response);
         if (!response.ok) {
           throw new Error('Failed to fetch posts');

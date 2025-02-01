@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar';
-import '../../../public/styles/flicker.css';
+import '../../assets/styles/flicker.css';
 import Post from '../../types';
+import { apiUrl } from '../../assets/env-var';
 
 const GamingPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -9,7 +10,7 @@ const GamingPage: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/gaming');
+      const response = await fetch(apiUrl + 'posts/tag/gaming');
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -80,15 +81,15 @@ const GamingPage: React.FC = () => {
           ))}
         </div>
 
-        <marquee
-          behavior="scroll"
-          direction="left"
-          scrollamount="10"
+        <div
+          // behavior="scroll"
+          // direction="left"
+          // scrollamount="10"
           className="text-4xl font-bold mb-8"
           style={{ color: '#ff00ff' }}
         >
         🎮LUDONARRATIVE DOESN'T EXIST🎮
-        </marquee>
+        </div>
 
         {/* Search Bar */}
         <div className="text-center mb-8">

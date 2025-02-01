@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import '../../../../public/styles/non-fiction.css';
+import '../../../assets/styles/non-fiction.css';
 import NavBar from '../../NavBar';
 import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import insideIntestineImage from '../../../assets/images/inside_intestine.webp';
 
 type Post = {
   id: number;
@@ -17,7 +19,7 @@ const NonFiction: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/non-fiction');
+      const response = await fetch(apiUrl + 'posts/tag/non-fiction');
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -30,11 +32,11 @@ const NonFiction: React.FC = () => {
       <NavBar/>
       <div className="container-non-fiction">
         <img
-          src='../../../public/inside_intestine.webp'
+          src={insideIntestineImage}
           alt="nonfiction"
           className="nonfiction-image"
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
             width: '100%',
@@ -46,6 +48,11 @@ const NonFiction: React.FC = () => {
         <button
           onClick={() => navigate(-1)}
           className="back-button-non-fiction"
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '20px',
+          }}
         >
           {Array.from('Return  to  my  body').map((char, index) => {
             if (char === ' ') {
@@ -73,6 +80,7 @@ const NonFiction: React.FC = () => {
             '--random-x': Math.random() * 0.5 + 1,
             '--random-y': Math.random() * 0.5 + 1,
             '--random-duration': `${Math.random() * 1 + 1}s`,
+            'cursor': 'default'
           } as React.CSSProperties}
         >NonFiction</div>
         <div className="posts-container-non-fiction">

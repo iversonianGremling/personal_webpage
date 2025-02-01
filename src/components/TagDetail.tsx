@@ -6,6 +6,7 @@ import Post from '../types';
 import PostCard from './PostCard';
 import NavBar from './NavBar';
 import BackgroundText from './BackgroundText';
+import { apiUrl } from '../assets/env-var';
 
 export const TagDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const TagDetail: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/posts/tag/${tag}`);
+        const response = await fetch(apiUrl + `posts/tag/${tag}`);
         if (!response.ok) throw new Error('Failed to fetch posts');
         const data = await response.json();
         setPosts(data);

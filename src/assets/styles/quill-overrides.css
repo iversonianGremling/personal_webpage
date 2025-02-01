@@ -1,0 +1,29 @@
+.ql-container.ql-snow {
+  border: none !important;
+  background: #4a5568 !important;
+  height: calc(100% - 42px) !important;
+}
+
+.ql-toolbar.ql-snow {
+  border: none !important;
+  background: #374151 !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.ql-editor {
+  min-height: 300px !important;
+  color: white !important;
+  font-size: 16px;
+}
+
+.ql-snow .ql-stroke {
+  stroke: #fff !important;
+}
+
+.ql-snow .ql-fill {
+  fill: #fff !important;
+}
+
+.ql-snow .ql-picker-label {
+  color: #fff !important;
+}

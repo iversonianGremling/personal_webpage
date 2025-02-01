@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Post from '../types';
+import { apiUrl } from '../assets/env-var';
 
 const EditPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +16,7 @@ const EditPost: React.FC = () => {
 
   const fetchPost = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/posts/${id}/admin`, {
+      const response = await fetch(apiUrl + `posts/${id}/admin`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -40,7 +41,7 @@ const EditPost: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
+      const response = await fetch(apiUrl + `posts/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

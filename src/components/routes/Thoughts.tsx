@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import { useDebounce } from 'use-debounce';
+import { apiUrl } from '../../assets/env-var';
 
 const ThoughtsPage: React.FC = () => {
   const [thoughts, setThoughts] = useState<Post[]>([]);
@@ -11,7 +12,7 @@ const ThoughtsPage: React.FC = () => {
 
   const fetchThoughts = useCallback(async (query = '') => {
     try {
-      const url = new URL('http://localhost:3000/api/posts/tag/thoughts/search');
+      const url = new URL(apiUrl + 'posts/tag/thoughts/search');
       if (query) {
         url.searchParams.append('search', query);
       }
@@ -79,14 +80,7 @@ const ThoughtsPage: React.FC = () => {
 
   const displayedPosts = [...thoughts];
   if (displayedPosts.length === 0 && !debouncedSearch) {
-    displayedPosts.push({
-      id: 0,
-      title: 'brain sooooooth rn',
-      content: '⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-      tags: ['void'],
-      date: new Date().toISOString(),
-      type: 'thought',
-    });
+    console.error('No posts found');
   }
 
   return (

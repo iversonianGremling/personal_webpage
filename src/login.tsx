@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from './assets/env-var';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const Login: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch(apiUrl + 'auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

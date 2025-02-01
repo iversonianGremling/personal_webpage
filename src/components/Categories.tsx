@@ -1,6 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import SaladFingersText from './SaladFingers';
+import musicIcon from '../assets/icons/music.svg';
+import gamingIcon from '../assets/icons/gaming.svg';
+import philosophyIcon from '../assets/icons/philosophy.svg';
+import writingsIcon from '../assets/icons/writings.svg';
+import articlesIcon from '../assets/icons/articles.svg';
+import intersectionalityIcon from '../assets/icons/intersectionality.svg';
+import programmingIcon from '../assets/icons/programming.svg';
+import thoughtsIcon from '../assets/icons/thoughts.svg';
+
+
 
 const Categories = () => {
   const radius = 120; // Radius of the circle
@@ -13,14 +23,14 @@ const Categories = () => {
   const circleRef = useRef<HTMLDivElement | null>(null); // Ref for the circle container
 
   const categories = [
-    { to: '/music', imgSrc: '../../public/icons/music.svg', alt: 'Music', label: 'Music' }, // Music note icon
-    { to: '/gaming', imgSrc: '../../public/icons/gaming.svg', alt: 'Gaming', label: 'Gaming' }, // Gamepad icon
-    { to: '/philosophy', imgSrc: '../../public/icons/philosophy.svg', alt: 'Philosophy', label: 'Philosophy' }, // The Thinker statue icon
-    { to: '/writings', imgSrc: '../../public/icons/writings.svg', alt: 'Writings', label: 'Writings' }, // Book icon
-    { to: '/articles', imgSrc: '../../public/icons/articles.svg', alt: 'Articles', label: 'Articles' }, // Academic article icon
-    { to: '/intersectionality', imgSrc: '../../public/icons/intersectionality.svg', alt: 'Politics', label: 'Politics' }, // Scales icon
-    { to: '/programming', imgSrc: '../../public/icons/programming.svg', alt: 'Programming', label: 'Programming' }, // Computer icon
-    { to: '/thoughts', imgSrc: '../../public/icons/thoughts.svg', alt: 'Thoughts', label: 'Thoughts' } // Brain icon
+    { to: '/music', imgSrc: musicIcon, alt: 'Music', label: 'Music' },
+    { to: '/gaming', imgSrc: gamingIcon, alt: 'Gaming', label: 'Gaming' },
+    { to: '/philosophy', imgSrc: philosophyIcon, alt: 'Philosophy', label: 'Philosophy' },
+    { to: '/writings', imgSrc: writingsIcon, alt: 'Writings', label: 'Writings' },
+    { to: '/articles', imgSrc: articlesIcon, alt: 'Articles', label: 'Articles' },
+    { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: 'Politics', label: 'Politics' },
+    { to: '/programming', imgSrc: programmingIcon, alt: 'Programming', label: 'Programming' },
+    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' }
   ];
 
 

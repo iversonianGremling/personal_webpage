@@ -82,14 +82,14 @@ export const MyName: React.FC = () => {
       {renderNameLayers()}
 
       {/* Attribution Footer */}
-      <footer className="fixed bottom-2 right-2 text-xs text-white opacity-50">
+      {/* <footer className="fixed bottom-2 right-2 text-xs text-white opacity-50">
         Font: <a href="https://fonts.google.com/specimen/Rubik+Glitch"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:opacity-75">
           Rubik Glitch
         </a> via Google Fonts
-      </footer>
+      </footer> */}
     </div>
   );
 };

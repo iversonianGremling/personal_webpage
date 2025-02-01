@@ -4,6 +4,7 @@ import Post from '../types';
 import DOMPurify from 'dompurify';
 import NavBar from './NavBar';
 import Programming from './routes/Programming/Programming';
+import { apiUrl } from '../assets/env-var';
 
 
 interface PostDetailProps {
@@ -19,7 +20,7 @@ const PostDetail: React.FC<PostDetailProps> = ({variant}) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/posts/${Number(id)}`);
+        const response = await fetch(apiUrl +`posts/${Number(id)}`);
         if (!response.ok) throw new Error('Post not found');
         const data = await response.json();
         setPost(data);

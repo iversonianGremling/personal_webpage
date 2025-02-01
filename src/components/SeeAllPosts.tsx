@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Post from '../types';
+import { apiUrl } from '../assets/env-var';
 
 interface SeeAllPostsProps {
   admin?: boolean;
@@ -22,7 +23,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(admin ? 'http://localhost:3000/api/posts/admin' : 'http://localhost:3000/api/posts/', {
+      const response = await fetch(admin ? apiUrl + 'posts/admin' : apiUrl + 'posts/', {
         method: 'GET',
         credentials: 'include', // Ensures cookies are sent with the request
       });
@@ -44,8 +45,8 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
     setError(null);
     try {
       const response = await fetch(
-        admin ? `http://localhost:3000/api/posts/search/admin?q=${encodeURIComponent(searchQuery)}`
-          : `http://localhost:3000/api/posts/search?q=${encodeURIComponent(searchQuery)}`,
+        admin ? apiUrl + `posts/search/admin?q=${encodeURIComponent(searchQuery)}`
+          : apiUrl + `posts/search?q=${encodeURIComponent(searchQuery)}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -66,7 +67,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   const handleDelete = async (postId: number) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
     try {
-      const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+      const response = await fetch(apiUrl + `posts/${postId}`, {
         method: 'DELETE',
         credentials: 'include',
       });

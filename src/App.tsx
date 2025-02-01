@@ -30,6 +30,7 @@ import { TagDetail } from './components/TagDetail';
 import AboutThisPage from './components/AboutThisPage';
 import Thoughts from './components/routes/Thoughts';
 import AboutPage from './components/routes/AboutPage';
+import { apiUrl } from './assets/env-var';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -62,7 +63,7 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/posts/latest');
+        const response = await fetch(apiUrl + 'posts/latest');
         if (!response.ok) {
           throw new Error('Failed to fetch posts');
         }
@@ -132,7 +133,7 @@ function App() {
               </div>
 
               <MyName />
-              <Background />
+              {/* <Background /> */}
 
               <div className="flex flex-row justify-center gap-52">
 

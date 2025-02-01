@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import '../../../../public/styles/fiction.css';
+import '../../../assets/styles/fiction.css';
 import NavBar from '../../NavBar';
 import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import insideBrainImage from '../../../assets/images/inside_brain.webp';
 
 type Post = {
   id: number;
@@ -17,7 +19,7 @@ const Fiction: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/fiction');
+      const response = await fetch(apiUrl + 'posts/tag/fiction');
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -30,11 +32,11 @@ const Fiction: React.FC = () => {
       <NavBar/>
       <div className="container-fiction">
         <img
-          src='../../../public/inside_brain.webp'
+          src={insideBrainImage}
           alt="fiction"
           className="image-fiction"
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
             width: '100%',
@@ -46,6 +48,11 @@ const Fiction: React.FC = () => {
         <button
           onClick={() => navigate(-1)}
           className="back-button-fiction"
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '20px',
+          }}
         >
           {Array.from('Return  to  my  body').map((char, index) => {
             if (char === ' ') {

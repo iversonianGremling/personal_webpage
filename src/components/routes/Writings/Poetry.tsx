@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import '../../../../public/styles/poetry.css';
+import '../../../assets/styles/poetry.css';
 import NavBar from '../../NavBar';
 import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import insideHeartImage from '../../../assets/images/inside_heart.webp';
+
 type Post = {
   id: number;
   title: string;
@@ -16,7 +19,7 @@ const Poetry: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/poetry');
+      const response = await fetch(apiUrl + 'posts/tag/poetry');
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -33,6 +36,11 @@ const Poetry: React.FC = () => {
         <button
           onClick={() => navigate(-1)}
           className="back-button-poetry"
+          style={{
+            position: 'fixed',
+            top: '80px',
+            left: '20px',
+          }}
         >
           {Array.from('Return  to  my  body').map((char, index) => {
             if (char === ' ') {
@@ -55,13 +63,14 @@ const Poetry: React.FC = () => {
             }
           })}
         </button>
-        <img src='../../../public/inside_heart.webp' alt="poetry" className="poetry-image" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }}/>
+        <img src={insideHeartImage} alt="poetry" className="poetry-image" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }}/>
         <div className="header-poetry">
           {Array.from('POETRY').map((char, index) => (
             <span
               key={index}
               className="wobble-letter"
               style={{
+                cursor: 'default',
                 fontFamily: 'Lithops, sans-serif',
                 '--char-index': index,
                 '--random-x': Math.random() * 2 + 1,

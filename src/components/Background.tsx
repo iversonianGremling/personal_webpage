@@ -70,8 +70,8 @@ const Background = () => {
         ctx.globalAlpha = layer.opacity;
         layer.items.forEach(item => {
           // Mouse movement effect
-          const moveX = mouseX * 0.02 * layer.speed;
-          const moveY = mouseY * 0.02 * layer.speed;
+          const moveX = mouseX * 0.02 * item.speed;
+          const moveY = mouseY * 0.02 * item.speed;
 
           // Floating effect using perlin-like noise
           const floatOffset = timestamp * 0.001 + item.offset;

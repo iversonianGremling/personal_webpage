@@ -6,12 +6,30 @@ import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    "process.env.VITE_API_URL": JSON.stringify(process.env.VITE_API_URL),
+  },
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // Your NestJS server
+        target: process.env.VITE_API_URL, // Your NestJS server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (
+            assetInfo.name &&
+            assetInfo.name.match(/icon|image|styles|fonts/i)
+          ) {
+            return "assets/[name][extname]";
+          }
+          return "assets/[name]-[hash][extname]";
+        },
       },
     },
   },

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import '../../../assets/styles/gopher.css';
 
 interface Post {
   id: string;
@@ -27,7 +29,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/posts/tag/programming/');
+        const response = await fetch(apiUrl + 'posts/tag/programming/');
         console.log(response);
         const data = await response.json();
 
@@ -60,7 +62,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
   useEffect(() => {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/public/styles/gopher.css';
+    link.href = '../../src/assets/styles/gopher.css';
     link.id = 'gopher-stylesheet';
     document.head.appendChild(link);
 
@@ -74,7 +76,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
     <div className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-4">
       <div className="mb-4 flex flex-row items-center">
         <img
-          src="../../../../public/search.png"
+          src='../../src/assets/icons/search.png'
           alt="Search"
           className="pr-1 py-1 size-8"
         />
@@ -100,13 +102,13 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
             >
               {expanded ? (
                 <img
-                  src="../../../../public/open_folder.png"
+                  src='../../src/assets/icons/open_folder.png'
                   alt="Open Folder"
                   className="inline-block mr-2 max-h-4"
                 />
               ) : (
                 <img
-                  src="../../../../public/closed_folder.png"
+                  src='../../src/assets/icons/closed_folder.png'
                   alt="Closed Folder"
                   className="inline-block mr-2 max-h-4"
                 />

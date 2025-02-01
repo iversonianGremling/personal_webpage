@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import PostCard from '../PostCard';
+import { apiUrl } from '../../assets/env-var';
 
 const PhilosophyBlog: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [latestPosts, setLatestPosts] = React.useState<Post[]>([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/philosophy');
+      const response = await fetch(apiUrl + 'posts/tag/philosophy');
       const data = await response.json();
       console.log(data);
       setPosts(data);
     };
     const fetchLatestPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/philosophy/latest');
+      const response = await fetch(apiUrl + 'posts/tag/philosophy/latest');
       const data = await response.json();
       console.log(data);
       setLatestPosts(data);
@@ -78,8 +79,8 @@ const PhilosophyBlog: React.FC = () => {
                   date={post.date}
                   type={post.type}
                   variant='philosophy'
-                  basePath={post.basePath}
-                  index={post.index}
+                  // basePath={post.basePath}
+                  // index={post.index}
                 />
               ))
             )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../public/styles/salad-fingers.css'; // CSS for styles
+import '../assets/styles/salad-fingers.css'; // CSS for styles
 import { Link } from 'react-router-dom';
 
 const fonts = [

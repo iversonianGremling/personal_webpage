@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../public/styles/salad-fingers.css'; // CSS for styles
+import '../assets/styles/salad-fingers.css'; // CSS for styles
 import { Link, useNavigate } from 'react-router-dom';
 
 const fonts = [
@@ -13,7 +13,7 @@ interface SaladFingersTextProps {
   enableHoverEffect?: boolean;
   text?: string;
   textSize: string;
-  linkTo: string;
+  linkTo?: string;
   onClickSpecialBehavior?: boolean;
 }
 

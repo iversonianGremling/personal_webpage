@@ -1,5 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import SaladFingersText from './SaladFingers';
+import githubIcon from '../assets/icons/github.svg';
+import linkedinIcon from '../assets/icons/linkedin.svg';
+import instagramIcon from '../assets/icons/instagram.svg';
+import twitterIcon from '../assets/icons/twitter.svg';
+import youtubeIcon from '../assets/icons/youtube.svg';
+import bandcampIcon from '../assets/icons/bandcamp.svg';
+import soundcloudIcon from '../assets/icons/soundcloud.svg';
+import twitchIcon from '../assets/icons/twitch.svg';
+import mailIcon from '../assets/icons/mail.svg';
+import tiktokIcon from '../assets/icons/tiktok.svg';
 
 const About = () => {
   const radius = 120; // Radius of the circle
@@ -12,15 +22,15 @@ const About = () => {
   const circleRef = useRef(null); // Ref for the circle container
 
   const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: '../../public/icons/github.svg', alt: 'GitHub', label: 'GitHub' },
-    { href: 'https://linkedin.com/in/yourprofile', imgSrc: '../../public/icons/linkedin.svg', alt: 'LinkedIn', label: 'LinkedIn' },
-    { href: 'mailto:your-email@example.com', imgSrc: '../../public/icons/mail.svg', alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: '../../public/icons/instagram.svg', alt: 'Instagram', label: 'Instagram' },
-    { href: 'https://tiktok.com/@yourprofile', imgSrc: '../../public/icons/tiktok.svg', alt: 'TikTok', label: 'TikTok' },
-    { href: 'https://youtube.com/yourchannel', imgSrc: '../../public/icons/youtube.svg', alt: 'YouTube', label: 'YouTube' },
-    { href: 'https://bandcamp.com/yourprofile', imgSrc: '../../public/icons/bandcamp.png', alt: 'Bandcamp', label: 'Bandcamp' },
-    { href: 'https://soundcloud.com/yourprofile', imgSrc: '../../public/icons/soundcloud.svg', alt: 'SoundCloud', label: 'SoundCloud' },
-    { href: 'https://twitch.tv/yourprofile', imgSrc: '../../public/icons/twitch.svg', alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://github.com/yourprofile', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
+    { href: 'https://linkedin.com/in/yourprofile', imgSrc: linkedinIcon, alt: 'LinkedIn', label: 'LinkedIn' },
+    { href: 'mailto:your-email@example.com', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
+    { href: 'https://instagram.com/yourprofile', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
+    { href: 'https://tiktok.com/@yourprofile', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
+    { href: 'https://youtube.com/yourchannel', imgSrc: youtubeIcon, alt: 'YouTube', label: 'YouTube' },
+    { href: 'https://bandcamp.com/yourprofile', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
+    { href: 'https://soundcloud.com/yourprofile', imgSrc: soundcloudIcon, alt: 'SoundCloud', label: 'SoundCloud' },
+    { href: 'https://twitch.tv/yourprofile', imgSrc: twitchIcon, alt: 'Twitch', label: 'Twitch' },
   ];
 
   useEffect(() => {

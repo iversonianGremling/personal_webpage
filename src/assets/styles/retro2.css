@@ -1,0 +1,19 @@
+.custom-bg {
+  background-color: #fef08a; /* Yellow background */
+  color: #1e3a8a; /* Dark blue text */
+}
+
+.post-card {
+  background-color: #1e3a8a; /* Dark blue */
+  color: #fef08a; /* Yellow text */
+}
+
+.post-card:hover {
+  background-color: #f87171; /* Red hover */
+  color: white;
+}
+
+.tag:hover {
+  background-color: #10b981; /* Green hover */
+  color: black;
+}

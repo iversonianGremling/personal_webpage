@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createNoise2D } from 'simplex-noise';
 import Post from '../../../types';
 import NavBar from '../../NavBar';
-import '../../../../public/styles/writings.css';
+import '../../../assets/styles/writings.css';
 import { Link } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
 
 const Writings: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -11,7 +12,7 @@ const Writings: React.FC = () => {
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
-      const response = await fetch('http://localhost:3000/api/posts/tag/writing/latest');
+      const response = await fetch(apiUrl + 'posts/tag/writing/latest');
       const data = await response.json();
       console.log(data);
       setLatestPosts(data);
@@ -181,6 +182,7 @@ const Writings: React.FC = () => {
           fontFamily: 'Lithops, sans-serif',
           textAlign: 'center',
           padding: '20px 0',
+          cursor: 'default'
         }}
       >
         {Array.from('WRITINGS').map((char, index) => (

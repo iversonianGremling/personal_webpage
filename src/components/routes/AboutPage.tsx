@@ -10,7 +10,7 @@ const AboutPage: React.FC = () => {
   return (
     <div>
       <div className='h-screen content-center'>
-        <SaladFingersStory text={'Hello...'}/>
+        <SaladFingersStory text={'Hello...'} textSize='2.5rem'  />
       </div>
     </div>
   );

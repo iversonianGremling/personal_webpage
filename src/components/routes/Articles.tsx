@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import PostCard from '../PostCard';
+import { apiUrl } from '../../assets/env-var';
 
 // Sample articles data
 const articles = [
@@ -16,7 +17,7 @@ const ArticlesPage: React.FC = () => {
   useEffect(() => {
     const fetchLatestPost = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/posts/tag/articles/latest');
+        const response = await fetch(apiUrl + 'posts/tag/articles/latest');
         const data = await response.json();
         console.table(data);
         setLatestPosts(data);

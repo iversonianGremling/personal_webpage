@@ -6,6 +6,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Post from '../types';
 import DOMPurify from 'dompurify';
+import { apiUrl } from '../assets/env-var';
 
 const CreatePost: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +47,7 @@ const CreatePost: React.FC = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:3000/api/upload/image', {
+      const response = await fetch(apiUrl + 'upload/image', {
         method: 'POST',
         body: formData,
         credentials: 'include',
@@ -115,7 +116,7 @@ const CreatePost: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/api/posts', {
+      const response = await fetch(apiUrl + 'posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
