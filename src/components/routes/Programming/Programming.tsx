@@ -44,7 +44,6 @@ const Programming: React.FC = () => {
         <ProgrammingSidebar onPostSelect={setSelectedPostId} />
 
         <div className="flex-1 p-8 overflow-y-auto">
-          <Outlet /> {/* This will render PostDetail when on /programming/:id */}
 
           {/* Show default content only when no post is selected */}
           {!selectedPostId && (
@@ -56,7 +55,7 @@ const Programming: React.FC = () => {
                 {latestPosts.map(post => (
                   <li key={post.id}>
                     <Link
-                      to={`/programming/${post.id}`}
+                      to={`/posts/${post.id}`}
                       className="text-blue-600 hover:underline"
                       style={{ fontFamily: 'VT323' }}
                       onClick={() => setSelectedPostId(post.id.toString())}

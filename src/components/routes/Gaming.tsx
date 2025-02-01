@@ -87,7 +87,7 @@ const GamingPage: React.FC = () => {
           className="text-4xl font-bold mb-8"
           style={{ color: '#ff00ff' }}
         >
-        🎮 YOU HAVE FAILED THE LUDONARRATIVE EXAM, FUCK YEAH 🎮
+        🎮LUDONARRATIVE DOESN'T EXIST🎮
         </marquee>
 
         {/* Search Bar */}

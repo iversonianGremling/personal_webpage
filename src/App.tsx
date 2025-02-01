@@ -29,6 +29,7 @@ import { MyName } from './components/MyName';
 import { TagDetail } from './components/TagDetail';
 import AboutThisPage from './components/AboutThisPage';
 import Thoughts from './components/routes/Thoughts';
+import AboutPage from './components/routes/AboutPage';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -158,8 +159,10 @@ function App() {
         />
         {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
         <Route path="/create-post" element={<CreatePost />} />
-        <Route path="/posts/admin" element={<SeeAllPosts />} />
+        <Route path="/posts/admin" element={<SeeAllPosts admin={true}/>} />
+        <Route path="/posts/" element={<SeeAllPosts admin={false}/>} />
         <Route path="/edit-post/:id" element={<EditPost />} />
+        <Route path='/about' element={<AboutPage/>} />
 
         {/* Posts routes */}
         <Route path="/posts/:id" element={<PostDetail />} />

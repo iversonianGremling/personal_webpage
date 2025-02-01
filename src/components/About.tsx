@@ -12,15 +12,15 @@ const About = () => {
   const circleRef = useRef(null); // Ref for the circle container
 
   const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/733/733553.png', alt: 'GitHub', label: 'GitHub' },
-    { href: 'https://linkedin.com/in/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/733/733561.png', alt: 'LinkedIn', label: 'LinkedIn' },
-    { href: 'mailto:your-email@example.com', imgSrc: 'https://cdn-icons-png.flaticon.com/512/732/732200.png', alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111463.png', alt: 'Instagram', label: 'Instagram' },
-    { href: 'https://tiktok.com/@yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/3046/3046125.png', alt: 'TikTok', label: 'TikTok' },
-    { href: 'https://youtube.com/yourchannel', imgSrc: 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png', alt: 'YouTube', label: 'YouTube' },
-    { href: 'https://bandcamp.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111621.png', alt: 'Bandcamp', label: 'Bandcamp' },
-    { href: 'https://soundcloud.com/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/145/145809.png', alt: 'SoundCloud', label: 'SoundCloud' },
-    { href: 'https://twitch.tv/yourprofile', imgSrc: 'https://cdn-icons-png.flaticon.com/512/2111/2111670.png', alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://github.com/yourprofile', imgSrc: '../../public/icons/github.svg', alt: 'GitHub', label: 'GitHub' },
+    { href: 'https://linkedin.com/in/yourprofile', imgSrc: '../../public/icons/linkedin.svg', alt: 'LinkedIn', label: 'LinkedIn' },
+    { href: 'mailto:your-email@example.com', imgSrc: '../../public/icons/mail.svg', alt: 'Email', label: 'Email' },
+    { href: 'https://instagram.com/yourprofile', imgSrc: '../../public/icons/instagram.svg', alt: 'Instagram', label: 'Instagram' },
+    { href: 'https://tiktok.com/@yourprofile', imgSrc: '../../public/icons/tiktok.svg', alt: 'TikTok', label: 'TikTok' },
+    { href: 'https://youtube.com/yourchannel', imgSrc: '../../public/icons/youtube.svg', alt: 'YouTube', label: 'YouTube' },
+    { href: 'https://bandcamp.com/yourprofile', imgSrc: '../../public/icons/bandcamp.png', alt: 'Bandcamp', label: 'Bandcamp' },
+    { href: 'https://soundcloud.com/yourprofile', imgSrc: '../../public/icons/soundcloud.svg', alt: 'SoundCloud', label: 'SoundCloud' },
+    { href: 'https://twitch.tv/yourprofile', imgSrc: '../../public/icons/twitch.svg', alt: 'Twitch', label: 'Twitch' },
   ];
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const About = () => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <SaladFingersText enableHoverEffect={true} />
+          <SaladFingersText enableHoverEffect={true} linkTo='/about' textSize='2.5rem'/>
         </div>
       </div>
     </div>
@@ -128,3 +128,4 @@ const About = () => {
 };
 
 export default About;
+

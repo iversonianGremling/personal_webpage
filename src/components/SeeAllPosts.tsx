@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Post from '../types';
 
-const SeeAllPosts: React.FC = () => {
+interface SeeAllPostsProps {
+  admin?: boolean;
+}
+
+const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   const [posts, setPosts] = useState<Post[]>();
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +22,7 @@ const SeeAllPosts: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/api/posts/admin', {
+      const response = await fetch(admin ? 'http://localhost:3000/api/posts/admin' : 'http://localhost:3000/api/posts/', {
         method: 'GET',
         credentials: 'include', // Ensures cookies are sent with the request
       });
@@ -40,7 +44,8 @@ const SeeAllPosts: React.FC = () => {
     setError(null);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/posts/search/admin?q=${encodeURIComponent(searchQuery)}`,
+        admin ? `http://localhost:3000/api/posts/search/admin?q=${encodeURIComponent(searchQuery)}`
+          : `http://localhost:3000/api/posts/search?q=${encodeURIComponent(searchQuery)}`,
         {
           method: 'GET',
           credentials: 'include',
@@ -80,12 +85,13 @@ const SeeAllPosts: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-800 text-white p-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">All Posts</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">All my blood</h1>
+      <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4" onClick={() => navigate(-1)}>I need to go back</button>
 
       <form onSubmit={handleSearch} className="mb-6">
         <input
           type="text"
-          placeholder="Search posts..."
+          placeholder="Search blood..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-2 mb-4 bg-gray-600 text-white rounded-lg"
@@ -103,32 +109,35 @@ const SeeAllPosts: React.FC = () => {
 
       <div className="grid grid-cols-1 gap-6">
         {posts?.map((post) => (
-          <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-            <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
-            <p className="mb-4">{post.content}</p>
-            <p className="mb-4">
-              <strong>Tags:</strong> {post.tags.join(', ')}
-            </p>
-            <p className="mb-4">
-              <strong>Type:</strong> {post.type}
-            </p>
-            <p className="mb-4">
-              <strong>Visibility:</strong> {post.visibility}
-            </p>
-            <button
-              onClick={() => handleEdit(post.id)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => handleDelete(post.id)}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-            >
-              Delete
-            </button>
-          </div>
+          <Link key={post.id} to={`/posts/${post.id}`}>
+            <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
+              <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
+              <p className="mb-4" dangerouslySetInnerHTML={{ __html: post.content }}></p>
+              <p className="mb-4">
+                <strong>Tags:</strong> {post.tags.join(', ')}
+              </p>
+              <p className="mb-4">
+                <strong>Type:</strong> {post.type}
+              </p>
+              <p className="mb-4">
+                <strong>Visibility:</strong> {post.visibility}
+              </p>
+              <button
+                onClick={() => handleEdit(post.id)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
+              >
+              Edit Blood
+              </button>
+              <button
+                onClick={() => handleDelete(post.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              >
+              Delete Blood
+              </button>
+              <div className="mt-2 font-extrabold font-mono font-serif"> ↑ Are you free?</div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

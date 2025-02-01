@@ -28,13 +28,8 @@ const AboutPage: React.FC = () => {
             transform: 'rotate(-0.7deg)'
           }}
         >
-          <span style={{ fontFamily: 'Shadows Into Light, cursive' }}>This page is made as an artistic response</span> to the
-          increasing dehumanization of <span style={{ fontFamily: 'Permanent Marker, cursive' }}>corporative design</span> and
-          as an excuse/platform to publish stuff that, otherwise, would have been
-          <span style={{ fontFamily: 'Indie Flower, cursive' }}> just thoughts</span>. Apparently these thoughts
-          <span style={{ fontFamily: 'Dancing Script, cursive' }}> are valuable</span>, even for some people specialized
-          in those fields - so it makes sense for them to have a place to exist.
-        </p>
+          <span style={{ fontFamily: 'Shadows Into Light, cursive' }}></span>
+          <span style={{ fontFamily: 'Indie Flower, cursive' }}>My blood </span>         </p>
 
         <div
           className="p-6 border rounded-lg"
@@ -45,12 +40,12 @@ const AboutPage: React.FC = () => {
             fontSize: '1.8rem'
           }}
         >
-          The approach mixes <span style={{ fontFamily: 'Permanent Marker, cursive' }}>functionality</span> and
-          <span style={{ fontFamily: 'Caveat, cursive' }}> expression</span>, breathing strange air from:<br/>
-          <span className="ml-8">→</span> Ancient web relics<br/>
+          The methodologies and inner mechanisms are <span style={{ fontFamily: 'Permanent Marker, cursive' }}>completely irrelevant but include: </span>
+          <span style={{ fontFamily: 'Caveat, cursive' }}> </span><br/>
+          <span className="ml-8">→</span> Ego death<br/>
           <span className="ml-8">→</span> Digital brutalism<br/>
           <span className="ml-8">→</span> Philosophical fragments<br/>
-          <span className="ml-8">→</span> Unfinished software rituals
+          <span className="ml-8">→</span> Software demonic rituals
         </div>
 
         <p
@@ -61,10 +56,10 @@ const AboutPage: React.FC = () => {
             textShadow: '0 0 8px rgba(255,255,255,0.2)'
           }}
         >
-          <span style={{ fontFamily: 'Dancing Script, cursive' }}>As everything good</span>, it's unpolished.
+          <span style={{ fontFamily: 'Dancing Script, cursive' }}>As everything that has life</span>, it's unpolished.
           <span style={{ fontFamily: 'Permanent Marker, cursive' }}> As every piece of software</span>, it's
-          forever-unfinished. The codebase sweats through its
-          <span style={{ fontFamily: 'Caveat, cursive' }}> digital pores</span> the anxiety of modern development.
+          forever-unfinished
+          <span style={{ fontFamily: 'Caveat, cursive' }}> this website preexists</span> modern web development.
         </p>
 
         <div
@@ -76,12 +71,12 @@ const AboutPage: React.FC = () => {
           }}
         >
           <div className="text-center mb-4" style={{ fontFamily: 'Permanent Marker, cursive', fontSize: '1.8rem' }}>
-            ↗ Zero Dark Patterns ↗
+            ↗ OOP Patterns used ↗
           </div>
           <div className="text-center" style={{ fontFamily: 'Caveat, cursive', fontSize: '1.4rem' }}>
-            No tracking cookies haunting your browser<br/>
-            No ads colonizing your attention<br/>
-            Just digital air you can actually breathe
+            No spooky cookies<br/>
+            No ads that steal time<br/>
+            "Emptiness as a concept"
           </div>
         </div>
 
@@ -94,10 +89,10 @@ const AboutPage: React.FC = () => {
         >
           <h2 className="text-3xl mb-6" style={{ fontFamily: 'Permanent Marker, cursive' }}>Blood Components:</h2>
           <ul className="space-y-4 text-2xl pl-8">
-            <li style={{ fontFamily: 'Caveat, cursive' }}>→ <span className="underline">NestJS</span>'s insidious simplicity</li>
-            <li style={{ fontFamily: 'Shadows Into Light, cursive' }}>→ CSS waterfalls drowning logic</li>
-            <li style={{ fontFamily: 'Dancing Script, cursive' }}>→ React+TS ideological cage matches</li>
-            <li style={{ fontFamily: 'Indie Flower, cursive' }}>→ Refactoring? Never heard of her</li>
+            <li style={{ fontFamily: 'Caveat, cursive' }}>→ <span className="underline">The reanimated corpse of my </span>CV</li>
+            <li style={{ fontFamily: 'Shadows Into Light, cursive' }}>→ Trauma</li>
+            <li style={{ fontFamily: 'Dancing Script, cursive' }}>→ Love, passion, romanticism</li>
+            <li style={{ fontFamily: 'Indie Flower, cursive' }}>→ Stolen time</li>
             <li
               className="text-red-300"
               style={{
@@ -105,7 +100,7 @@ const AboutPage: React.FC = () => {
                 textShadow: '0 0 10px rgba(255,0,0,0.3)'
               }}
             >
-              → Battlefield hemoglobin (mine)
+              → Finger bleeding keystrokes
             </li>
           </ul>
         </div>

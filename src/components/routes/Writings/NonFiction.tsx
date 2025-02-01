@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import '../../../../public/styles/non-fiction.css';
 import NavBar from '../../NavBar';
 import PostCard from '../../PostCard';
+import { useNavigate } from 'react-router-dom';
 
 type Post = {
   id: number;
@@ -12,6 +13,7 @@ type Post = {
 };
 
 const NonFiction: React.FC = () => {
+  const navigate = useNavigate();
   const [posts, setPosts] = React.useState<Post[]>([]);
   useEffect(() => {
     const fetchPosts = async () => {
@@ -41,7 +43,38 @@ const NonFiction: React.FC = () => {
             zIndex: -1,
           }}
         />
-        <div className="header-non-fiction">NonFiction</div>
+        <button
+          onClick={() => navigate(-1)}
+          className="back-button-non-fiction"
+        >
+          {Array.from('Return  to  my  body').map((char, index) => {
+            if (char === ' ') {
+              return <span key={index}>&nbsp;</span>;
+            } else {
+              return (
+                <span
+                  key={index}
+                  className="wobble-letter"
+                  style={{
+                    '--char-index': index,
+                    '--random-x': Math.random() * 0.5 ,
+                    '--random-y': Math.random() * 0.5 ,
+                    '--random-duration': `${Math.random() + 1}s`,
+                  } as React.CSSProperties}
+                >
+                  {char}
+                </span>
+              );
+            }
+          })}
+        </button>
+        <div className="header-non-fiction wobble-letter"
+          style={{
+            '--random-x': Math.random() * 0.5 + 1,
+            '--random-y': Math.random() * 0.5 + 1,
+            '--random-duration': `${Math.random() * 1 + 1}s`,
+          } as React.CSSProperties}
+        >NonFiction</div>
         <div className="posts-container-non-fiction">
           {posts.map((post) => (
             <PostCard

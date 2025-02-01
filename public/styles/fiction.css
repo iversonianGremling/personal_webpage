@@ -58,6 +58,19 @@
   opacity: 0.8;
 }
 
+.back-button-fiction {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  color: rgba(255, 0, 0, 0.9);
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
 @keyframes fiction-scale {
   0% {
     transform: scale(1);

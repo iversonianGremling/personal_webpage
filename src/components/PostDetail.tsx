@@ -3,8 +3,13 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Post from '../types';
 import DOMPurify from 'dompurify';
 import NavBar from './NavBar';
+import Programming from './routes/Programming/Programming';
 
-const PostDetail: React.FC = () => {
+
+interface PostDetailProps {
+  variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
+}
+const PostDetail: React.FC<PostDetailProps> = ({variant}) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
@@ -66,7 +71,7 @@ const PostDetail: React.FC = () => {
 
   return (
     <div className="">
-      <NavBar/>
+      {variant !== 'programming' && <NavBar/>}
       <div className='flex flex-row'>
         <button
           onClick={() => navigate(-1)}

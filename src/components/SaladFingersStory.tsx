@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../public/styles/salad-fingers.css'; // CSS for styles
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const fonts = [
   '\'Shadows Into Light\', cursive',
@@ -17,12 +17,13 @@ interface SaladFingersTextProps {
   onClickSpecialBehavior?: boolean;
 }
 
-const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect = false, text = 'About', textSize = '2.5rem', linkTo = '/', onClickSpecialBehavior = false }) => {
-  const textArray = [text, 'Entering...'];
+const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect = false, text = 'About', textSize = '2.5rem', linkTo = '/' }) => {
+  const textArray = ['Henlo', 'I don\'t has a name yed', 'I can\'t feel anyfing iet', 'Or asg guestions', 'I\'m sordy', 'Some day we\'ll bee able to talg', 'Bie'];
 
   const [index, setIndex] = useState(0);
   const [letters, setLetters] = useState<string[]>([]);
   const [hovering, setHovering] = useState(false); // Track whether the user is hovering
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentText = textArray[index].split('');
@@ -31,7 +32,7 @@ const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect =
 
   const handleClick = () => {
     setIndex((prevIndex) => (prevIndex + 1) % textArray.length);
-
+    if (index === textArray.length - 2) navigate('/');
   };
 
   const handleMouseEnter = () => {
@@ -43,20 +44,18 @@ const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect =
   };
 
   return (
-    <Link to={linkTo}>
-      <div
-        className="salad-fingers-container"
-        onClick={handleClick}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="salad-fingers-text">
-          {letters.map((char, i) => (
-            <RandomFontLetter key={i} char={char} animate={hovering || !enableHoverEffect} textSize={textSize}/>
-          ))}
-        </div>
+    <div
+      className="salad-fingers-container"
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="salad-fingers-text">
+        {letters.map((char, i) => (
+          <RandomFontLetter key={i} char={char} animate={hovering || !enableHoverEffect} textSize={textSize}/>
+        ))}
       </div>
-    </Link>
+    </div>
   );
 };
 

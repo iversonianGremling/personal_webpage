@@ -60,7 +60,7 @@ const IntersectionalityPage: React.FC = () => {
               color: '#fff',
             }}
           >
-          💖 iNtERseCtiOnaLiTy, fuCk yEah!!!! 💖
+          💖 pOliTics DoN't exiSt fuCk yEah!!!! 💖
           </h1>
           <p
             className="text-2xl italic"
@@ -72,8 +72,9 @@ const IntersectionalityPage: React.FC = () => {
               border: '3px solid #ff69b4',
             }}
           >
-          bEcAuSe LiFE iS MOre fAbUloUs wHEN We JuSt dON'T gIVe A fUck! 🌈✨
+          100% less politics 100% MORE FACTS AND LOGIC!!! 🌈✨
           </p>
+          <p className="text-lg mt-4 border-b-2 border-pink-500 text-black"> Can't escape, sorry</p>
         </header>
 
         <main className="max-w-5xl mx-auto">
@@ -109,7 +110,7 @@ const IntersectionalityPage: React.FC = () => {
                     date={post.date}
                     variant='pink'
                     type={post.type}
-                    basePath='/posts'
+                    basePath='/intersectionality'
                   />
                 ))}
               </div>

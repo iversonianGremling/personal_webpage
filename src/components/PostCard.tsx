@@ -76,10 +76,10 @@ const PostCard: React.FC<Props> = ({
       // Variant-specific classes
       'default': 'bg-violet-950 text-white hover:bg-yellow-300 py-6 pr-72 mb-3 hover:text-black cursor-pointer',
       'latest': 'bg-opacity-80 hover:bg-opacity-90 bg-violet-950 rounded-lg p-4 mb-4 hover:scale-[1.02]',
-      'pink': 'bg-pink-500/70 border-3 border-pink-500 hover:border-pink-600 shadow-[4px_4px_10px_rgba(255,20,147,0.8)] hover:shadow-pink-600/50 p-6 rounded-lg',
+      'pink': 'bg-pink-500 border-3 border-pink-500 hover:border-pink-600 shadow-[4px_4px_10px_rgba(255,20,147,0.8)] hover:shadow-pink-600/50 p-6 rounded-lg text-pink-200 hover:text-red-600',
       'fiction': 'bg-transparent text-white hover:bg-white/10 p-4 rounded-lg',
       'nonFiction': 'bg-amber-50 text-stone-800 p-6 rounded-lg shadow-lg',
-      'poetry': 'bg-indigo-900/80 text-purple-100 p-6 italic text-center',
+      'poetry': 'bg-indigo-900/80 text-purple-100 p-6 italic text-center hover:scale-[1.02]',
       'gaming': 'hover:text-red-500 list-item',
       'minimal': 'bg-transparent p-0',
       'programming': 'text-blue-600 hover:underline',
@@ -135,20 +135,20 @@ const PostCard: React.FC<Props> = ({
   }[variant]);
 
   // Render content based on variant
-  const renderContent = () => {
-    if (variant === 'poetry') {
-      return (
-        <Link to={`${basePath}/${id}`} >
-          <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
-        </Link>
-      );
-    }
-    else  (
-      <Link to={`${basePath}/${id}`}>
-        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
-      </Link>
-    );
-  };
+  // const renderContent = () => {
+  //   if (variant === 'poetry') {
+  //     return (
+  //       <Link to={`${basePath}/${id}`} >
+  //         <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+  //       </Link>
+  //     );
+  //   }
+  //   else  (
+  //     <Link to={`${basePath}/${id}`}>
+  //       <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+  //     </Link>
+  //   );
+  // };
 
   // Render navigation element
   const renderNavigationWrapper = (children: React.ReactNode) => {
@@ -179,30 +179,19 @@ const PostCard: React.FC<Props> = ({
 
     if (variant === 'pink') {
       return (
-        <Link
-          to={`${basePath}/${id}`}
-          className="block"
-          style={{ fontFamily: 'VT323' }}
-        >
+        <div>
           {children}
-        </Link>
+        </div>
       );
     }
 
     return children;
   };
 
-  const onClickArticle = (e) => {
-    if (!(e.target as HTMLElement).closest('a[href^="/tag/"]')) {
-      navigate(`${basePath}/${id}`);
-    }
-    return variant === 'default' ? () => navigate(`${basePath}/${id}`) : undefined;
-  };
 
   return renderNavigationWrapper(
     <Link to={`${basePath}/${id}`}>
       <article
-        onClick={onClickArticle}
         className={containerClasses}
         style={{...magazineStyle}}
         data-index={index}
@@ -236,8 +225,9 @@ const PostCard: React.FC<Props> = ({
                     className={clsx('rounded-full px-3 py-1 border-2', {
                       'border-black bg-white/10 hover:bg-red-600': variant === 'default',
                       'border-white/30 bg-white/5 hover:bg-white/20': variant === 'latest',
-                      'border-white/20': variant === 'fiction',
-                      'border-0 rounded-none': variant === 'philosophy'
+                      'border-white/20 hover:bg-red-600': variant === 'fiction',
+                      'border-0 rounded-none hover:bg-black': variant === 'philosophy',
+                      'border-0 rounded-none hover:bg-red': variant === 'nonFiction',
                     })}
                   >
                     {tag}

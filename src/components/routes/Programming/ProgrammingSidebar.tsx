@@ -120,7 +120,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
                     key={post.id}
                     className="text-gray-600 hover:text-gray-800 cursor-pointer"
                     // onClick={() => onPostSelect(post.id)}
-                    onClick={() => navigate(`/programming/${post.id}`)}
+                    onClick={() => navigate(`/posts/${post.id}`)}
                     style={{ fontFamily: 'VT323' }}
                   >
                     {post.title}

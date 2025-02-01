@@ -58,6 +58,19 @@
   opacity: 0.8;
 }
 
+.back-button-poetry {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 0, 0, 0.9);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @keyframes poetry-scale {
   0% {
     transform: scale(1);
