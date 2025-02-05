@@ -9,6 +9,15 @@ import { apiUrl } from '../../../assets/env-var';
 const Writings: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 720);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
@@ -178,7 +187,7 @@ const Writings: React.FC = () => {
       <div className='title-container'
         style={{
           color: 'rgba(199, 119, 119, 0.9)',
-          fontSize: '8rem',
+          fontSize: `${ isMobile ? '4rem' : '8rem'}`,
           fontFamily: 'Lithops, sans-serif',
           textAlign: 'center',
           padding: '20px 0',

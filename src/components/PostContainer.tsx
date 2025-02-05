@@ -1,5 +1,5 @@
 // src/components/PostContainer.tsx
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PostCard from './PostCard';
 import Post from '../types';
 
@@ -11,6 +11,15 @@ interface Props {
 const PostContainer: React.FC<Props> = ({ posts, className }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   useEffect(() => {
     let scrollVelocity = 0;
@@ -32,6 +41,8 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         scrollVelocity = 0;
       }
     };
+
+
 
     const animateScroll = () => {
       if (!containerRef.current || !isScrolling) return;
@@ -56,6 +67,11 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
     };
   }, []);
 
+  const handleResize = () => {
+    const mobile = window.innerWidth < 720;
+    setIsMobile(mobile);
+  };
+
   return (
     <div
       ref={containerRef}
@@ -68,9 +84,10 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         // border: '2px solid #000',
         scrollbarWidth: 'none',
         msOverflowStyle: 'none',
+        marginTop: isMobile ? '8rem' : ''
       }}
     >
-      <div className="space-y-6 pr-4">
+      <div className={'space-y-6 pr-4 '}>
         {posts.map((post) => (
           <PostCard
             key={post.id}

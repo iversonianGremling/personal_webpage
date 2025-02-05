@@ -12,6 +12,15 @@ export const TagDetail: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const { tag } = useParams<{ tag: string }>();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 720);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,7 +46,7 @@ export const TagDetail: React.FC = () => {
       >
         Back
       </button>
-      <BackgroundText text={tag}/>
+      {isMobile? '' : <BackgroundText text={tag}/>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {posts.map((post) => (
           <PostCard key={post.id}

@@ -22,10 +22,10 @@ const About = () => {
   const circleRef = useRef(null); // Ref for the circle container
 
   const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
+    { href: 'https://github.com/iversonianGremling', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
     { href: 'https://linkedin.com/in/yourprofile', imgSrc: linkedinIcon, alt: 'LinkedIn', label: 'LinkedIn' },
     { href: 'mailto:your-email@example.com', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
+    { href: 'https://instagram.com/velavelucci', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
     { href: 'https://tiktok.com/@yourprofile', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
     { href: 'https://youtube.com/yourchannel', imgSrc: youtubeIcon, alt: 'YouTube', label: 'YouTube' },
     { href: 'https://bandcamp.com/yourprofile', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
@@ -81,7 +81,7 @@ const About = () => {
   }, [innerBoundary, outerBoundary, prevAngle]);
 
   return (
-    <div className="justify-center text-white shadow-lg h-screen pb-32 pt-10 block absolute top-4 -left-20">
+    <div className="justify-center text-white h-screen pb-32 pt-10 block absolute top-4 -left-20">
       <div
         ref={circleRef}
         className="circle-container relative bg-black rounded-full"

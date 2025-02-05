@@ -10,46 +10,49 @@
 
 }
 
-.gopher > div, p, span, h1, h2, h3, h4, h5, h6, input, textarea, select, button, ul, li, nav {
+.gopher > div, p, span, h1, h2, h3, h4, h5, h6, input, textarea, select, button, ul, li, nav, a {
   font-family: var(--font-family);
 }
 
-.gopher > nav {
+/* .gopher > nav {
   font-family: inherit;
-}
+} */
 
-.gopher > nav ul, nav ul li, nav ul li a {
+/* .gopher > nav ul, nav ul li, nav ul li a {
   font-family: inherit;
-}
+} */
 
 /* Navbar styled like the Gopher client */
-.gopher > nav {
+/* .gopher > nav {
   background-color: #d3d3d3;
   border-bottom: 2px solid black;
   color: black;
   display: flex;
   justify-content: start;
   font-size: 18px;
-}
+} */
 
 /* Parent UL */
-.gopher > nav > ul {
+/* .gopher > nav > ul {
   list-style-type: none;
   display: flex;
   justify-content: start;
-}
+} */
 
 /* Navbar Items */
-.gopher > nav > ul > li {
+/* .gopher > nav > ul > li {
+  font-family: 'VT323', 'Courier New', monospace;
   position: relative;
   padding: 0;
   margin: 0;
   transition: none;
-}
+} */
 
 /* Parent Links */
-.gopher > nav > ul > li > a {
-  color: black;
+/* .gopher > nav > ul > li > a {
+
+  font-family: 'VT323', 'Courier New', monospace;
+  color: white;
   text-decoration: none;
   cursor: pointer;
   border: 1px solid transparent;
@@ -59,24 +62,26 @@
   padding-bottom: 0;
   padding-right: 2rem;
   transition: none;
-}
+} */
 
 /* Hover Effect */
-.gopher > nav > ul > li:hover > a {
+/* .gopher > nav > ul > li:hover > a {
+
+  font-family: 'VT323', 'Courier New', monospace;
   background-color: #000080;
   color: white;
   border: 1px solid #000;
   transition: none;
-}
+} */
 
-.gopher > nav > ul > li:hover {
+/* .gopher > nav > ul > li:hover {
   background-color: #000080;
   transition: none;
-}
+} */
 
 
 /* Child UL (Hidden by default) */
-.gopher > nav ul ul {
+/* .gopher > nav ul ul {
   display: none;
   position: absolute;
   top: 100%;
@@ -88,17 +93,17 @@
   z-index: 100;
   transition: none;
   font-size:small;
-}
+} */
 
 /* Show Dropdown on Hover */
-.gopher > nav > ul > li:hover > ul {
+/* .gopher > nav > ul > li:hover > ul {
   transition: none;
   background-color: #c0c0c0;
   display: block;
-}
+} */
 
 /* Child Links */
-.gopher > nav ul ul li a {
+/* .gopher > nav ul ul li a {
   display: block;
   color: black;
   text-decoration: none;
@@ -115,7 +120,7 @@
   transition: none;
   background-color: #000080;
   color: white;
-}
+} */
 
 .gopher > .App {
   background-color: #00ffff;

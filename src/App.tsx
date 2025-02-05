@@ -59,6 +59,17 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 720);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -126,13 +137,13 @@ function App() {
             <>
               <NavBar/>
               <div className='flex flex-row justify-center content-center text-center mt-8'>
-                <div className="w-1/2 pb-20">
+                <div className="w-8/12 pb-20">
                   <MovingTitle />
                   <PostContainer posts={posts} className="post-container" />
                 </div>
               </div>
 
-              <MyName />
+              {isMobile ? '' : <MyName />}
               {/* <Background /> */}
 
               <div className="flex flex-row justify-center gap-52">

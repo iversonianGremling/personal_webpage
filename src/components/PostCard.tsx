@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { sanitizeHTML } from '../utils/contentUtils';
 import clsx from 'clsx';
@@ -37,6 +37,18 @@ const PostCard: React.FC<Props> = ({
   image,
 }) => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleResize = () => {
+    const mobile = window.innerWidth < 720;
+    setIsMobile(mobile);
+    // Close menu when switching to desktop view
+  };
 
   // Date formatting utilities
   const formatDate = (dateString: string) => {
@@ -74,7 +86,7 @@ const PostCard: React.FC<Props> = ({
     'transition-all duration-300',
     {
       // Variant-specific classes
-      'default': 'bg-violet-950 text-white hover:bg-yellow-300 py-6 pr-72 mb-3 hover:text-black cursor-pointer',
+      'default': 'bg-violet-950 text-white hover:bg-yellow-300 py-6 mb-3 hover:text-black cursor-pointer',
       'latest': 'bg-opacity-80 hover:bg-opacity-90 bg-violet-950 rounded-lg p-4 mb-4 hover:scale-[1.02]',
       'pink': 'bg-pink-500 border-3 border-pink-500 hover:border-pink-600 shadow-[4px_4px_10px_rgba(255,20,147,0.8)] hover:shadow-pink-600/50 p-6 rounded-lg text-pink-200 hover:text-red-600',
       'fiction': 'bg-transparent text-white hover:bg-white/10 p-4 rounded-lg',
@@ -91,7 +103,7 @@ const PostCard: React.FC<Props> = ({
 
   // Title classes
   const titleClasses = clsx({
-    'default': 'text-3xl font-semibold mb-2',
+    'default': isMobile ? 'text-xl' : 'text3xl' + 'font-semibold mb-2',
     'latest': 'text-2xl font-bold',
     'pink': 'text-2xl font-bold text-shadow-[2px_2px_#ff00ff]',
     'fiction': 'text-xl',
@@ -106,7 +118,7 @@ const PostCard: React.FC<Props> = ({
 
   // Content classes
   const contentClasses = clsx({
-    'default': 'text-md line-clamp-3 prose prose-invert max-w-none',
+    'default': 'text-md line-clamp-3 prose prose-invert max-w-none pr-1',
     'latest': 'text-sm line-clamp-2',
     'pink': 'text-gray-300',
     'fiction': '',
@@ -197,7 +209,7 @@ const PostCard: React.FC<Props> = ({
         data-index={index}
       >
         {/* Date section for default variant */}
-        {variant === 'default' && (
+        {variant === 'default' && !isMobile && (
           <div className="date-section flex flex-col ml-6 my-4 text-center">
             <span className="text-6xl">{formatDate(date).split(' ')[0]}</span>
             <span className="text-xl">{formatDate(date).split(' ')[1]}</span>
@@ -205,7 +217,7 @@ const PostCard: React.FC<Props> = ({
           </div>
         )}
 
-        <div className="content-section flex-1">
+        <div className={`${isMobile ? 'ml-4 h-full' : 'flex-1'} `}>
           {/* Title with variant-specific decorations */}
           <h2 className={titleClasses} style={{textAlign: 'left'}}>
             {variant === 'pink' ? `✨ ${title} ✨` : title}
@@ -238,7 +250,11 @@ const PostCard: React.FC<Props> = ({
           )}
 
           {/* Main content */}
-          <div className={contentClasses} style={{textAlign: 'left'}} dangerouslySetInnerHTML={{ __html: sanitizeHTML(content) }}/>
+          <div
+            className={`${contentClasses} ${isMobile ? 'line-clamp-3' : 'line-clamp-5'}`}
+            style={{textAlign: 'left'}}
+            dangerouslySetInnerHTML={{ __html: sanitizeHTML(content) }}
+          />
 
           {/* Metadata footer */}
 

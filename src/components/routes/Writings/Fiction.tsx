@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../assets/styles/fiction.css';
 import NavBar from '../../NavBar';
 import PostCard from '../../PostCard';
@@ -17,6 +17,16 @@ type Post = {
 const Fiction: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = React.useState<Post[]>([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 720);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(apiUrl + 'posts/tag/fiction');
@@ -50,8 +60,8 @@ const Fiction: React.FC = () => {
           className="back-button-fiction"
           style={{
             position: 'fixed',
-            top: '80px',
-            left: '20px',
+            top: '90px',
+            left: '15px',
           }}
         >
           {Array.from('Return  to  my  body').map((char, index) => {
@@ -77,7 +87,7 @@ const Fiction: React.FC = () => {
         </button>
 
 
-        <div className="header-fiction">
+        <div className={`${isMobile ? 'text-7xl' : 'text-9xl'} header-fiction`}>
 
           {Array.from('FICTION').map((char, index) => {
             return (

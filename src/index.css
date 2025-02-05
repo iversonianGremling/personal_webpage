@@ -116,3 +116,77 @@ nav > ul > li:hover > ul {
 .visible {
   visibility: visible;
 }
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-5 {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 719px) {
+  .hamburger {
+    display: block;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .hamburger.inactive {
+    display: none;
+  }
+
+  .nav-links {
+    position: fixed;
+    right: -100%;
+    top: 70px;
+    gap: 0;
+    flex-direction: column;
+    background-color: #000;
+    width: 100%;
+    text-align: center;
+    transition: right 0.3s ease;
+    padding: 1rem 0;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    margin: 0;
+  }
+
+  .nav-links.mobile .relative > ul li {
+    margin: 0.5rem 0;
+  }
+  
+  .nav-links.mobile .relative img {
+    min-width: 24px;
+  }
+  
+  .nav-links.mobile .relative a {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

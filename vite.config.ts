@@ -6,15 +6,13 @@ import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    "process.env.VITE_API_URL": JSON.stringify(process.env.VITE_API_URL),
-  },
   server: {
     proxy: {
       "/api": {
-        target: process.env.VITE_API_URL, // Your NestJS server
+        target: process.env.VITE_API_URL, // Base URL (no /api)
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/api/, ""), // Remove /api prefix
+        secure: true, // Add if targeting HTTPS in development
       },
     },
   },

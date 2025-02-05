@@ -13,7 +13,6 @@
 
 .header-fiction {
   font-family: 'Lithops', serif;
-  font-size: 6rem;
   margin-bottom: 40px;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
   animation: fiction-scale 10s infinite ease-in-out;
