@@ -16,6 +16,15 @@ const PostDetail: React.FC<PostDetailProps> = ({variant}) => {
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 720);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -76,9 +85,9 @@ const PostDetail: React.FC<PostDetailProps> = ({variant}) => {
       <div className='flex flex-row'>
         <button
           onClick={() => navigate(-1)}
-          className="bg-violet-950 text-white m-6 p-6 hover:bg-red-600 transition-colors duration-300"
+          className={`bg-violet-950 text-white ${isMobile? 'm-2' : 'm-6'} p-6 hover:bg-red-600 transition-colors duration-300`}
         >Back</button>
-        <h1 className="text-6xl font-bold mb-2 text-center content-center text-white">{post.title}</h1>
+        <h1 className={`${isMobile ? 'text-4xl mr-4' : 'text-6xl'} font-bold mb-2 text-center content-center text-white`}>{post.title}</h1>
       </div>
 
       <article className="bg-violet-950 text-white px-6 mx-6 pb-6">

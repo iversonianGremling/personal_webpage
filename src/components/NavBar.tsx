@@ -26,6 +26,7 @@ import soundcloudIcon from '../assets/icons/soundcloud.svg';
 import twitchIcon from '../assets/icons/twitch.svg';
 import mailIcon from '../assets/icons/mail.svg';
 import tiktokIcon from '../assets/icons/tiktok.svg';
+import SaladFingersText from './SaladFingers';
 
 function NavBar() {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -155,6 +156,13 @@ function NavBar() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    to="/posts"
+                  >
+                    <SaladFingersText textSize="1.5rem" linkTo='/posts' text='All Posts'/>
+                  </Link>
+                </li>
               </ul>
             </div>
           ) : (  <div>
@@ -212,6 +220,13 @@ function NavBar() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    to='/about'
+                  >
+                    <SaladFingersText textSize="1.5rem" linkTo='/about' text='About Me'/>
+                  </Link>
+                </li>
               </ul>
             </div>
           ) : (
