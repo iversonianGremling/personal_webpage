@@ -74,21 +74,23 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiUrl + 'posts/latest');
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        const data: Post[] = await response.json();
-        setPosts(data);
+        const response = await fetch(apiUrl + 'posts/latest', {
+          method: 'GET',
+          mode: 'cors', // Add this
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'Origin': window.location.origin // Explicitly set origin
+          }
+        });
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+        // Rest of your code
       } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setIsLoading(false);
+        console.error('Fetch error:', err);
       }
     };
-
     fetchPosts();
-  }, []);
+  });
 
   useEffect(() => {
     // Set the background color of the body
