@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Post from '../types';
-import { apiUrl } from '../assets/env-var';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Post from "../types";
+import { apiUrl } from "../assets/env-var";
 
 interface SeeAllPostsProps {
   admin?: boolean;
 }
 
-const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
+const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
   const [posts, setPosts] = useState<Post[]>();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -23,12 +23,15 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(admin ? apiUrl + 'posts/admin' : apiUrl + 'posts/', {
-        method: 'GET',
-        credentials: 'include', // Ensures cookies are sent with the request
-      });
+      const response = await fetch(
+        admin ? apiUrl + "/posts/admin" : apiUrl + "/posts/",
+        {
+          method: "GET",
+          credentials: "include", // Ensures cookies are sent with the request
+        },
+      );
       if (!response.ok) {
-        throw new Error('Failed to fetch posts');
+        throw new Error("Failed to fetch posts");
       }
       const data = await response.json();
       setPosts(data);
@@ -45,15 +48,16 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
     setError(null);
     try {
       const response = await fetch(
-        admin ? apiUrl + `posts/search/admin?q=${encodeURIComponent(searchQuery)}`
-          : apiUrl + `posts/search?q=${encodeURIComponent(searchQuery)}`,
+        admin
+          ? apiUrl + `/posts/search/admin?q=${encodeURIComponent(searchQuery)}`
+          : apiUrl + `/posts/search?q=${encodeURIComponent(searchQuery)}`,
         {
-          method: 'GET',
-          credentials: 'include',
-        }
+          method: "GET",
+          credentials: "include",
+        },
       );
       if (!response.ok) {
-        throw new Error('Failed to search posts');
+        throw new Error("Failed to search posts");
       }
       const data = await response.json();
       setPosts(data);
@@ -65,14 +69,14 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   };
 
   const handleDelete = async (postId: number) => {
-    if (!window.confirm('Are you sure you want to delete this post?')) return;
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
-      const response = await fetch(apiUrl + `posts/${postId}`, {
-        method: 'DELETE',
-        credentials: 'include',
+      const response = await fetch(apiUrl + `/posts/${postId}`, {
+        method: "DELETE",
+        credentials: "include",
       });
       if (!response.ok) {
-        throw new Error('Failed to delete post');
+        throw new Error("Failed to delete post");
       }
       setPosts(posts?.filter((post) => post.id !== postId)); // Remove deleted post from state
     } catch (error) {
@@ -87,7 +91,12 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   return (
     <div className="min-h-screen bg-gray-800 text-white p-8">
       <h1 className="text-4xl font-bold mb-6 text-center">All my blood</h1>
-      <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4" onClick={() => navigate(-1)}>I need to go back</button>
+      <button
+        className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4"
+        onClick={() => navigate(-1)}
+      >
+        I need to go back
+      </button>
 
       <form onSubmit={handleSearch} className="mb-6">
         <input
@@ -114,9 +123,12 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
             <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
               <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
-              <p className="mb-4" dangerouslySetInnerHTML={{ __html: post.content }}></p>
+              <p
+                className="mb-4"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              ></p>
               <p className="mb-4">
-                <strong>Tags:</strong> {post.tags.join(', ')}
+                <strong>Tags:</strong> {post.tags.join(", ")}
               </p>
               <p className="mb-4">
                 <strong>Type:</strong> {post.type}
@@ -128,15 +140,18 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
                 onClick={() => handleEdit(post.id)}
                 className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
               >
-              Edit Blood
+                Edit Blood
               </button>
               <button
                 onClick={() => handleDelete(post.id)}
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               >
-              Delete Blood
+                Delete Blood
               </button>
-              <div className="mt-2 font-extrabold font-mono font-serif"> ↑ Are you free?</div>
+              <div className="mt-2 font-extrabold font-mono font-serif">
+                {" "}
+                ↑ Are you free?
+              </div>
             </div>
           </Link>
         ))}

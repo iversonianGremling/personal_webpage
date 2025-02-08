@@ -1,26 +1,26 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import NavBar from '../NavBar';
-import Post from '../../types';
-import { useDebounce } from 'use-debounce';
-import { apiUrl } from '../../assets/env-var';
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import NavBar from "../NavBar";
+import Post from "../../types";
+import { useDebounce } from "use-debounce";
+import { apiUrl } from "../../assets/env-var";
 
 const ThoughtsPage: React.FC = () => {
   const [thoughts, setThoughts] = useState<Post[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch] = useDebounce(searchQuery, 500);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const fetchThoughts = useCallback(async (query = '') => {
+  const fetchThoughts = useCallback(async (query = "") => {
     try {
-      const url = new URL(apiUrl + 'posts/tag/thoughts/search');
+      const url = new URL(apiUrl + "/posts/tag/thoughts/search");
       if (query) {
-        url.searchParams.append('search', query);
+        url.searchParams.append("search", query);
       }
       const response = await fetch(url.toString());
       const data = await response.json();
       setThoughts(data);
     } catch (error) {
-      console.error('Error fetching thoughts:', error);
+      console.error("Error fetching thoughts:", error);
     }
   }, []);
 
@@ -31,7 +31,7 @@ const ThoughtsPage: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resizeCanvas = () => {
@@ -40,7 +40,7 @@ const ThoughtsPage: React.FC = () => {
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     const squares = Array.from({ length: 200 }, () => ({
       x: Math.random() * canvas.width,
@@ -69,18 +69,18 @@ const ThoughtsPage: React.FC = () => {
       mouseY = e.clientY;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
     update();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
   const displayedPosts = [...thoughts];
   if (displayedPosts.length === 0 && !debouncedSearch) {
-    console.error('No posts found');
+    console.error("No posts found");
   }
 
   return (
@@ -104,27 +104,52 @@ const ThoughtsPage: React.FC = () => {
             <div
               key={thought.id}
               className="relative group transform transition-transform hover:scale-[1.02] ease-linear duration-500"
-              style={{ rotate: `${Math.sin(index) * 5}deg`, width: `${100 + Math.sin(index) * 5}%` }}
+              style={{
+                rotate: `${Math.sin(index) * 5}deg`,
+                width: `${100 + Math.sin(index) * 5}%`,
+              }}
             >
-              <div className="p-8 backdrop-blur-lg border-2 h-full" style={{ background: 'white', borderColor: 'white', fontFamily: index % 2 === 0 ? '"Comic Neue", cursive' : '"Shadows Into Light", cursive' }}>
+              <div
+                className="p-8 backdrop-blur-lg border-2 h-full"
+                style={{
+                  background: "white",
+                  borderColor: "white",
+                  fontFamily:
+                    index % 2 === 0
+                      ? '"Comic Neue", cursive'
+                      : '"Shadows Into Light", cursive',
+                }}
+              >
                 <div className="text-2xl leading-relaxed space-y-4 text-black">
-                  {thought.content === '⠀⠀⠀⠀⠀⠀⠀⠀⠀' ? (
-                    <div className="text-4xl animate-pulse text-center">🧠🌫️⋯ {thought.title} ⋯🌌🫧</div>
+                  {thought.content === "⠀⠀⠀⠀⠀⠀⠀⠀⠀" ? (
+                    <div className="text-4xl animate-pulse text-center">
+                      🧠🌫️⋯ {thought.title} ⋯🌌🫧
+                    </div>
                   ) : (
                     <>
-                      <div className="opacity-80 font-light" dangerouslySetInnerHTML={{ __html: thought.content }}></div>
+                      <div
+                        className="opacity-80 font-light"
+                        dangerouslySetInnerHTML={{ __html: thought.content }}
+                      ></div>
                     </>
                   )}
                 </div>
                 <div className="mt-6 flex justify-between items-center opacity-50 text-sm">
-                  <div>{new Date(thought.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                  <div>
+                    {new Date(thought.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
         {thoughts.length === 0 && debouncedSearch && (
-          <div className="text-center text-white/50 mt-20 text-xl">No neural patterns match "{debouncedSearch}"</div>
+          <div className="text-center text-white/50 mt-20 text-xl">
+            No neural patterns match "{debouncedSearch}"
+          </div>
         )}
       </div>
     </>

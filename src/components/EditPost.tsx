@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import Post from '../types';
-import { apiUrl } from '../assets/env-var';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Post from "../types";
+import { apiUrl } from "../assets/env-var";
 
 const EditPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,12 +16,12 @@ const EditPost: React.FC = () => {
 
   const fetchPost = async () => {
     try {
-      const response = await fetch(apiUrl + `posts/${id}/admin`, {
-        method: 'GET',
-        credentials: 'include',
+      const response = await fetch(apiUrl + `/posts/${id}/admin`, {
+        method: "GET",
+        credentials: "include",
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch post');
+        throw new Error("Failed to fetch post");
       }
       const data = await response.json();
       setFormData(data);
@@ -30,7 +30,11 @@ const EditPost: React.FC = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { id, value } = e.target;
     setFormData((prevData) => (prevData ? { ...prevData, [id]: value } : null));
   };
@@ -41,18 +45,18 @@ const EditPost: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      const response = await fetch(apiUrl + `posts/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(apiUrl + `/posts/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: 'include',
+        credentials: "include",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update post');
+        throw new Error("Failed to update post");
       }
 
-      navigate('/posts/admin'); // Redirect to all posts page
+      navigate("/posts/admin"); // Redirect to all posts page
     } catch (error) {
       setErrorMessage((error as Error).message);
     } finally {
@@ -64,7 +68,9 @@ const EditPost: React.FC = () => {
     <div className="min-h-screen bg-gray-800 text-white p-8">
       <h1 className="text-4xl font-bold mb-6 text-center">Edit Post</h1>
 
-      {errorMessage && <p className="text-center text-red-500">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="text-center text-red-500">{errorMessage}</p>
+      )}
       {formData && (
         <form onSubmit={handleSubmit}>
           {/* Title */}
@@ -105,10 +111,17 @@ const EditPost: React.FC = () => {
             <input
               type="text"
               id="tags"
-              value={formData.tags.join(', ')}
+              value={formData.tags.join(", ")}
               onChange={(e) =>
                 setFormData((prevData) =>
-                  prevData ? { ...prevData, tags: e.target.value.split(',').map((tag) => tag.trim()) } : null
+                  prevData
+                    ? {
+                        ...prevData,
+                        tags: e.target.value
+                          .split(",")
+                          .map((tag) => tag.trim()),
+                      }
+                    : null,
                 )
               }
               className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg"
@@ -146,7 +159,10 @@ const EditPost: React.FC = () => {
 
           {/* Visibility */}
           <div className="mb-4">
-            <label htmlFor="visibility" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="visibility"
+              className="block text-sm font-medium mb-1"
+            >
               Visibility
             </label>
             <select
@@ -166,7 +182,7 @@ const EditPost: React.FC = () => {
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Updating...' : 'Update Post'}
+            {isSubmitting ? "Updating..." : "Update Post"}
           </button>
         </form>
       )}

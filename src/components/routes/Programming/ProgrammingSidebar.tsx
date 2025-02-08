@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { apiUrl } from '../../../assets/env-var';
-import '../../../assets/styles/gopher.css';
+import React, { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../../../assets/env-var";
+import "../../../assets/styles/gopher.css";
 
 interface Post {
   id: string;
@@ -19,9 +19,11 @@ interface ProgrammingSidebarProps {
   onPostSelect: (postId: string) => void;
 }
 
-const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect }) => {
+const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
+  onPostSelect,
+}) => {
   const [expanded, setExpanded] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -29,21 +31,21 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiUrl + 'posts/tag/programming/');
+        const response = await fetch(apiUrl + "/posts/tag/programming/");
         console.log(response);
         const data = await response.json();
 
         const programmingPosts = data
-          .filter((post: any) => post.tags?.includes('programming'))
+          .filter((post: any) => post.tags?.includes("programming"))
           .map((post: any) => ({
             id: post.id.toString(),
             title: post.title,
-            tags: post.tags
+            tags: post.tags,
           }));
 
         setPosts(programmingPosts);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);
       }
@@ -54,20 +56,20 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
 
   const filteredPosts = useMemo(() => {
     if (!searchQuery) return posts;
-    return posts.filter(post =>
-      post.title.toLowerCase().includes(searchQuery.toLowerCase())
+    return posts.filter((post) =>
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [posts, searchQuery]);
 
   useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '../../src/assets/styles/gopher.css';
-    link.id = 'gopher-stylesheet';
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "../../src/assets/styles/gopher.css";
+    link.id = "gopher-stylesheet";
     document.head.appendChild(link);
 
     return () => {
-      const existingLink = document.getElementById('gopher-stylesheet');
+      const existingLink = document.getElementById("gopher-stylesheet");
       if (existingLink) document.head.removeChild(existingLink);
     };
   }, []);
@@ -76,7 +78,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
     <div className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-4">
       <div className="mb-4 flex flex-row items-center">
         <img
-          src='../../src/assets/icons/search.png'
+          src="../../src/assets/icons/search.png"
           alt="Search"
           className="pr-1 py-1 size-8"
         />
@@ -102,13 +104,13 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
             >
               {expanded ? (
                 <img
-                  src='../../src/assets/icons/open_folder.png'
+                  src="../../src/assets/icons/open_folder.png"
                   alt="Open Folder"
                   className="inline-block mr-2 max-h-4"
                 />
               ) : (
                 <img
-                  src='../../src/assets/icons/closed_folder.png'
+                  src="../../src/assets/icons/closed_folder.png"
                   alt="Closed Folder"
                   className="inline-block mr-2 max-h-4"
                 />
@@ -117,13 +119,13 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({ onPostSelect })
             </div>
             {expanded && (
               <ul className="mt-2 ml-4">
-                {filteredPosts.map(post => (
+                {filteredPosts.map((post) => (
                   <li
                     key={post.id}
                     className="text-gray-600 hover:text-gray-800 cursor-pointer"
                     // onClick={() => onPostSelect(post.id)}
                     onClick={() => navigate(`/posts/${post.id}`)}
-                    style={{ fontFamily: 'VT323' }}
+                    style={{ fontFamily: "VT323" }}
                   >
                     {post.title}
                   </li>

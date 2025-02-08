@@ -1,21 +1,21 @@
-import React from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Image from '@tiptap/extension-image';
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Post from '../types';
-import DOMPurify from 'dompurify';
-import { apiUrl } from '../assets/env-var';
+import React from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Post from "../types";
+import DOMPurify from "dompurify";
+import { apiUrl } from "../assets/env-var";
 
 const CreatePost: React.FC = () => {
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    tags: '',
-    image: '',
-    type: '',
-    visibility: 'public',
+    title: "",
+    content: "",
+    tags: "",
+    image: "",
+    type: "",
+    visibility: "public",
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -34,7 +34,7 @@ const CreatePost: React.FC = () => {
     ],
     content: formData.content,
     onUpdate: ({ editor }) => {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         content: editor.getHTML(),
       }));
@@ -45,27 +45,29 @@ const CreatePost: React.FC = () => {
     setIsUploading(true);
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
-      const response = await fetch(apiUrl + 'upload/image', {
-        method: 'POST',
+      const response = await fetch(apiUrl + "/upload/image", {
+        method: "POST",
         body: formData,
-        credentials: 'include',
+        credentials: "include",
         headers: {
-          'Accept': 'application/json',
+          Accept: "application/json",
         },
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Image upload failed');
+        throw new Error(errorData.message || "Image upload failed");
       }
 
       const result = await response.json();
       return result.url;
     } catch (error) {
-      console.error('Upload error:', error);
-      setErrorMessage(error instanceof Error ? error.message : 'Image upload failed');
+      console.error("Upload error:", error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Image upload failed",
+      );
       throw error;
     } finally {
       setIsUploading(false);
@@ -81,19 +83,23 @@ const CreatePost: React.FC = () => {
     const file = e.target.files?.[0];
     if (file && editor) {
       try {
-        if (!file.type.startsWith('image/')) {
-          throw new Error('Only image files are allowed (JPEG, PNG, GIF)');
+        if (!file.type.startsWith("image/")) {
+          throw new Error("Only image files are allowed (JPEG, PNG, GIF)");
         }
 
         const url = await handleImageUpload(file);
         editor.chain().focus().setImage({ src: url }).run();
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'Failed to insert image');
+        setErrorMessage(
+          error instanceof Error ? error.message : "Failed to insert image",
+        );
       }
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -109,30 +115,34 @@ const CreatePost: React.FC = () => {
     const post: Partial<Post> = {
       title: formData.title,
       content: formData.content,
-      tags: formData.tags.split(',').map((tag) => tag.trim()),
+      tags: formData.tags.split(",").map((tag) => tag.trim()),
       image: formData.image,
       type: formData.type,
-      visibility: formData.visibility === 'public' ? 'public' : 'private',
+      visibility: formData.visibility === "public" ? "public" : "private",
     };
 
     try {
-      const response = await fetch(apiUrl + 'posts', {
-        method: 'POST',
+      const response = await fetch(apiUrl + "/posts", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(post),
-        credentials: 'include',
+        credentials: "include",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || `Failed to create post: ${response.statusText}`);
+        throw new Error(
+          errorData.message || `Failed to create post: ${response.statusText}`,
+        );
       }
 
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to create post');
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to create post",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -140,7 +150,7 @@ const CreatePost: React.FC = () => {
 
   const createMarkup = (html: string) => {
     return {
-      __html: DOMPurify.sanitize(html)
+      __html: DOMPurify.sanitize(html),
     };
   };
 
@@ -149,9 +159,25 @@ const CreatePost: React.FC = () => {
       {isUploading && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-700 p-4 rounded-lg flex items-center gap-2">
-            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
             </svg>
             <span>Uploading image...</span>
           </div>
@@ -190,9 +216,7 @@ const CreatePost: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Content
-              </label>
+              <label className="block text-sm font-medium mb-1">Content</label>
               <div className="bg-gray-600 rounded-lg p-4 min-h-[300px]">
                 {editor && (
                   <div className="flex gap-2 mb-2 flex-wrap">
@@ -200,16 +224,20 @@ const CreatePost: React.FC = () => {
                       type="button"
                       onClick={() => editor.chain().focus().toggleBold().run()}
                       className={`p-2 rounded ${
-                        editor.isActive('bold') ? 'bg-blue-500' : 'bg-gray-500'
+                        editor.isActive("bold") ? "bg-blue-500" : "bg-gray-500"
                       }`}
                     >
                       Bold
                     </button>
                     <button
                       type="button"
-                      onClick={() => editor.chain().focus().toggleItalic().run()}
+                      onClick={() =>
+                        editor.chain().focus().toggleItalic().run()
+                      }
                       className={`p-2 rounded ${
-                        editor.isActive('italic') ? 'bg-blue-500' : 'bg-gray-500'
+                        editor.isActive("italic")
+                          ? "bg-blue-500"
+                          : "bg-gray-500"
                       }`}
                     >
                       Italic
@@ -271,7 +299,10 @@ const CreatePost: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="visibility" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="visibility"
+                className="block text-sm font-medium mb-1"
+              >
                 Visibility
               </label>
               <select
@@ -290,7 +321,7 @@ const CreatePost: React.FC = () => {
               className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50"
               disabled={isSubmitting || isUploading}
             >
-              {isSubmitting ? 'Submitting...' : 'Create Post'}
+              {isSubmitting ? "Submitting..." : "Create Post"}
             </button>
           </form>
 
@@ -305,12 +336,14 @@ const CreatePost: React.FC = () => {
                   alt="Post preview"
                   className="w-full h-48 object-cover rounded-lg mb-4"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
+                    (e.target as HTMLImageElement).style.display = "none";
                   }}
                 />
               )}
 
-              <h2 className="text-2xl font-bold text-white">{formData.title}</h2>
+              <h2 className="text-2xl font-bold text-white">
+                {formData.title}
+              </h2>
 
               <div
                 className="text-gray-300 preview-content prose prose-invert"
@@ -319,9 +352,10 @@ const CreatePost: React.FC = () => {
 
               {formData.tags && (
                 <div className="flex flex-wrap gap-2">
-                  {formData.tags.split(',')
-                    .map(tag => tag.trim())
-                    .filter(tag => tag)
+                  {formData.tags
+                    .split(",")
+                    .map((tag) => tag.trim())
+                    .filter((tag) => tag)
                     .map((tag, index) => (
                       <span
                         key={index}

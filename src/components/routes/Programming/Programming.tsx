@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import ProgrammingSidebar from './ProgrammingSidebar';
-import PostDetail from '../../PostDetail';
-import NavBar from '../../NavBar';
-import Post from '../../../types';
-import { Link, Outlet } from 'react-router-dom';
-import { apiUrl } from '../../../assets/env-var';
+import React, { useEffect, useState } from "react";
+import ProgrammingSidebar from "./ProgrammingSidebar";
+import PostDetail from "../../PostDetail";
+import NavBar from "../../NavBar";
+import Post from "../../../types";
+import { Link, Outlet } from "react-router-dom";
+import { apiUrl } from "../../../assets/env-var";
 
 const Programming: React.FC = () => {
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
@@ -14,8 +14,8 @@ const Programming: React.FC = () => {
   const [mobilePosts, setMobilePosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleResize = () => {
@@ -25,14 +25,14 @@ const Programming: React.FC = () => {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const response = await fetch(apiUrl + 'posts/tag/programming/latest');
+        const response = await fetch(apiUrl + "/posts/tag/programming/latest");
         console.log(response);
         const data = await response.json();
         console.table(data);
 
         setLatestPosts(data);
       } catch (error) {
-        console.error('Error fetching latest posts:', error);
+        console.error("Error fetching latest posts:", error);
       }
     };
 
@@ -42,21 +42,21 @@ const Programming: React.FC = () => {
   useEffect(() => {
     const fetchMobilePosts = async () => {
       try {
-        const response = await fetch(apiUrl + 'posts/tag/programming/');
+        const response = await fetch(apiUrl + "/posts/tag/programming/");
         console.log(response);
         const data = await response.json();
 
         const programmingPosts = data
-          .filter((post: any) => post.tags?.includes('programming'))
+          .filter((post: any) => post.tags?.includes("programming"))
           .map((post: any) => ({
             id: post.id.toString(),
             title: post.title,
-            tags: post.tags
+            tags: post.tags,
           }));
 
         setMobilePosts(programmingPosts);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);
       }
@@ -65,10 +65,9 @@ const Programming: React.FC = () => {
   }, []);
 
   useEffect(() => {
-
-    document.documentElement.style.backgroundColor = 'white';
+    document.documentElement.style.backgroundColor = "white";
     return () => {
-      document.documentElement.style.backgroundColor = 'black';
+      document.documentElement.style.backgroundColor = "black";
     };
   }, []);
 
@@ -78,13 +77,12 @@ const Programming: React.FC = () => {
 
   return (
     <>
-      <div className='gopher'>
+      <div className="gopher">
         <NavBar />
         <div className="flex h-screen">
           {!isMobile && <ProgrammingSidebar onPostSelect={setSelectedPostId} />}
 
           <div className="flex-1 p-8 overflow-y-auto">
-
             {/* Show default content only when no post is selected */}
             {!selectedPostId && (
               <div className="p-8">
@@ -92,12 +90,12 @@ const Programming: React.FC = () => {
                 <p>printf("And folks, let’s be honest...") – Al viro</p>
                 <p className="text-xl">Recent posts</p>
                 <ul className="list-disc pl-5 mt-4">
-                  {latestPosts.map(post => (
+                  {latestPosts.map((post) => (
                     <li key={post.id}>
                       <Link
                         to={`/posts/${post.id}`}
                         className="text-blue-600 hover:underline"
-                        style={{ fontFamily: 'VT323' }}
+                        style={{ fontFamily: "VT323" }}
                         onClick={() => setSelectedPostId(post.id.toString())}
                       >
                         {post.title}
@@ -106,22 +104,26 @@ const Programming: React.FC = () => {
                   ))}
                 </ul>
 
-                <p className='text-xl'>All posts</p>
-                <div className='bg-black text-white border-1 border-white mt-2 pb-2'
-                >
-                  <div className='flex flex-col ml-2 text-emerald-400' style={{ fontFamily: 'VT323' }}>
-                    <div className='flex flex-row'>
+                <p className="text-xl">All posts</p>
+                <div className="bg-black text-white border-1 border-white mt-2 pb-2">
+                  <div
+                    className="flex flex-col ml-2 text-emerald-400"
+                    style={{ fontFamily: "VT323" }}
+                  >
+                    <div className="flex flex-row">
                       <p>body@velavelucci:~$</p>
-                      <p className='ml-2 text-white'>ls -lha posts</p>
+                      <p className="ml-2 text-white">ls -lha posts</p>
                     </div>
                     <ul>
-                      {mobilePosts.map(post => (
+                      {mobilePosts.map((post) => (
                         <li key={post.id}>
                           <Link
                             to={`/posts/${post.id}`}
                             className="text-blue-600 hover:underline"
-                            style={{ fontFamily: 'VT323' }}
-                            onClick={() => setSelectedPostId(post.id.toString())}
+                            style={{ fontFamily: "VT323" }}
+                            onClick={() =>
+                              setSelectedPostId(post.id.toString())
+                            }
                           >
                             {post.title}
                           </Link>
@@ -131,7 +133,6 @@ const Programming: React.FC = () => {
                   </div>
                 </div>
               </div>
-
             )}
           </div>
         </div>

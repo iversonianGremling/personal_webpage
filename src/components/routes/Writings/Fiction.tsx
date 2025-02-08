@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import '../../../assets/styles/fiction.css';
-import NavBar from '../../NavBar';
-import PostCard from '../../PostCard';
-import { useNavigate } from 'react-router-dom';
-import { apiUrl } from '../../../assets/env-var';
-import insideBrainImage from '../../../assets/images/inside_brain.webp';
+import React, { useEffect, useState } from "react";
+import "../../../assets/styles/fiction.css";
+import NavBar from "../../NavBar";
+import PostCard from "../../PostCard";
+import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../../../assets/env-var";
+import insideBrainImage from "../../../assets/images/inside_brain.webp";
 
 type Post = {
   id: number;
@@ -23,13 +23,13 @@ const Fiction: React.FC = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 720);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/fiction');
+      const response = await fetch(apiUrl + "/posts/tag/fiction");
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -39,19 +39,19 @@ const Fiction: React.FC = () => {
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <div className="container-fiction">
         <img
           src={insideBrainImage}
           alt="fiction"
           className="image-fiction"
           style={{
-            position: 'fixed',
+            position: "fixed",
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
             zIndex: -1,
           }}
         />
@@ -59,25 +59,27 @@ const Fiction: React.FC = () => {
           onClick={() => navigate(-1)}
           className="back-button-fiction"
           style={{
-            position: 'fixed',
-            top: '90px',
-            left: '15px',
+            position: "fixed",
+            top: "90px",
+            left: "15px",
           }}
         >
-          {Array.from('Return  to  my  body').map((char, index) => {
-            if (char === ' ') {
+          {Array.from("Return  to  my  body").map((char, index) => {
+            if (char === " ") {
               return <span key={index}>&nbsp;</span>;
             } else {
               return (
                 <span
                   key={index}
                   className="wobble-letter"
-                  style={{
-                    '--char-index': index,
-                    '--random-x': Math.random() * 0.5 + 1,
-                    '--random-y': Math.random() * 0.5 + 1,
-                    '--random-duration': `${Math.random() * 1 + 1}s`,
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      "--char-index": index,
+                      "--random-x": Math.random() * 0.5 + 1,
+                      "--random-y": Math.random() * 0.5 + 1,
+                      "--random-duration": `${Math.random() * 1 + 1}s`,
+                    } as React.CSSProperties
+                  }
                 >
                   {char}
                 </span>
@@ -86,22 +88,21 @@ const Fiction: React.FC = () => {
           })}
         </button>
 
-
-        <div className={`${isMobile ? 'text-7xl' : 'text-9xl'} header-fiction`}>
-
-          {Array.from('FICTION').map((char, index) => {
+        <div className={`${isMobile ? "text-7xl" : "text-9xl"} header-fiction`}>
+          {Array.from("FICTION").map((char, index) => {
             return (
               <span
                 key={index}
                 className="wobble-letter"
-
-                style={{
-                  fontFamily: 'Lithops, sans-serif',
-                  '--char-index': index,
-                  '--random-x': Math.random() * 2 + 1,
-                  '--random-y': Math.random() * 2 + 1,
-                  '--random-duration': `${Math.random() * 1 + 1}s`,
-                } as React.CSSProperties}
+                style={
+                  {
+                    fontFamily: "Lithops, sans-serif",
+                    "--char-index": index,
+                    "--random-x": Math.random() * 2 + 1,
+                    "--random-y": Math.random() * 2 + 1,
+                    "--random-duration": `${Math.random() * 1 + 1}s`,
+                  } as React.CSSProperties
+                }
               >
                 {char}
               </span>
@@ -123,7 +124,6 @@ const Fiction: React.FC = () => {
           ))}
         </div>
       </div>
-
     </>
   );
 };
