@@ -46,32 +46,41 @@ const CreatePost: React.FC = () => {
 
   const handleImageUpload = async (file: File) => {
     setIsUploading(true);
+    setErrorMessage('');
+
     try {
+    // Validate file before upload
+      if (!file.type.startsWith('image/')) {
+        throw new Error('Only image files are allowed');
+      }
+
       const formData = new FormData();
       formData.append('file', file);
 
       const response = await fetch(apiUrl + '/upload/image', {
         method: 'POST',
         body: formData,
-        credentials: 'include',
+        credentials: 'include', // For cookies/auth
+        // Let browser set Content-Type automatically
         headers: {
           Accept: 'application/json',
+        // Add CSRF token if needed:
+        // 'X-CSRF-TOKEN': getCsrfTokenFromCookie()
         },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Image upload failed');
+        throw new Error(data.message || `Upload failed (HTTP ${response.status})`);
       }
 
-      const result = await response.json();
-      return result.url;
+      return data.url;
     } catch (error) {
       console.error('Upload error:', error);
-      setErrorMessage(
-        error instanceof Error ? error.message : 'Image upload failed',
-      );
-      throw error;
+      const message = error instanceof Error ? error.message : 'Upload failed';
+      setErrorMessage(message);
+      throw error; // Re-throw for calling code
     } finally {
       setIsUploading(false);
     }
@@ -151,9 +160,6 @@ const CreatePost: React.FC = () => {
     }
   };
 
-  const handleContentTypeChange = () => {
-    setContentType(contentType === 'Text' ? 'HTML' : 'Text');
-  };
 
   const createMarkup = (html: string) => {
     return {
