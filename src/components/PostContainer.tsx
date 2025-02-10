@@ -41,9 +41,6 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         scrollVelocity = 0;
       }
     };
-
-
-
     const animateScroll = () => {
       if (!containerRef.current || !isScrolling) return;
 
