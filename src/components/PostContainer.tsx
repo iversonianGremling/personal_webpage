@@ -22,12 +22,15 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
   });
 
   useEffect(() => {
+
+    if (isMobile) return;
     let scrollVelocity = 0;
     let isScrolling = true;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
 
+      console.log(`Mouse Y: ${e.clientY}`);
       const rect = containerRef.current.getBoundingClientRect();
       const mouseY = e.clientY - rect.top;
       const containerHeight = rect.height;
@@ -43,7 +46,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
     };
     const animateScroll = () => {
       if (!containerRef.current || !isScrolling) return;
-
+      console.log(`Scroll velocity: ${scrollVelocity}`);
       containerRef.current.scrollBy({
         top: scrollVelocity * 10,
         behavior: 'auto'
@@ -62,7 +65,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
       }
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isMobile]);
 
   const handleResize = () => {
     const mobile = window.innerWidth < 720;
