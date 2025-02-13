@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import Post from "../types";
-import DOMPurify from "dompurify";
-import NavBar from "./NavBar";
-import Programming from "./routes/Programming/Programming";
-import { apiUrl } from "../assets/env-var";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import Post from '../types';
+import DOMPurify from 'dompurify';
+import NavBar from './NavBar';
+import Programming from './routes/Programming/Programming';
+import { apiUrl } from '../assets/env-var';
 
 interface PostDetailProps {
-  variant?: "programming" | "thoughts" | "gaming" | "pink" | "article";
+  variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
 }
 const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
   const { id } = useParams<{ id: string }>();
@@ -21,15 +21,16 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 720);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   });
 
   useEffect(() => {
+    console.log('History length: ', window.history.length);
     const fetchPost = async () => {
       try {
         const response = await fetch(apiUrl + `/posts/${Number(id)}`);
-        if (!response.ok) throw new Error("Post not found");
+        if (!response.ok) throw new Error('Post not found');
         const data = await response.json();
         setPost(data);
       } catch (err) {
@@ -45,8 +46,8 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
   const createMarkup = (html: string) => {
     return {
       __html: DOMPurify.sanitize(html, {
-        ADD_TAGS: ["iframe"], // Allow iframes if needed
-        ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],
+        ADD_TAGS: ['iframe'], // Allow iframes if needed
+        ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
       }),
     };
   };
@@ -54,13 +55,13 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
       }).format(date);
     } catch (error) {
-      return "Invalid date";
+      return 'Invalid date';
     }
   };
 
@@ -81,16 +82,16 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
 
   return (
     <div className="">
-      {variant !== "programming" && <NavBar />}
+      {variant !== 'programming' && <NavBar />}
       <div className="flex flex-row">
         <button
-          onClick={() => navigate(-1)}
-          className={`bg-violet-950 text-white ${isMobile ? "m-2" : "m-6"} p-6 hover:bg-red-600 transition-colors duration-300`}
+          onClick={() => window.history.length > 2 ? navigate(-1) : navigate('/')}
+          className={`bg-violet-950 text-white ${isMobile ? 'm-2' : 'm-6'} p-6 hover:bg-red-600 transition-colors duration-300`}
         >
           Back
         </button>
         <h1
-          className={`${isMobile ? "text-4xl mr-4" : "text-6xl"} font-bold mb-2 text-center content-center text-white`}
+          className={`${isMobile ? 'text-4xl mr-4' : 'text-6xl'} font-bold mb-2 text-center content-center text-white`}
         >
           {post.title}
         </h1>
@@ -126,7 +127,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
               className="my-6 w-full h-64 object-cover rounded-lg"
               loading="lazy"
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+                (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
           )}

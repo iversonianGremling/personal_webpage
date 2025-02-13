@@ -22,7 +22,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
   });
 
   useEffect(() => {
-
+    if (true) return;
     if (isMobile) return;
     let scrollVelocity = 0;
     let isScrolling = true;
@@ -79,7 +79,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         overflowY: 'auto',
         scrollBehavior: 'smooth',
         position: 'relative',
-        scrollbarWidth: 'none',
+        scrollbarWidth: 'auto',
         msOverflowStyle: 'none',
         marginTop: isMobile ? '8rem' : ''
       }}
