@@ -103,7 +103,7 @@ const PostCard: React.FC<Props> = ({
 
   // Title classes
   const titleClasses = clsx({
-    'default': isMobile ? 'text-xl' : 'text3xl' + 'font-semibold mb-2',
+    'default': isMobile ? 'text-xl' : 'text3xl' + 'font-bold mb-2',
     'latest': 'text-2xl font-bold',
     'pink': 'text-2xl font-bold text-shadow-[2px_2px_#ff00ff]',
     'fiction': 'text-xl',

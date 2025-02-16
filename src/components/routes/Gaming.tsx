@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "../NavBar";
-import "../../assets/styles/flicker.css";
-import Post from "../../types";
-import { apiUrl } from "../../assets/env-var";
+import React, { useEffect, useState } from 'react';
+import NavBar from '../NavBar';
+import '../../assets/styles/flicker.css';
+import Post from '../../types';
+import { apiUrl } from '../../assets/env-var';
 
 const GamingPage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + "/posts/tag/gaming");
+      const response = await fetch(apiUrl + '/posts/tag/videogames');
       const data = await response.json();
       console.log(data);
-      setPosts(data);
+      setPosts(data.reverse());
     };
     fetchPosts();
   }, []);
@@ -24,32 +24,32 @@ const GamingPage: React.FC = () => {
 
   const handleConsoleClick = (consoleName: string) => {
     switch (consoleName) {
-      case "Atari 2600":
+      case 'Atari 2600':
         alert(
-          "People used to take LSD while making my games. Also I invented the concept of having contracts with companies so they couldn't be developed by other companies, you are welcome blyaaaaaaaat! 🎮",
+          'People used to take LSD while making my games. Also I invented the concept of having contracts with companies so they couldn\'t be developed by other companies, you are welcome blyaaaaaaaat! 🎮',
         );
         break;
-      case "PC":
+      case 'PC':
         alert(
-          "You either get a 4090GTX for playing marvel rivals in 4k in 3 monitors in ultra at 1000fps or you are using it for mining bitcoins, either way, gaming and gambling addicts found the same piece of hardware as a useful way for feeding their addiction 🎮",
+          'You either get a 4090GTX for playing marvel rivals in 4k in 3 monitors in ultra at 1000fps or you are using it for mining bitcoins, either way, gaming and gambling addicts found the same piece of hardware as a useful way for feeding their addiction 🎮',
         );
         break;
-      case "Nintendo":
+      case 'Nintendo':
         alert(
-          "Yeah, I love treating my employees like shit while making games for children, btw in Zelda II Link recovered health when sleeping with prostitutes?? 🎮",
+          'Yeah, I love treating my employees like shit while making games for children, btw in Zelda II Link recovered health when sleeping with prostitutes?? 🎮',
         );
         break;
-      case "Sega":
+      case 'Sega':
         alert(
-          "Does what nintendon't, aka, the mascot of autistic people all over the world 🎮",
+          'Does what nintendon\'t, aka, the mascot of autistic people all over the world 🎮',
         );
         break;
-      case "Chess":
-        alert("Chess is the dark souls of colonoscopies");
+      case 'Chess':
+        alert('Chess is the dark souls of colonoscopies');
         break;
-      case "Bondage":
+      case 'Bondage':
         alert(
-          "As much as bed gaming is a fun topic this is a serious website and here, we separate stuff properly, this part is not for *that* kind of games, please, refer yourself to the sexuality section, this section is EXCLUSIVELY for epic games 🎮",
+          'As much as bed gaming is a fun topic this is a serious website and here, we separate stuff properly, this part is not for *that* kind of games, please, refer yourself to the sexuality section, this section is EXCLUSIVELY for epic games 🎮',
         );
         break;
       default:
@@ -65,23 +65,23 @@ const GamingPage: React.FC = () => {
         style={{
           backgroundImage:
             'url("https://www.webdesignmuseum.org/uploaded/fullscreen/2002/sega-2002.png")',
-          backgroundSize: "cover",
-          backgroundAttachment: "fixed",
-          color: "#00ff00",
-          fontFamily: "Comic Sans MS, cursive, sans-serif",
-          textShadow: "2px 2px #ff0000",
+          backgroundSize: 'cover',
+          backgroundAttachment: 'fixed',
+          color: '#00ff00',
+          fontFamily: 'Comic Sans MS, cursive, sans-serif',
+          textShadow: '2px 2px #ff0000',
         }}
       >
         <h1
           className="text-6xl font-bold text-center mb-8 animate-pulse"
-          style={{ border: "5px solid yellow", padding: "10px" }}
+          style={{ border: '5px solid yellow', padding: '10px' }}
         >
           Welcome to the Ultimate Gaming Zone
         </h1>
 
         {/* Fake Console Navbar */}
         <div className="flex justify-center gap-8 mb-12">
-          {["PC", "Nintendo", "Sega", "Chess", "Atari 2600", "Bondage"].map(
+          {['PC', 'Nintendo', 'Sega', 'Chess', 'Atari 2600', 'Bondage'].map(
             (console) => (
               <button
                 key={console}
@@ -99,7 +99,7 @@ const GamingPage: React.FC = () => {
           // direction="left"
           // scrollamount="10"
           className="text-4xl font-bold mb-8"
-          style={{ color: "#ff00ff" }}
+          style={{ color: '#ff00ff' }}
         >
           🎮LUDONARRATIVE DOESN'T EXIST🎮
         </div>
@@ -112,7 +112,7 @@ const GamingPage: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="px-4 py-2 text-2xl border-4 border-green-500 bg-black text-green-300 placeholder-yellow-400 focus:outline-none"
-            style={{ width: "80%" }}
+            style={{ width: '80%' }}
           />
         </div>
 
@@ -120,7 +120,7 @@ const GamingPage: React.FC = () => {
         <div className="text-center mb-12">
           <h2
             className="text-5xl font-extrabold mb-4 underline flicker-effect"
-            style={{ color: "#ff6600" }}
+            style={{ color: '#ff6600' }}
           >
             Recent Posts
           </h2>
@@ -130,9 +130,9 @@ const GamingPage: React.FC = () => {
                 <li
                   key={post.id}
                   className="hover:text-red-500"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: 'pointer' }}
                 >
-                  <a href={`/posts/${post.id}`} style={{ color: "#00ff00" }}>
+                  <a href={`/posts/${post.id}`} style={{ color: '#00ff00' }}>
                     {post.title}
                   </a>
                 </li>
@@ -161,7 +161,7 @@ const GamingPage: React.FC = () => {
           </div>
           <div
             className="border-4 border-green-500 p-4 bg-pink-300 max-w-80"
-            style={{ maxHeight: "19rem" }}
+            style={{ maxHeight: '19rem' }}
           >
             <p className="mt-2 text-center text-xl">
               "SHOOT ME IN THE FACE! IN THE FAAAAAAAACE! DO IT! SHOOT ME IN THE
@@ -187,10 +187,10 @@ const GamingPage: React.FC = () => {
         <div
           className="text-center text-2xl font-bold"
           style={{
-            backgroundColor: "#0000ff",
-            color: "#00ff00",
-            padding: "10px",
-            border: "5px dashed #ff00ff",
+            backgroundColor: '#0000ff',
+            color: '#00ff00',
+            padding: '10px',
+            border: '5px dashed #ff00ff',
           }}
         >
           © 2000 GamingZone. All Rights Reserved. Soundtrack of the webpage
