@@ -132,7 +132,7 @@ function NavBar() {
         {/* Categories Dropdown */}
         <li className="relative py-4" onClick={handleCategoriesClick}>
           <button className={`cursor-pointer hover:text-gray-300 transition-colors ${isMobile ? 'ml-4' : ''}`}>
-    Categories
+            Topics
           </button>
           {isMobile ? (
             <div className='pl-8 max-h-[60vh] overflow-y-auto'>

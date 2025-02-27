@@ -31,6 +31,10 @@ import AboutThisPage from './components/AboutThisPage';
 import Thoughts from './components/routes/Thoughts';
 import AboutPage from './components/routes/AboutPage';
 import { apiUrl } from './assets/env-var';
+import ReviewsPage from './components/routes/Reviews';
+import ReviewDetails from './components/routes/ReviewPage';
+import ReviewPage from './components/routes/ReviewPage';
+import RecommendationsPage from './components/routes/RecommendationsPage';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -298,6 +302,9 @@ function App() {
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/thoughts" element={<Thoughts />} />
         <Route path="/tag/:tag" element={<TagDetail />} />
+        <Route path="/reviews" element={<ReviewsPage/>} />
+        <Route path="/reviews/:tag" element={<ReviewPage/>} />
+        <Route path="/recommendations" element={<RecommendationsPage/>} />
       </Routes>
     </div>
   );

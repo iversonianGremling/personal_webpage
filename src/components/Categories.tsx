@@ -9,6 +9,7 @@ import articlesIcon from '../assets/icons/articles.svg';
 import intersectionalityIcon from '../assets/icons/intersectionality.svg';
 import programmingIcon from '../assets/icons/programming.svg';
 import thoughtsIcon from '../assets/icons/thoughts.svg';
+import reviewsIcon from '../assets/icons/reviews.svg';
 
 
 
@@ -30,7 +31,8 @@ const Categories = () => {
     { to: '/articles', imgSrc: articlesIcon, alt: 'Articles', label: 'Articles' },
     { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: 'Politics', label: 'Politics' },
     { to: '/programming', imgSrc: programmingIcon, alt: 'Programming', label: 'Programming' },
-    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' }
+    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' },
+    { to: '/reviews', imgSrc: reviewsIcon, alt: 'Reviews', label: 'Reviews' }
   ];
 
 
