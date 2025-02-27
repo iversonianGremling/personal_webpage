@@ -328,6 +328,7 @@ const CreatePost: React.FC = () => {
               >
                 <option value="blog">Blog</option>
                 <option value="thought">Thought</option>
+                <option value="recommendation">Recommendation</option>
               </select>
             </div>
 
