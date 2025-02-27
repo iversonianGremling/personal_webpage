@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Post from '../types';
 import '../assets/styles/recommendation-card.css';
-import { apiUrl } from '../assets/env-var';
 
 interface RecommendationCardProps {
   post: Post;
@@ -54,26 +52,26 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
 
   // Add this function in your component
   const getDescriptionStyle = () => {
-    // Start with a base style
-    const style = {
+  // Define the style with React.CSSProperties type
+    const style: React.CSSProperties = {
       margin: '0',
-      textAlign: 'center',
+      textAlign: 'center', // 'center' is a valid value for textAlign
       color: '#000',
       fontWeight: 'bold',
       overflow: 'hidden',
       display: '-webkit-box',
-      WebkitBoxOrient: 'vertical'
+      WebkitBoxOrient: 'vertical',
     };
 
-    // Add responsive font sizing based on content length
+    // Conditionally set fontSize
     if (description.length > 200) {
-      style.fontSize = '0.75rem'; // Very small
+      style.fontSize = '0.75rem';
     } else if (description.length > 150) {
-      style.fontSize = '0.825rem'; // Small
+      style.fontSize = '0.825rem';
     } else if (description.length > 100) {
-      style.fontSize = '1rem'; // Medium
+      style.fontSize = '1rem';
     } else {
-      style.fontSize = '1.2rem'; // Large
+      style.fontSize = '1.2rem';
     }
 
     return style;
