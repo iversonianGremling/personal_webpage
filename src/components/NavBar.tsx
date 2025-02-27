@@ -17,15 +17,14 @@ import intersectionalityIcon from '../assets/icons/intersectionality.svg';
 import programmingIcon from '../assets/icons/programming.svg';
 import thoughtsIcon from '../assets/icons/thoughts.svg';
 import githubIcon from '../assets/icons/github.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
 import instagramIcon from '../assets/icons/instagram.svg';
-import twitterIcon from '../assets/icons/twitter.svg';
 import youtubeIcon from '../assets/icons/youtube.svg';
 import bandcampIcon from '../assets/icons/bandcamp.svg';
 import soundcloudIcon from '../assets/icons/soundcloud.svg';
 import twitchIcon from '../assets/icons/twitch.svg';
 import mailIcon from '../assets/icons/mail.svg';
 import tiktokIcon from '../assets/icons/tiktok.svg';
+import reviewsIcon from '../assets/icons/reviews.svg';
 import SaladFingersText from './SaladFingers';
 
 function NavBar() {
@@ -44,12 +43,12 @@ function NavBar() {
     { to: '/articles', imgSrc: articlesIcon, alt: 'Articles', label: 'Articles' },
     { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: 'Politics', label: 'Politics' },
     { to: '/programming', imgSrc: programmingIcon, alt: 'Programming', label: 'Programming' },
-    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' }
+    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' },
+    { to: '/reviews', imgSrc: reviewsIcon, alt: 'Reviews', label: 'Reviews' }
   ];
 
   const socialMediaLinks = [
     { href: 'https://github.com/yourprofile', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
-    { href: 'https://linkedin.com/in/yourprofile', imgSrc: linkedinIcon, alt: 'LinkedIn', label: 'LinkedIn' },
     { href: 'mailto:your-email@example.com', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
     { href: 'https://instagram.com/yourprofile', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
     { href: 'https://tiktok.com/@yourprofile', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
