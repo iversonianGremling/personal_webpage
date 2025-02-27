@@ -14,7 +14,7 @@ const EditPost: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    tags: '',
+    tags: [],
     image: '',
     type: 'blog',
     visibility: 'public',
@@ -48,7 +48,7 @@ const EditPost: React.FC = () => {
         });
         setFormData({
           ...response.data,
-          tags: response.data.tags.join(', '),
+          tags: response.data.tags,
         });
         editor?.commands.setContent(response.data.content);
       } catch (error) {
@@ -330,7 +330,7 @@ const EditPost: React.FC = () => {
                 variant="article"
                 title={formData.title || ''}
                 content={formData.content || ''}
-                tags={(formData.tags || '').split(',')}
+                tags={(formData.tags as string[] || [])}
                 image={formData.image || ''}
                 date={new Date().toISOString()}
                 type={formData.type || 'blog'}
