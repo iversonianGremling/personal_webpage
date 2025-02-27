@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+
+import React, { useState, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar';
 import '../../assets/styles/move-image.css';
@@ -12,6 +12,13 @@ import opinionPicture from '../../assets/images/opinion.png';
 import programmingPicture from '../../assets/images/programming.png';
 import videogamesPicture from '../../assets/images/videogames.png';
 import artPicture from '../../assets/images/art.png';
+
+interface GridItemProps {
+  name: string;
+  textColor: string;
+  backgroundColor: string;
+  imageUrl: string;
+}
 
 // Sample black-and-white images
 const sampleImages = [
@@ -29,7 +36,7 @@ const sampleImages = [
 const categories = [
   { name: 'Music', textColor: '#72955A', backgroundColor: '#E78B21', imageUrl: sampleImages[0] },
   { name: 'Movies', textColor: '#FDFD00', backgroundColor: '#2C3CD0', imageUrl: sampleImages[1] },
-  { name: 'Videogames', textColor: '#894545', backgroundColor: '#8AD571',imageUrl: sampleImages[2] },
+  { name: 'Videogames', textColor: '#894545', backgroundColor: '#8AD571', imageUrl: sampleImages[2] },
   { name: 'Literature', textColor: '#D39797', backgroundColor: '#502F56', imageUrl: sampleImages[3] },
   { name: 'Non-fiction', textColor: '#763939', backgroundColor: '#CD74DD', imageUrl: sampleImages[4] },
   { name: 'Art', textColor: '#946DBD', backgroundColor: '#403D5A', imageUrl: sampleImages[5] },
@@ -37,10 +44,10 @@ const categories = [
   { name: 'Recommendations',  textColor: '#D374D6', backgroundColor: '#4B55B0', imageUrl: sampleImages[7] },
 ];
 
-const GridItem = ({ name, textColor, backgroundColor, imageUrl }) => {
+const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const containerStyle = {
+  const containerStyle: CSSProperties = {
     position: 'relative',
     overflow: 'hidden',
     backgroundColor: isHovered ? '#ffffff' : backgroundColor,
@@ -48,7 +55,7 @@ const GridItem = ({ name, textColor, backgroundColor, imageUrl }) => {
     transition: 'background-color 0.3s, color 0.3s',
   };
 
-  const linkStyle = {
+  const linkStyle: CSSProperties = {
     position: 'absolute',
     inset: 0,
     display: 'flex',
@@ -62,7 +69,7 @@ const GridItem = ({ name, textColor, backgroundColor, imageUrl }) => {
     color: 'inherit',
   };
 
-  const imageStyle = {
+  const imageStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -77,22 +84,26 @@ const GridItem = ({ name, textColor, backgroundColor, imageUrl }) => {
   return (
     <div
       className='linealVF-text'
-      style={{...containerStyle,
+      style={{
+        ...containerStyle,
         fontFamily: 'linealVF-text, sans-serif'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-
-      <Link className='linealVF-text' to={`${name === 'Recommendations' ? '/recommendations': '/reviews/'+name.toLowerCase() }`} style={linkStyle}>
-        <img src={imageUrl} alt={name} style={{...imageStyle}} />
+      <Link
+        className='linealVF-text'
+        to={`${name === 'Recommendations' ? '/recommendations' : '/reviews/' + name.toLowerCase()}`}
+        style={linkStyle}
+      >
+        <img src={imageUrl} alt={name} style={imageStyle} />
         {name.toUpperCase()}
       </Link>
     </div>
   );
 };
 
-const ReviewsPage = () => (
+const ReviewsPage: React.FC = () => (
   <div className="flex flex-col h-screen overflow-hidden">
     <NavBar />
     <div className="grid grid-cols-2 md:grid-cols-4 flex-1 min-h-0">
@@ -117,18 +128,17 @@ const ReviewsPage = () => (
         backgroundColor: 'black',
       }}
     >
-        Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
+      Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
       <a
         href="https://velvetyne.fr"
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: 'rgba(255, 200, 200, 0.9)' }}
       >
-          velvetyne.fr
+        velvetyne.fr
       </a>
-        .
+      .
     </footer>
-
   </div>
 );
 
