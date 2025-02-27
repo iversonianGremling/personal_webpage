@@ -11,7 +11,7 @@ interface ReviewCardProps {
 const ReviewCard: React.FC<ReviewCardProps> = ({ post }) => {
   return (
     <div className="review-card karrik-regular-text">
-      <Link to={`/post/${post.id}`}>
+      <Link to={`/posts/${post.id}`}>
         <h2 className="title bold text-3xl">{post.title}</h2>
         <p className="content line-clamp-5 " dangerouslySetInnerHTML={{ __html: post.content }}
           style={{
