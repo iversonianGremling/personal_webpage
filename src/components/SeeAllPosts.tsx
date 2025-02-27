@@ -125,21 +125,6 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
               <h2 className="text-2xl font-bold mb-2 hover:text-red-600">{post.title}</h2>
             </Link>
             <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
-            <p
-              className="mb-4 line-clamp-5"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            ></p>
-            <p className="mb-4">
-              <strong>Tags:</strong> {post.tags.join(', ')}
-            </p>
-            <p className="mb-4">
-              <strong>Type:</strong> {post.type}
-            </p>
-            {admin && (
-              <p className="mb-4">
-                <strong>Visibility:</strong> {post.visibility}
-              </p>
-            )}
             <button
               onClick={() => handleEdit(post.id)}
               className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
@@ -156,6 +141,22 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
               {' '}
                 ↑ Are you free?
             </div>
+            <p
+              className="mb-4 line-clamp-5"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            ></p>
+            <p className="mb-4">
+              <strong>Tags:</strong> {post.tags.join(', ')}
+            </p>
+            <p className="mb-4">
+              <strong>Type:</strong> {post.type}
+            </p>
+            {admin && (
+              <p className="mb-4">
+                <strong>Visibility:</strong> {post.visibility}
+              </p>
+            )}
+
           </div>
         ))}
       </div>
