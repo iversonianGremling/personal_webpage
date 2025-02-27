@@ -114,19 +114,20 @@ const EditPost: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      await axios.put(`${apiUrl}/posts/${id}`, {
-        ...formData,
-        tags: formData.tags?.split(',').map(t => t.trim()),
-      }, {
-        withCredentials: true,
+      const response = await fetch(apiUrl + `/posts/${id}`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+        credentials: 'include',
       });
 
-      navigate('/posts/admin');
+      if (!response.ok) {
+        throw new Error('Failed to update post');
+      }
+
+      navigate('/posts/admin'); // Redirect to all posts page
     } catch (error) {
-      setErrorMessage(axios.isAxiosError(error)
-        ? error.response?.data?.message || 'Update failed'
-        : 'Update failed');
+      setErrorMessage((error as Error).message);
     } finally {
       setIsSubmitting(false);
     }
