@@ -35,6 +35,7 @@ import ReviewsPage from './components/routes/Reviews';
 import ReviewDetails from './components/routes/ReviewPage';
 import ReviewPage from './components/routes/ReviewPage';
 import RecommendationsPage from './components/routes/RecommendationsPage';
+import CreateThought from './components/CreateThought';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -171,6 +172,14 @@ function App() {
               <div className="flex flex-row justify-center gap-52">
                 {isAdmin && (
                   <div className="fixed bottom-10 right-10 space-y-4">
+                    <button onClick={() => navigate('/create-thought')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >Create Thought
+                    </button>
+                    <button onClick={() => navigate('/create-recommendation')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >Create Recommendation
+                    </button>
                     <button
                       onClick={() => navigate('/create-post')}
                       className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
@@ -192,6 +201,8 @@ function App() {
         />
         {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
         <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/create-thought" element={<CreateThought/>} />
+        {/* <Route path="/create-recommendation" element={<CreateRecommendation />} /> */}
         <Route path="/posts/admin" element={<SeeAllPosts admin={true} />} />
         <Route path="/posts/" element={<SeeAllPosts admin={false} />} />
         <Route path="/edit-post/:id" element={<EditPost />} />

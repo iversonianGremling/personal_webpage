@@ -10,6 +10,7 @@ import soundcloudIcon from '../assets/icons/soundcloud.svg';
 import twitchIcon from '../assets/icons/twitch.svg';
 import mailIcon from '../assets/icons/mail.svg';
 import tiktokIcon from '../assets/icons/tiktok.svg';
+import blueskyIcon from '../assets/icons/bluesky.svg';
 
 const About = () => {
   const radius = 120; // Radius of the circle
@@ -30,6 +31,7 @@ const About = () => {
     { href: 'https://velavelucci.bandcamp.com/', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
     { href: 'https://soundcloud.com/vela-velucci', imgSrc: soundcloudIcon, alt: 'SoundCloud', label: 'SoundCloud' },
     { href: 'https://www.twitch.tv/velavelucci', imgSrc: twitchIcon, alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://bsky.app/profile/velavelucci.bsky.social', imgSrc: blueskyIcon, alt: 'Bluesky', label: 'Bluesky' },
   ];
 
   useEffect(() => {

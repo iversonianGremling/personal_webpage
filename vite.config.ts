@@ -15,6 +15,7 @@ export default defineConfig({
         secure: true, // Add if targeting HTTPS in development
       },
     },
+    cors: true,
   },
   build: {
     rollupOptions: {

@@ -25,6 +25,7 @@ import twitchIcon from '../assets/icons/twitch.svg';
 import mailIcon from '../assets/icons/mail.svg';
 import tiktokIcon from '../assets/icons/tiktok.svg';
 import reviewsIcon from '../assets/icons/reviews.svg';
+import blueskyIcon from '../assets/icons/bluesky.svg';
 import SaladFingersText from './SaladFingers';
 
 function NavBar() {
@@ -48,15 +49,17 @@ function NavBar() {
   ];
 
   const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
-    { href: 'mailto:your-email@example.com', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
-    { href: 'https://tiktok.com/@yourprofile', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
-    { href: 'https://youtube.com/yourchannel', imgSrc: youtubeIcon, alt: 'YouTube', label: 'YouTube' },
-    { href: 'https://bandcamp.com/yourprofile', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
-    { href: 'https://soundcloud.com/yourprofile', imgSrc: soundcloudIcon, alt: 'SoundCloud', label: 'SoundCloud' },
-    { href: 'https://twitch.tv/yourprofile', imgSrc: twitchIcon, alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://github.com/iversonianGremling', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
+    { href: 'mailto:velavelucci@proton.me', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
+    { href: 'https://instagram.com/velavelucci', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
+    { href: 'https://www.tiktok.com/@velavelucci?lang=en', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
+    { href: 'https://www.youtube.com/@VelaVelucci', imgSrc: youtubeIcon, alt: 'YouTube', label: 'YouTube' },
+    { href: 'https://velavelucci.bandcamp.com/', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
+    { href: 'https://soundcloud.com/vela-velucci', imgSrc: soundcloudIcon, alt: 'SoundCloud', label: 'SoundCloud' },
+    { href: 'https://www.twitch.tv/velavelucci', imgSrc: twitchIcon, alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://bsky.app/profile/velavelucci.bsky.social', imgSrc: blueskyIcon, alt: 'Bluesky', label: 'Bluesky' },
   ];
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
