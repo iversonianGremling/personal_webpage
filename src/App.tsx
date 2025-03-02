@@ -36,6 +36,7 @@ import ReviewDetails from './components/routes/ReviewPage';
 import ReviewPage from './components/routes/ReviewPage';
 import RecommendationsPage from './components/routes/RecommendationsPage';
 import CreateThought from './components/CreateThought';
+import CreateRecommendation from './components/CreateRecommendation';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -202,7 +203,7 @@ function App() {
         {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/create-thought" element={<CreateThought/>} />
-        {/* <Route path="/create-recommendation" element={<CreateRecommendation />} /> */}
+        <Route path="/create-recommendation" element={<CreateRecommendation />} />
         <Route path="/posts/admin" element={<SeeAllPosts admin={true} />} />
         <Route path="/posts/" element={<SeeAllPosts admin={false} />} />
         <Route path="/edit-post/:id" element={<EditPost />} />
