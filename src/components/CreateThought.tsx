@@ -17,7 +17,7 @@ const CreatePost: React.FC = () => {
     content: '',
     tags: '',
     image: '',
-    type: '',
+    type: 'thought',
     visibility: 'public',
   });
 
