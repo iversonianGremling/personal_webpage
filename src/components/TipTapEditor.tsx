@@ -38,7 +38,7 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange, onImageU
           // Match #Header pattern (without space)
           const headingMatch = lineText.match(/^(#{1,6})([^\s].*)/);
           if (headingMatch && $head.parent.type.name === 'paragraph') {
-            const level = headingMatch[1].length;
+            const level = Math.min(6, Math.max(1, headingMatch[1].length)) as 1|2|3|4|5|6;
             editor.chain().focus().setHeading({ level }).run();
             return true;
           }
