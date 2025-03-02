@@ -207,7 +207,7 @@ const CreatePost: React.FC = () => {
       />
 
       <div className="bg-gray-700 p-8 rounded-lg shadow-lg w-full max-w-6xl">
-        <h2 className="text-3xl font-bold mb-6 text-center">Create Thought</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center">Create Recommendation</h2>
 
         {errorMessage && (
           <p className="mb-4 text-red-500 text-center">{errorMessage}</p>
@@ -314,7 +314,7 @@ const CreatePost: React.FC = () => {
                 className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
-                <option value="thought">Thought</option>
+                <option value="recommendation">Recommendation</option>
               </select>
             </div>
 
