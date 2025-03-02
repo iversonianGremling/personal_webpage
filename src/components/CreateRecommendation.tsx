@@ -15,9 +15,9 @@ const CreatePost: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    tags: '',
+    tags: 'recommendation',
     image: '',
-    type: '',
+    type: 'recommendation',
     visibility: 'public',
   });
 
@@ -310,7 +310,6 @@ const CreatePost: React.FC = () => {
               <select
                 id="type"
                 value={formData.type}
-                onChange={handleInputChange}
                 className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
