@@ -9,6 +9,7 @@ import DOMPurify from 'dompurify';
 import { apiUrl } from '../assets/env-var';
 import PostDetail from './PostDetail';
 import PostDetailPreview from './PostDetailPreview';
+import TiptapEditor from './TipTapEditor';
 
 const CreatePost: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -233,51 +234,12 @@ const CreatePost: React.FC = () => {
               <button type='button' className={`${contentType === 'HTML' ? 'bg-slate-600' : 'bg-slate-700'} bg-slate-700 text-white px-4 py-2 rounded-lg hover:bg-slate-600`} onClick={() => setContentType('HTML')}> HTML </button>
             </div>
             {contentType === 'Text' ? (
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Content</label>
-                <div className="bg-gray-600 rounded-lg p-4 min-h-[300px]">
-                  {editor && (
-                    <div className="flex gap-2 mb-2 flex-wrap">
-                      <button
-                        type="button"
-                        onClick={() => editor.chain().focus().toggleBold().run()}
-                        className={`p-2 rounded ${
-                          editor.isActive('bold') ? 'bg-blue-500' : 'bg-gray-500'
-                        }`}
-                      >
-                      Bold
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          editor.chain().focus().toggleItalic().run()
-                        }
-                        className={`p-2 rounded ${
-                          editor.isActive('italic')
-                            ? 'bg-blue-500'
-                            : 'bg-gray-500'
-                        }`}
-                      >
-                      Italic
-                      </button>
-                      <button
-                        type="button"
-                        onClick={addImage}
-                        className="p-2 rounded bg-gray-500"
-                      >
-                      Image
-                      </button>
-                    </div>
-                  )}
-                  <EditorContent
-                    editor={editor}
-                    className="prose prose-invert max-w-none min-w-36 focus:outline-none text-white text-editor-preview"
-                    style={{ minHeight: '20rem', padding: '10px' }}
-                  />
-                </div>
-              </div>
-
-            ) : (
+              <TiptapEditor
+                content={formData.content}
+                onChange={(html) => setFormData(prev => ({ ...prev, content: html }))}
+                onImageUpload={handleImageUpload}
+              />
+            )  : (
               <div className='mb-4'>
                 <label>HTML</label>
                 <textarea
@@ -285,7 +247,6 @@ const CreatePost: React.FC = () => {
                   value={formData.content}
                   onChange={handleInputChange}
                   className="w-full h-64 px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 "
-                  maxLength={2000}
                 />
 
               </div>

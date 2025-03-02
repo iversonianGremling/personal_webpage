@@ -118,7 +118,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
       {error && <p className="text-center text-red-500">{error}</p>}
 
       <div className="grid grid-cols-1 gap-6">
-        {posts?.map((post) => (
+        {posts?.reverse().map((post) => (
           <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
 
             <Link key={post.id} to={`/posts/${post.id}`}>
