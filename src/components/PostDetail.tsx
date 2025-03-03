@@ -4,7 +4,6 @@ import Post from '../types';
 import DOMPurify from 'dompurify';
 import NavBar from './NavBar';
 import { apiUrl } from '../assets/env-var';
-import { Helmet } from 'react-helmet-async';
 
 interface PostDetailProps {
   variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
@@ -62,42 +61,6 @@ const parsePostContent = (content: string): { thumbnail: string | null; descript
   return { thumbnail, description };
 };
 
-const PostMetaTags: React.FC<OpenGraphMetaProps> = ({ post, siteInfo }) => {
-  const { thumbnail, description } = parsePostContent(post.content);
-
-  // Use the first image from content, or the post.image as fallback
-  const ogImage = thumbnail || post.image || `${siteInfo.baseUrl}/default-og-image.jpg`;
-  const canonicalUrl = `${siteInfo.baseUrl}/posts/${post.id}`;
-
-  return (
-    <Helmet>
-      {/* Basic meta tags */}
-      <title>{post.title} | {siteInfo.name}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
-
-      {/* Open Graph meta tags (Facebook, Reddit, etc.) */}
-      <meta property="og:title" content={post.title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:type" content="article" />
-      <meta property="og:site_name" content={siteInfo.name} />
-
-      {/* Twitter Card meta tags */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={post.title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
-
-      {/* Optional: Article specific meta tags */}
-      <meta property="article:published_time" content={new Date(post.date).toISOString()} />
-      {post.tags && post.tags.map((tag, index) => (
-        <meta key={index} property="article:tag" content={tag} />
-      ))}
-    </Helmet>
-  );
-};
 
 function QualityBadge({ tags }: { tags: string[] }) {
   // Find quality tag if exists
@@ -249,7 +212,6 @@ const TableOfContents: React.FC<{ post: Post }> = ({ post }) => {
 const PostContent: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <>
-      <PostMetaTags post={post} siteInfo={{ name: 'Vela Velucci', baseUrl: 'https://velavelucci.com'}} />
       <header className="mb-8 pt-2">
         {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2">

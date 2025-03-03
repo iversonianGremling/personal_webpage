@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './components/AuthContext';
 import About from './components/About';
@@ -70,7 +69,6 @@ function App() {
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
-  const helmetContext = {};
 
   useEffect(() => {
     const handleResize = () => {
@@ -145,184 +143,182 @@ function App() {
   }
 
   return (
-    <HelmetProvider context={helmetContext}>
-      <div
-        className="App min-h-screen  bg-cover bg-center bg-no-repeat bg-fixed"
-        style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}
-      >
-        <Routes>
-          <Route path="/auth/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <>
-                <NavBar />
-                <div className="flex flex-row justify-center content-center text-center mt-8">
-                  <div className="w-8/12 pb-20">
-                    <MovingTitle />
-                    {isLoading ? (
-                      <div className="text-white text-center">Loading posts...</div>
-                    ) : error ? (
-                      <div className="text-red-500 text-center">Error: {error}</div>
-                    ) : (
-                      <PostContainer posts={posts} className="post-container" />
-                    )}
-                  </div>
-                </div>
-
-                {isMobile ? '' : <MyName />}
-                {/* <Background /> */}
-
-                <div className="flex flex-row justify-center gap-52">
-                  {isAdmin && (
-                    <div className="fixed bottom-10 right-10 space-y-4">
-                      <button onClick={() => navigate('/create-thought')}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
-                      >Create Thought
-                      </button>
-                      <button onClick={() => navigate('/create-recommendation')}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
-                      >Create Recommendation
-                      </button>
-                      <button
-                        onClick={() => navigate('/create-post')}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
-                      >
-                      Create Post
-                      </button>
-                      <button
-                        onClick={() => navigate('/posts/admin')}
-                        className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 w-full"
-                      >
-                      See All Posts
-                      </button>
-                    </div>
+    <div
+      className="App min-h-screen  bg-cover bg-center bg-no-repeat bg-fixed"
+      style={{ backgroundImage: 'url(\'/path-to-your-image.jpg\')' }}
+    >
+      <Routes>
+        <Route path="/auth/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <NavBar />
+              <div className="flex flex-row justify-center content-center text-center mt-8">
+                <div className="w-8/12 pb-20">
+                  <MovingTitle />
+                  {isLoading ? (
+                    <div className="text-white text-center">Loading posts...</div>
+                  ) : error ? (
+                    <div className="text-red-500 text-center">Error: {error}</div>
+                  ) : (
+                    <PostContainer posts={posts} className="post-container" />
                   )}
                 </div>
-                <AboutThisPage />
-              </>
-            }
-          />
-          {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
-          <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/create-thought" element={<CreateThought/>} />
-          <Route path="/create-recommendation" element={<CreateRecommendation />} />
-          <Route path="/posts/admin" element={<SeeAllPosts admin={true} />} />
-          <Route path="/posts/" element={<SeeAllPosts admin={false} />} />
-          <Route path="/edit-post/:id" element={<EditPost />} />
-          <Route path="/about" element={<AboutPage />} />
+              </div>
 
-          {/* Posts routes */}
-          <Route path="/posts/:id" element={<PostDetail />} />
-          <Route
-            path="/posts/programming"
-            element={<Placeholder title="Programming Posts" />}
-          />
-          <Route
-            path="/posts/arts"
-            element={<Placeholder title="Arts Posts" />}
-          />
-          <Route
-            path="/posts/opinion"
-            element={<Placeholder title="Opinion Posts" />}
-          />
-          <Route
-            path="/posts/philosophy"
-            element={<Placeholder title="Philosophy Posts" />}
-          />
-          <Route
-            path="/posts/mathematics"
-            element={<Placeholder title="Mathematics Posts" />}
-          />
-          <Route
-            path="/posts/gaming"
-            element={<Placeholder title="Gaming Posts" />}
-          />
-          <Route
-            path="/posts/literature"
-            element={<Placeholder title="Literature Posts" />}
-          />
+              {isMobile ? '' : <MyName />}
+              {/* <Background /> */}
 
-          {/* Music routes */}
-          <Route path="/music" element={<Music />} />
-          <Route
-            path="/music/soundcloud"
-            element={<Placeholder title="Soundcloud" />}
-          />
-          <Route
-            path="/music/bandcamp"
-            element={<Placeholder title="Bandcamp" />}
-          />
-          <Route
-            path="/music/youtube"
-            element={<Placeholder title="YouTube" />}
-          />
-          <Route path="/music/twitch" element={<Placeholder title="Twitch" />} />
-          <Route path="/music/tiktok" element={<Placeholder title="TikTok" />} />
+              <div className="flex flex-row justify-center gap-52">
+                {isAdmin && (
+                  <div className="fixed bottom-10 right-10 space-y-4">
+                    <button onClick={() => navigate('/create-thought')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >Create Thought
+                    </button>
+                    <button onClick={() => navigate('/create-recommendation')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >Create Recommendation
+                    </button>
+                    <button
+                      onClick={() => navigate('/create-post')}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600 w-full"
+                    >
+                      Create Post
+                    </button>
+                    <button
+                      onClick={() => navigate('/posts/admin')}
+                      className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 w-full"
+                    >
+                      See All Posts
+                    </button>
+                  </div>
+                )}
+              </div>
+              <AboutThisPage />
+            </>
+          }
+        />
+        {/* <Route path="/posts/:id" element={<PostDetail />} /> */}
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/create-thought" element={<CreateThought/>} />
+        <Route path="/create-recommendation" element={<CreateRecommendation />} />
+        <Route path="/posts/admin" element={<SeeAllPosts admin={true} />} />
+        <Route path="/posts/" element={<SeeAllPosts admin={false} />} />
+        <Route path="/edit-post/:id" element={<EditPost />} />
+        <Route path="/about" element={<AboutPage />} />
 
-          {/* Programming routes */}
-          <Route path="/programming" element={<Programming />}>
-            <Route path=":id" element={<PostDetail />} />
-          </Route>
-          <Route
-            path="/programming/articles"
-            element={<Placeholder title="Programming Articles" />}
-          />
+        {/* Posts routes */}
+        <Route path="/posts/:id" element={<PostDetail />} />
+        <Route
+          path="/posts/programming"
+          element={<Placeholder title="Programming Posts" />}
+        />
+        <Route
+          path="/posts/arts"
+          element={<Placeholder title="Arts Posts" />}
+        />
+        <Route
+          path="/posts/opinion"
+          element={<Placeholder title="Opinion Posts" />}
+        />
+        <Route
+          path="/posts/philosophy"
+          element={<Placeholder title="Philosophy Posts" />}
+        />
+        <Route
+          path="/posts/mathematics"
+          element={<Placeholder title="Mathematics Posts" />}
+        />
+        <Route
+          path="/posts/gaming"
+          element={<Placeholder title="Gaming Posts" />}
+        />
+        <Route
+          path="/posts/literature"
+          element={<Placeholder title="Literature Posts" />}
+        />
 
-          {/* Videos routes */}
-          <Route path="/videos" element={<Placeholder title="Videos" />} />
+        {/* Music routes */}
+        <Route path="/music" element={<Music />} />
+        <Route
+          path="/music/soundcloud"
+          element={<Placeholder title="Soundcloud" />}
+        />
+        <Route
+          path="/music/bandcamp"
+          element={<Placeholder title="Bandcamp" />}
+        />
+        <Route
+          path="/music/youtube"
+          element={<Placeholder title="YouTube" />}
+        />
+        <Route path="/music/twitch" element={<Placeholder title="Twitch" />} />
+        <Route path="/music/tiktok" element={<Placeholder title="TikTok" />} />
 
-          {/* Streaming routes */}
-          <Route path="/streaming" element={<Placeholder title="Streaming" />} />
-          <Route
-            path="/streaming/twitch"
-            element={<Placeholder title="Twitch Streaming" />}
-          />
+        {/* Programming routes */}
+        <Route path="/programming" element={<Programming />}>
+          <Route path=":id" element={<PostDetail />} />
+        </Route>
+        <Route
+          path="/programming/articles"
+          element={<Placeholder title="Programming Articles" />}
+        />
 
-          {/* Writings routes */}
-          <Route path="/writings" element={<Writings />} />
-          <Route path="/writings/poetry" element={<Poetry />} />
-          <Route path="/writings/fiction" element={<Fiction />} />
-          <Route path="/writings/non-fiction" element={<NonFiction />} />
+        {/* Videos routes */}
+        <Route path="/videos" element={<Placeholder title="Videos" />} />
 
-          {/* Visual Media routes */}
-          <Route
-            path="/visual-media"
-            element={<Placeholder title="Visual Media" />}
-          />
-          <Route
-            path="/visual-media/articles"
-            element={<Placeholder title="Visual Media Articles" />}
-          />
-          <Route
-            path="/visual-media/photography"
-            element={<Placeholder title="Photography" />}
-          />
-          <Route
-            path="/visual-media/collages"
-            element={<Placeholder title="Collages" />}
-          />
-          <Route
-            path="/visual-media/digital-art"
-            element={<Placeholder title="Digital Art" />}
-          />
-          <Route
-            path="/visual-media/drawings"
-            element={<Placeholder title="Drawings" />}
-          />
+        {/* Streaming routes */}
+        <Route path="/streaming" element={<Placeholder title="Streaming" />} />
+        <Route
+          path="/streaming/twitch"
+          element={<Placeholder title="Twitch Streaming" />}
+        />
 
-          <Route path="/gaming" element={<GamingPage />} />
-          <Route path="/philosophy" element={<PhilosophyBlog />} />
-          <Route path="/intersectionality" element={<IntersectionalityPage />} />
-          <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/thoughts" element={<Thoughts />} />
-          <Route path="/tag/:tag" element={<TagDetail />} />
-          <Route path="/reviews" element={<ReviewsPage/>} />
-          <Route path="/reviews/:tag" element={<ReviewPage/>} />
-          <Route path="/recommendations" element={<RecommendationsPage/>} />
-        </Routes>
-      </div>
-    </HelmetProvider>
+        {/* Writings routes */}
+        <Route path="/writings" element={<Writings />} />
+        <Route path="/writings/poetry" element={<Poetry />} />
+        <Route path="/writings/fiction" element={<Fiction />} />
+        <Route path="/writings/non-fiction" element={<NonFiction />} />
+
+        {/* Visual Media routes */}
+        <Route
+          path="/visual-media"
+          element={<Placeholder title="Visual Media" />}
+        />
+        <Route
+          path="/visual-media/articles"
+          element={<Placeholder title="Visual Media Articles" />}
+        />
+        <Route
+          path="/visual-media/photography"
+          element={<Placeholder title="Photography" />}
+        />
+        <Route
+          path="/visual-media/collages"
+          element={<Placeholder title="Collages" />}
+        />
+        <Route
+          path="/visual-media/digital-art"
+          element={<Placeholder title="Digital Art" />}
+        />
+        <Route
+          path="/visual-media/drawings"
+          element={<Placeholder title="Drawings" />}
+        />
+
+        <Route path="/gaming" element={<GamingPage />} />
+        <Route path="/philosophy" element={<PhilosophyBlog />} />
+        <Route path="/intersectionality" element={<IntersectionalityPage />} />
+        <Route path="/articles" element={<ArticlesPage />} />
+        <Route path="/thoughts" element={<Thoughts />} />
+        <Route path="/tag/:tag" element={<TagDetail />} />
+        <Route path="/reviews" element={<ReviewsPage/>} />
+        <Route path="/reviews/:tag" element={<ReviewPage/>} />
+        <Route path="/recommendations" element={<RecommendationsPage/>} />
+      </Routes>
+    </div>
   );
 }
 
