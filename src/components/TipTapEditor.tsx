@@ -107,7 +107,6 @@ const TiptapEditor: React.FC<TiptapEditorProps> = ({ content, onChange, onImageU
         },
         'Enter': ({ editor }) => {
           if (editor.isActive('heading')) {
-            const level = editor.getAttributes('heading').level;
 
             // First create a new paragraph below
             editor.chain().focus().insertContentAt(editor.state.selection.to, '<p></p>').run();

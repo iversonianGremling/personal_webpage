@@ -3,8 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Post from '../types';
 import DOMPurify from 'dompurify';
 import NavBar from './NavBar';
-import Programming from './routes/Programming/Programming';
 import { apiUrl } from '../assets/env-var';
+import { Helmet } from 'react-helmet-async';
 
 interface PostDetailProps {
   variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
@@ -14,6 +14,13 @@ interface HeadingItem {
   text: string;
   level: number;
   children: HeadingItem[];
+}
+interface OpenGraphMetaProps {
+  post: Post;
+  siteInfo: {
+    name: string; // Your site name
+    baseUrl: string; // Your domain e.g. "https://yoursite.com"
+  };
 }
 const createMarkup = (html: string) => {
   return {
@@ -32,9 +39,64 @@ const formatDate = (dateString: string) => {
       month: 'long',
       day: 'numeric',
     }).format(date);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return 'Invalid date';
   }
+};
+
+const parsePostContent = (content: string): { thumbnail: string | null; description: string } => {
+  // Create a temporary div to parse HTML content
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = content;
+
+  // Find the first image
+  const firstImageElement = tempDiv.querySelector('img');
+  const thumbnail = firstImageElement ? firstImageElement.src : null;
+
+  // Get text content for description (limit to around 160 characters for meta description)
+  let description = tempDiv.textContent || '';
+  description = description.trim().substring(0, 160);
+  if (description.length === 160) description += '...';
+
+  return { thumbnail, description };
+};
+
+const PostMetaTags: React.FC<OpenGraphMetaProps> = ({ post, siteInfo }) => {
+  const { thumbnail, description } = parsePostContent(post.content);
+
+  // Use the first image from content, or the post.image as fallback
+  const ogImage = thumbnail || post.image || `${siteInfo.baseUrl}/default-og-image.jpg`;
+  const canonicalUrl = `${siteInfo.baseUrl}/posts/${post.id}`;
+
+  return (
+    <Helmet>
+      {/* Basic meta tags */}
+      <title>{post.title} | {siteInfo.name}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
+
+      {/* Open Graph meta tags (Facebook, Reddit, etc.) */}
+      <meta property="og:title" content={post.title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:type" content="article" />
+      <meta property="og:site_name" content={siteInfo.name} />
+
+      {/* Twitter Card meta tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={post.title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+
+      {/* Optional: Article specific meta tags */}
+      <meta property="article:published_time" content={new Date(post.date).toISOString()} />
+      {post.tags && post.tags.map((tag, index) => (
+        <meta key={index} property="article:tag" content={tag} />
+      ))}
+    </Helmet>
+  );
 };
 
 function QualityBadge({ tags }: { tags: string[] }) {
@@ -165,7 +227,7 @@ const TableOfContents: React.FC<{ post: Post }> = ({ post }) => {
               });
             }}
           >
-            {item.text}
+            {'- ' + item.text}
           </a>
           {item.children.length > 0 && <RenderHeadings items={item.children} />}
         </li>
@@ -176,8 +238,8 @@ const TableOfContents: React.FC<{ post: Post }> = ({ post }) => {
   if (headings.length === 0) return null;
 
   return (
-    <div className="mb-6">
-      <h3 className="text-xl font-semibold mb-2">Table of Contents</h3>
+    <div className="mb-6 mr-4 bg-black border border-red-600 p-4 pl-6 min-w-56 h-auto">
+      <div className='text-violet-500 text-xl'>Table of Contents</div>
       <RenderHeadings items={headings} />
     </div>
   );
@@ -187,6 +249,7 @@ const TableOfContents: React.FC<{ post: Post }> = ({ post }) => {
 const PostContent: React.FC<{ post: Post }> = ({ post }) => {
   return (
     <>
+      <PostMetaTags post={post} siteInfo={{ name: 'Vela Velucci', baseUrl: 'https://velavelucci.com'}} />
       <header className="mb-8 pt-2">
         {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2">
@@ -395,21 +458,23 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
           {post.title}
         </h1>
       </div>
-      <TableOfContents post={post} />
-      <article className="bg-violet-950 text-white px-6 mx-6 pb-6">
-        {(() => {
-          switch(post.type) {
-            case 'blog':
-              return <PostContent post={post} />;
-            case 'recommendation':
-              return <RecommendationContent post={post} />;
-            case 'thought':
-              return <ThoughtContent post={post} />;
-            default:
-              return <PostContent post={post} />;
-          }
-        })()}
-      </article>
+      <div className='flex flex-row'>
+        <article className="bg-violet-950 text-white px-6 mx-6 pb-6">
+          {(() => {
+            switch(post.type) {
+              case 'blog':
+                return <PostContent post={post} />;
+              case 'recommendation':
+                return <RecommendationContent post={post} />;
+              case 'thought':
+                return <ThoughtContent post={post} />;
+              default:
+                return <PostContent post={post} />;
+            }
+          })()}
+        </article>
+        <TableOfContents post={post} />
+      </div>
     </div>
   );
 };
