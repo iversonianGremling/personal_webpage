@@ -121,7 +121,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
         {posts?.reverse().map((post) => (
           <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
 
-            <Link key={post.id} to={`/posts/${post.id}`}>
+            <Link key={post.id} to={`${admin ? '/admin/posts/' + post.id : '/posts/' + post.id}`}>
               <h2 className="text-2xl font-bold mb-2 hover:text-red-600">{post.title}</h2>
             </Link>
             <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
