@@ -204,8 +204,8 @@ function App() {
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/create-thought" element={<CreateThought/>} />
         <Route path="/create-recommendation" element={<CreateRecommendation />} />
-        <Route path="/posts/admin" element={<SeeAllPosts admin={true} />} />
-        <Route path="/posts/" element={<SeeAllPosts admin={false} />} />
+        <Route path="/posts/admin" element={isAdmin && <SeeAllPosts admin={true} />} />
+        <Route path="/posts/" element={ !isAdmin && <SeeAllPosts admin={false} />} />
         <Route path="/edit-post/:id" element={<EditPost />} />
         <Route path="/about" element={<AboutPage />} />
 
