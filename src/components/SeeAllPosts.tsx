@@ -15,6 +15,8 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const { isAdmin } = useAuth();
+
   // Fetch all posts on component mount
   useEffect(() => {
     fetchPosts();
@@ -26,7 +28,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
     setError(null);
     try {
       const response = await fetch(
-        admin ? apiUrl + '/posts/admin' : apiUrl + '/posts/',
+        isAdmin ? apiUrl + '/posts/admin' : apiUrl + '/posts/',
         {
           method: 'GET',
           credentials: 'include', // Ensures cookies are sent with the request
@@ -50,7 +52,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
     setError(null);
     try {
       const response = await fetch(
-        admin
+        isAdmin
           ? apiUrl + `/posts/search/admin?q=${encodeURIComponent(searchQuery)}`
           : apiUrl + `/posts/search?q=${encodeURIComponent(searchQuery)}`,
         {
@@ -123,7 +125,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
         {posts?.reverse().map((post) => (
           <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
 
-            <Link key={post.id} to={`/posts/${post.id}`}>
+            <Link key={post.id} to={`${isAdmin ? '/admin' : ''}/posts/${post.id}`}>
               <h2 className="text-2xl font-bold mb-2 hover:text-red-600">{post.title}</h2>
             </Link>
             <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
