@@ -7,6 +7,7 @@ import { apiUrl } from '../assets/env-var';
 
 interface PostDetailProps {
   variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
+  admin: boolean
 }
 interface HeadingItem {
   id: string;
@@ -354,7 +355,7 @@ const ThoughtContent: React.FC<{ post: Post }> = ({ post }) => {
   );
 };
 
-const PostDetail: React.FC<PostDetailProps> = ({ variant }) => {
+const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);

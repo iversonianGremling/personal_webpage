@@ -210,7 +210,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
 
         {/* Posts routes */}
-        <Route path="/posts/:id" element={<PostDetail />} />
+        <Route path="/posts/:id" element={<PostDetail admin={false}/>} />
+        <Route path="/posts/admin/:id" element={<PostDetail admin={true} />} />
         <Route
           path="/posts/programming"
           element={<Placeholder title="Programming Posts" />}
@@ -259,7 +260,7 @@ function App() {
 
         {/* Programming routes */}
         <Route path="/programming" element={<Programming />}>
-          <Route path=":id" element={<PostDetail />} />
+          <Route path=":id" element={<PostDetail admin={true}/>} />
         </Route>
         <Route
           path="/programming/articles"
