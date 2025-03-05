@@ -21,6 +21,7 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
   }, []);
 
   const fetchPosts = async () => {
+    console.log(`Admin: ${admin}`);
     setLoading(true);
     setError(null);
     try {
