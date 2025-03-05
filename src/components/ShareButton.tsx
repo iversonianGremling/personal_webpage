@@ -1,85 +1,132 @@
 import React, { useState } from 'react';
-import { Share2, Link as LinkIcon, Twitter, Facebook } from 'lucide-react';
+import {
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+  FaReddit,
+  FaWhatsapp,
+  FaTelegram,
+  FaEnvelope,
+  FaShare,
+  FaLink
+} from 'react-icons/fa';
 
 interface ShareButtonProps {
   post: {
+    id: number;
     title: string;
-    id: string | number;
+    summary?: string;
+    slug?: string;
   };
   className?: string;
 }
 
 const ShareButton: React.FC<ShareButtonProps> = ({ post, className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
 
-  // Generate the current URL for sharing
-  const currentUrl = `${window.location.origin}/post/${post.id}`;
+  // Get the current URL or construct it from post data
+  const currentUrl = typeof window !== 'undefined'
+    ? window.location.href
+    : `${post.slug || post.id}`;
 
-  const shareOptions = [
+  const title = encodeURIComponent(post.title);
+  const url = encodeURIComponent(currentUrl);
+  const summary = encodeURIComponent(post.summary || '');
+
+  const shareLinks = [
     {
-      name: 'Copy Link',
-      icon: <LinkIcon size={18} />,
-      action: () => {
-        navigator.clipboard.writeText(currentUrl)
-          .then(() => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-          })
-          .catch(err => console.error('Failed to copy: ', err));
-      }
-    },
-    {
-      name: 'Twitter',
-      icon: <Twitter size={18} />,
-      action: () => {
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(currentUrl)}`, '_blank');
-      }
+      name: 'X (Twitter)',
+      icon: <FaTwitter />,
+      url: `https://twitter.com/intent/tweet?text=${title}&url=${url}`
     },
     {
       name: 'Facebook',
-      icon: <Facebook size={18} />,
-      action: () => {
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
+      icon: <FaFacebook />,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${url}`
+    },
+    {
+      name: 'LinkedIn',
+      icon: <FaLinkedin />,
+      url: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+    },
+    {
+      name: 'Reddit',
+      icon: <FaReddit />,
+      url: `https://www.reddit.com/submit?url=${url}&title=${title}`
+    },
+    {
+      name: 'WhatsApp',
+      icon: <FaWhatsapp />,
+      url: `https://api.whatsapp.com/send?text=${title}%20${url}`
+    },
+    {
+      name: 'Telegram',
+      icon: <FaTelegram />,
+      url: `https://t.me/share/url?url=${url}&text=${title}`
+    },
+    {
+      name: 'Email',
+      icon: <FaEnvelope />,
+      url: `mailto:?subject=${title}&body=${summary}%0A%0A${url}`
+    },
+    {
+      name: 'Copy Link',
+      icon: <FaLink />,
+      url: '#',
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(currentUrl);
+        alert('Link copied to clipboard!');
       }
     }
   ];
 
+  const handleShare = async () => {
+    // Use Web Share API if available (mobile devices)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post.title,
+          text: post.summary,
+          url: currentUrl
+        });
+        return;
+      } catch (err) {
+        console.error(`Error sharing: ${err}`);
+        // Fallback to dropdown if share is canceled or fails
+      }
+    }
+
+    // Toggle dropdown if Web Share API not available or failed
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className={`relative ${className}`}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-violet-800 text-white hover:bg-violet-700 transition-colors rounded"
-        aria-label="Share this post"
+        onClick={handleShare}
+        className="flex items-center gap-2 bg-violet-800 hover:bg-violet-700 text-white rounded-full px-4 py-2 transition-colors duration-300"
+        aria-label="Share post"
       >
-        <Share2 size={18} />
-        <span>Share</span>
+        <FaShare className="text-sm" />
+        <span className="text-sm">Share</span>
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-48 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5">
-          <div className="py-1" role="menu" aria-orientation="vertical">
-            {shareOptions.map((option, index) => (
-              <button
-                key={index}
-                className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-white hover:bg-violet-700 transition-colors"
-                onClick={() => {
-                  option.action();
-                  setIsOpen(false);
-                }}
-                role="menuitem"
-              >
-                {option.icon}
-                <span>{option.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {copied && (
-        <div className="fixed bottom-6 right-6 bg-violet-900 text-white px-4 py-2 rounded shadow-lg">
-          Link copied to clipboard!
+        <div className="absolute right-0 top-full mt-2 bg-violet-900 rounded-lg shadow-lg z-50 w-48 overflow-hidden">
+          {shareLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              onClick={link.onClick || ((e) => { e.preventDefault(); if (!link.onClick) window.open(link.url, '_blank', 'noopener,noreferrer'); })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-violet-800 text-white transition-colors"
+            >
+              <span className="text-lg">{link.icon}</span>
+              <span className="text-sm">{link.name}</span>
+            </a>
+          ))}
         </div>
       )}
     </div>
