@@ -14,8 +14,18 @@ const AdminCommentDashboard = () => {
     const fetchAllComments = async () => {
       try {
         const response = await fetch(apiUrl + '/comments/admin');
-        const data = await response.json();
-        setComments(data);
+        console.log('Response status:', response.status);
+        const text = await response.text();
+        console.log('Raw response:', text);
+
+        try {
+          const data = JSON.parse(text);
+          console.log('Parsed data:', data);
+          setComments(Array.isArray(data) ? data : []);
+        } catch (parseErr) {
+          console.error('JSON parse error:', parseErr);
+        }
+
         setLoading(false);
       } catch (err) {
         console.error('Error loading comments:', err);
