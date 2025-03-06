@@ -37,6 +37,7 @@ import ReviewPage from './components/routes/ReviewPage';
 import RecommendationsPage from './components/routes/RecommendationsPage';
 import CreateThought from './components/CreateThought';
 import CreateRecommendation from './components/CreateRecommendation';
+import AdminCommentDashboard from './components/AdminCommentDashboard';
 
 const Placeholder = ({ title, backgroundColor = 'transparent' }) => {
   useEffect(() => {
@@ -193,6 +194,7 @@ function App() {
                     >
                       See All Posts
                     </button>
+                    <AdminCommentDashboard />
                   </div>
                 )}
               </div>

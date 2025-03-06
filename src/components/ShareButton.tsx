@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FaTwitter,
   FaFacebook,
@@ -22,6 +23,7 @@ interface ShareButtonProps {
 }
 
 const ShareButton: React.FC<ShareButtonProps> = ({ post, className = '' }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   // Get the current URL or construct it from post data
@@ -35,48 +37,48 @@ const ShareButton: React.FC<ShareButtonProps> = ({ post, className = '' }) => {
 
   const shareLinks = [
     {
-      name: 'X (Twitter)',
+      name: t('share.twitter'),
       icon: <FaTwitter />,
       url: `https://twitter.com/intent/tweet?text=${title}&url=${url}`
     },
     {
-      name: 'Facebook',
+      name: t('share.facebook'),
       icon: <FaFacebook />,
       url: `https://www.facebook.com/sharer/sharer.php?u=${url}`
     },
     {
-      name: 'LinkedIn',
+      name: t('share.linkedin'),
       icon: <FaLinkedin />,
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
     },
     {
-      name: 'Reddit',
+      name: t('share.reddit'),
       icon: <FaReddit />,
       url: `https://www.reddit.com/submit?url=${url}&title=${title}`
     },
     {
-      name: 'WhatsApp',
+      name: t('share.whatsapp'),
       icon: <FaWhatsapp />,
       url: `https://api.whatsapp.com/send?text=${title}%20${url}`
     },
     {
-      name: 'Telegram',
+      name: t('share.telegram'),
       icon: <FaTelegram />,
       url: `https://t.me/share/url?url=${url}&text=${title}`
     },
     {
-      name: 'Email',
+      name: t('share.email'),
       icon: <FaEnvelope />,
       url: `mailto:?subject=${title}&body=${summary}%0A%0A${url}`
     },
     {
-      name: 'Copy Link',
+      name: t('share.copyLink'),
       icon: <FaLink />,
       url: '#',
       onClick: (e: React.MouseEvent) => {
         e.preventDefault();
         navigator.clipboard.writeText(currentUrl);
-        alert('Link copied to clipboard!');
+        alert(t('share.linkCopied'));
       }
     }
   ];
@@ -106,10 +108,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({ post, className = '' }) => {
       <button
         onClick={handleShare}
         className="flex items-center gap-2 bg-violet-800 hover:bg-violet-700 text-white rounded-full px-4 py-2 transition-colors duration-300"
-        aria-label="Share post"
+        aria-label={t('general.share')}
       >
         <FaShare className="text-sm" />
-        <span className="text-sm">Share</span>
+        <span className="text-sm">{t('general.share')}</span>
       </button>
 
       {isOpen && (

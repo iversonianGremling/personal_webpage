@@ -1,4 +1,107 @@
 {
+  "general": {
+    "home": "Inicio",
+    "topics": "Temas",
+    "about": "Acerca de",
+    "back": "Volver",
+    "loading": "Cargando...",
+    "error": "Error",
+    "search": "Buscar",
+    "share": "Compartir",
+    "support": "Apoyar",
+    "zenMode": "Modo Zen (haz clic para colores amigables)",
+    "tableOfContents": "Tabla de Contenidos (clickeable)",
+    "similarPosts": "Publicaciones Similares",
+    "noSimilarPosts": "No se encontraron publicaciones similares."
+  },
+  "nav": {
+    "home": "Inicio",
+    "topics": "Temas",
+    "about": "Acerca de",
+    "allPosts": "Todas las Publicaciones"
+  },
+  "categories": {
+    "music": "Música",
+    "gaming": "Videojuegos",
+    "philosophy": "Filosofía",
+    "writings": "Escritos",
+    "articles": "Artículos",
+    "politics": "Política",
+    "programming": "Programación",
+    "thoughts": "Pensamientos",
+    "reviews": "Reseñas"
+  },
+  "social": {
+    "github": "GitHub",
+    "email": "Correo",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "youtube": "YouTube",
+    "bandcamp": "Bandcamp",
+    "soundcloud": "SoundCloud",
+    "twitch": "Twitch",
+    "bluesky": "Bluesky",
+    "aboutMe": "Sobre Mí"
+  },
+  "posts": {
+    "latestPosts": "ÚLTIMAS PUBLICACIONES",
+    "createPost": "Crear Publicación",
+    "createThought": "Crear Pensamiento",
+    "createRecommendation": "Crear Recomendación",
+    "seeAllPosts": "Ver Todas las Publicaciones",
+    "editPost": "Editar Sangre",
+    "deletePost": "Eliminar Sangre",
+    "areYouFree": "¿Eres libre?",
+    "tags": "Etiquetas",
+    "type": "Tipo",
+    "visibility": "Visibilidad",
+    "date": "Fecha",
+    "title": "Título",
+    "content": "Contenido",
+    "featuredImage": "URL de Imagen Destacada",
+    "postType": "Tipo de Publicación",
+    "blog": "Blog",
+    "thought": "Pensamiento",
+    "recommendation": "Recomendación",
+    "public": "Público",
+    "private": "Privado",
+    "preview": "Vista Previa",
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "allMyBlood": "Toda mi sangre (haz clic en los títulos para navegar a mi sangre)",
+    "needToGoBack": "Necesito volver",
+    "searchBlood": "Buscar sangre..."
+  },
+  "quality": {
+    "masterpiece": "Obra maestra",
+    "indispensable": "Indispensable",
+    "mediumDefining": "Define el medio",
+    "cultClassic": "Clásico de culto",
+    "worthExperiencing": "Vale la pena experimentar"
+  },
+  "share": {
+    "twitter": "X (Twitter)",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "reddit": "Reddit",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "email": "Correo",
+    "copyLink": "Copiar Enlace",
+    "linkCopied": "¡Enlace copiado al portapapeles!"
+  },
+  "errors": {
+    "failedToFetchPosts": "Error al obtener publicaciones",
+    "failedToSearchPosts": "Error al buscar publicaciones",
+    "failedToDeletePost": "Error al eliminar publicación",
+    "postNotFound": "Publicación no encontrada",
+    "uploadFailed": "Error de carga",
+    "onlyImageFiles": "Solo se permiten archivos de imagen",
+    "failedToInsertImage": "Error al insertar imagen"
+  },
+  "confirmations": {
+    "deletePost": "¿Estás seguro de que quieres eliminar esta publicación?"
+  },
   "app_create_post": "Crear post",
   "app_see_all_posts": "Ver todos los posts",
   "moving_title_latest_posts_all_caps": "ULTIMOS POSTS"

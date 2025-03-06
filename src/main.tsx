@@ -5,6 +5,7 @@ import App from './App.tsx';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './components/AuthContext.tsx';
+import './i18n.js';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

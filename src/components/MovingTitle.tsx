@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const MovingTitle = () => {
+  const { t } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const MovingTitle = () => {
       <div
         className={`${isMobile ? 'text-7xl' : 'text-8xl'} title text-red-600 font-serif mt-6 transition-colors absolute top-0 cursor-default shadow-lg pb-16 text-left`}
       >
-        LATEST POSTS
+        {t('posts.latestPosts')}
       </div>
 
 

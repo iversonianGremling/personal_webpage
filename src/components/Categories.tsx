@@ -11,8 +11,6 @@ import programmingIcon from '../assets/icons/programming.svg';
 import thoughtsIcon from '../assets/icons/thoughts.svg';
 import reviewsIcon from '../assets/icons/reviews.svg';
 
-
-
 const Categories = () => {
   const radius = 120; // Radius of the circle
   const iconSize = 60; // Size of each icon

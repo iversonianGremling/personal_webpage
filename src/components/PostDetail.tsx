@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Post from '../types';
 import DOMPurify from 'dompurify';
 import NavBar from './NavBar';
 import { apiUrl } from '../assets/env-var';
 import ShareButton from './ShareButton';
 import PatreonButton from './PatreonButton';
+import { PostMetrics } from './ViewCounter';
+import LikeButton from './LikeButton';
+import CommentSection from './CommentSection';
 
 interface PostDetailProps {
   variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
@@ -31,10 +35,10 @@ const createMarkup = (html: string) => {
   };
 };
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, language: string) => {
   try {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat(language === 'es' ? 'es-ES' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -181,7 +185,7 @@ const TableOfContents: React.FC<{ post: Post, isMobile: boolean, zenMode: boolea
               }
             }}
           >
-            <div className={` ${zenMode ? 'text-white bg-black' : 'text-black bg-yellow-300'} p-2 rounded-lg`}>
+            <div className={` ${zenMode ? 'text-white bg-black' : 'text-white bg-violet-600'} p-2 rounded-lg`}>
               {'- ' + item.text}
             </div>
           </a>
@@ -194,7 +198,7 @@ const TableOfContents: React.FC<{ post: Post, isMobile: boolean, zenMode: boolea
   if (headings.length === 0) return null;
 
   return (
-    <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-red-600'} p-4 pl-6 min-w-60 h-auto`}>
+    <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-white'} p-4 pl-6 min-w-60 h-auto`}>
       <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl`}>Table of Contents (clickable)</div>
       <RenderHeadings items={headings} zenMode={zenMode}/>
     </div>
@@ -237,7 +241,7 @@ const SimilarPosts: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenMod
   }, [post]);
 
   return (
-    <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-red-600'} p-4 pl-6 min-w-56 h-auto`}>
+    <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-white'} p-4 pl-6 min-w-56 h-auto`}>
       <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl`}>Similar Posts</div>
       {posts.length > 0 ? (
         <ul className="pl-4 py-1">
@@ -260,6 +264,7 @@ const SimilarPosts: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenMod
 };
 
 const PostContent: React.FC<{ post: Post, isMobile: boolean, zenMode: boolean }> = ({ post, isMobile, zenMode }) => {
+  const { i18n } = useTranslation();
   return (
     <>
       <header className="mb-8 pt-2">
@@ -283,7 +288,7 @@ const PostContent: React.FC<{ post: Post, isMobile: boolean, zenMode: boolean }>
               </div>
             )}
             <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
-              <time>{formatDate(post.date)}</time>
+              <time>{formatDate(post.date, i18n.language)}</time>
             </div>
           </div>
         </div>
@@ -310,6 +315,7 @@ const PostContent: React.FC<{ post: Post, isMobile: boolean, zenMode: boolean }>
 };
 
 const RecommendationContent: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenMode }) => {
+  const { i18n } = useTranslation();
   return (
     <div className={'flex justify-center flex-col'}>
       <header className="mb-8 pt-2">
@@ -338,7 +344,7 @@ const RecommendationContent: React.FC<{ post: Post, zenMode: boolean }> = ({ pos
           </div>
         )}
         <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
-          <time>{formatDate(post.date)}</time>
+          <time>{formatDate(post.date, i18n.language)}</time>
         </div>
 
         {post.image && (
@@ -363,6 +369,7 @@ const RecommendationContent: React.FC<{ post: Post, zenMode: boolean }> = ({ pos
 };
 
 const ThoughtContent: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenMode }) => {
+  const { i18n } = useTranslation();
   return (
     <>
       <header className="mb-8 pt-2">
@@ -384,7 +391,7 @@ const ThoughtContent: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenM
           </div>
         )}
         <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
-          <time>{formatDate(post.date)}</time>
+          <time>{formatDate(post.date, i18n.language)}</time>
         </div>
 
         {post.image && (
@@ -409,6 +416,7 @@ const ThoughtContent: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenM
 };
 
 const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
+  const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
@@ -467,7 +475,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
           onClick={() => window.history.length > 2 ? navigate(-1) : navigate('/')}
           className={`${zenMode ? 'bg-black' : 'bg-violet-950'} text-white m-6 p-6 hover:bg-red-600 transition-colors duration-300`}
         >
-          Back
+          {t('general.back')}
         </button>
         <h1
           className={`${isMobile ? 'text-4xl mr-4' : 'text-6xl'} font-bold mb-2 text-center content-center text-white`}
@@ -522,6 +530,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
               </div>
             </div>
           }
+          <PostMetrics post={post} />
+          <LikeButton postId={post.id} initialLikes={post.likes} />
+          <CommentSection postId={post.id} />
         </article>
         {!isMobile && <div className='flex flex-col sticky top-24 self-start ml-2'>
           <button className={`bg-black text-white p-6 mr-4 hover:bg-red-600 transition-colors duration-300 ${zenMode ? '' : 'border border-white'} mb-4`} onClick={() => setZenMode(!zenMode)}>Zen Mode (click for eye friendly colors)</button>

@@ -56,7 +56,7 @@ const PatreonButton: React.FC<PatreonButtonProps> = ({
   };
 
   const variantClasses = {
-    primary: 'bg-[#FF424D] hover:bg-[#E23440] text-white shadow-md',
+    primary: 'bg-rgb(255,66,77) hover:bg-[#FF424D] text-white shadow-md',
     outline: 'bg-transparent border-2 border-[#FF424D] text-[#FF424D] hover:bg-[#FF424D] hover:text-white',
     ghost: 'bg-transparent text-[#FF424D] hover:bg-[#FF424D]/10'
   };
