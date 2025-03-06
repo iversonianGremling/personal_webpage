@@ -13,7 +13,7 @@ const AdminCommentDashboard = () => {
 
     const fetchAllComments = async () => {
       try {
-        const response = await fetch(apiUrl + '/api/comments/admin');
+        const response = await fetch(apiUrl + '/comments/admin');
         const data = await response.json();
         setComments(data);
         setLoading(false);
