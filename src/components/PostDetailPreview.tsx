@@ -41,6 +41,9 @@ const PostDetailPreview: React.FC<PostDetailProps> = ({ variant, title, content,
     visibility: visibility,
     createdAt: Date.now().toString(),
     updatedAt: Date.now().toString(),
+    views: 0,
+    comments: [],
+    likes: 0
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
