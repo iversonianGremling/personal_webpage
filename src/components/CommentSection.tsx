@@ -90,12 +90,12 @@ const CommentSection = ({ postId }: { postId: number }) => {
   if (loading) return <div className="p-4 text-center">Loading comments...</div>;
 
   return (
-    <div className="mt-8 bg-gray-50 p-6 rounded-lg">
-      <h3 className="text-xl font-bold mb-6">Comments</h3>
+    <div className="mt-8 bg-black p-6 rounded-lg w-full">
+      <h3 className="text-xl font-bold mb-6 te">Comments</h3>
 
       <form onSubmit={handleSubmit} className="mb-6">
         <textarea
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"
           rows={3}
           placeholder="Add a comment..."
           value={content}
@@ -104,7 +104,7 @@ const CommentSection = ({ postId }: { postId: number }) => {
         {error && <p className="text-red-500 mt-2">{error}</p>}
         <button
           type="submit"
-          className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mt-2 bg-violet-600 text-white py-2 px-4 rounded-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
           disabled={!content.trim()}
         >
           Post Comment
@@ -113,7 +113,7 @@ const CommentSection = ({ postId }: { postId: number }) => {
 
       <div className="space-y-4">
         {comments.length === 0 ? (
-          <p className="text-gray-500 italic">No comments yet. Be the first to comment!</p>
+          <p className="text-gray-300 italic">No comments yet. Be the first to comment!</p>
         ) : (
           comments.map((comment) => (
             <div key={comment.id} className="bg-white p-4 rounded-md shadow-sm">
