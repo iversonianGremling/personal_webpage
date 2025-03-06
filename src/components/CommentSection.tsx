@@ -31,7 +31,7 @@ const CommentSection = ({ postId }: { postId: number }) => {
     if (!content.trim()) return;
 
     try {
-      const response = await fetch(apiUrl + '/api/comments', {
+      const response = await fetch(apiUrl + '/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const CommentSection = ({ postId }: { postId: number }) => {
     if (!isAdmin) return;
 
     try {
-      const response = await fetch(`${apiUrl}/api/comments/${commentId}`, {
+      const response = await fetch(`${apiUrl}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
