@@ -13,7 +13,12 @@ const AdminCommentDashboard = () => {
 
     const fetchAllComments = async () => {
       try {
-        const response = await fetch(apiUrl + '/comments/admin');
+        const response = await fetch(apiUrl + '/comments/admin',
+          {
+            method: 'GET',
+            credentials: 'include',
+          },
+        );
         console.log('Response status:', response.status);
         const text = await response.text();
         console.log('Raw response:', text);
