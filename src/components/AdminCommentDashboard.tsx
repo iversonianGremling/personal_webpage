@@ -73,15 +73,20 @@ const AdminCommentDashboard = () => {
 
   // Group comments by post
   const commentsByPost = {};
-  comments.forEach(comment => {
-    if (!commentsByPost[comment.post.id]) {
-      commentsByPost[comment.post.id] = {
-        post: comment.post,
-        comments: []
-      };
-    }
-    commentsByPost[comment.post.id].comments.push(comment);
-  });
+  if (comments && comments.length > 0) {
+    comments.forEach(comment => {
+      if (!commentsByPost[comment.post.id]) {
+        commentsByPost[comment.post.id] = {
+          post: comment.post,
+          comments: []
+        };
+      }
+      commentsByPost[comment.post.id].comments.push(comment);
+    });
+  }
+  else {
+    console.error('No comments found');
+  }
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
