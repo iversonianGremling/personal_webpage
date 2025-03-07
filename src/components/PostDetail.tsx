@@ -542,7 +542,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
         {!isMobile && <div className='flex flex-col sticky top-24 self-start ml-2'>
           <button className={`bg-black text-white p-6 mr-4 hover:bg-red-600 transition-colors duration-300 ${zenMode ? '' : 'border border-white'} mb-4`} onClick={() => setZenMode(!zenMode)}>Zen Mode (click for eye friendly colors)</button>
           <TableOfContents post={post} isMobile={isMobile} zenMode={zenMode} />
-          <SimilarPosts post={post} zenMode={zenMode} />
+          <SimilarPosts post={post} zenMode={zenMode} isAdmin={admin} />
           <div className='flex flex-row justify-center gap-4'>
             {!zenMode ?
               (<>
