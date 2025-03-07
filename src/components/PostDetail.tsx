@@ -456,6 +456,26 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
     fetchPost();
   }, [id]);
 
+  const handleDelete = async (postId: number) => {
+    if (!window.confirm('Are you sure you want to delete this post?')) return;
+    try {
+      const response = await fetch(apiUrl + `/posts/${postId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete post');
+      }
+    } catch (error) {
+      setError((error as Error).message);
+    }
+  };
+
+  const handleEdit = (postId: number) => {
+    navigate(`/edit-post/${postId}`);
+  };
+
+
 
   if (isLoading)
     return (
@@ -482,11 +502,28 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
         >
           {t('general.back')}
         </button>
-        <h1
-          className={`${isMobile ? 'text-4xl mr-4' : 'text-6xl'} font-bold mb-2 text-center content-center text-white`}
-        >
-          {post.title}
-        </h1>
+        <div className='flex flex-row w-full justify-between'>
+          <h1
+            className={`${isMobile ? 'text-4xl mr-4' : 'text-6xl'} font-bold mb-2 text-center content-center text-white`}
+          >
+            {post.title}
+          </h1>
+          <div className='mt-12' style={{ marginRight: '22rem'}}>
+            <button
+              onClick={() => handleEdit(post.id)}
+              className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
+            >
+                Edit Blood
+            </button>
+            <button
+              onClick={() => handleDelete(post.id)}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            >
+                Delete Blood
+            </button>
+          </div>
+        </div>
+
       </div>
       {isMobile && <div className='flex flex-col top-24 self-start mx-7 mb-5'>
 
