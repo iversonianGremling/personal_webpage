@@ -508,6 +508,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
           >
             {post.title}
           </h1>
+          {admin &&
           <div className='mt-12' style={{ marginRight: '22rem'}}>
             <button
               onClick={() => handleEdit(post.id)}
@@ -522,6 +523,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
                 Delete Blood
             </button>
           </div>
+          }
         </div>
 
       </div>
