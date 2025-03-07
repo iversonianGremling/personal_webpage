@@ -9,9 +9,9 @@
     "search": "Buscar",
     "share": "Compartir",
     "support": "Apoyar",
-    "zenMode": "Modo Zen (haz clic para colores amigables)",
-    "tableOfContents": "Tabla de Contenidos (clickeable)",
-    "similarPosts": "Publicaciones Similares",
+    "zenMode": "Modo Zen (clic para colores más amigables)",
+    "tableOfContents": "Tabla de Contenidos (haz clic)",
+    "similarPosts": "Posts Similares",
     "noSimilarPosts": "No se encontraron publicaciones similares."
   },
   "nav": {
