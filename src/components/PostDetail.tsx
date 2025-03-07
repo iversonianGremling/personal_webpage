@@ -205,13 +205,13 @@ const TableOfContents: React.FC<{ post: Post, isMobile: boolean, zenMode: boolea
   );
 };
 
-const SimilarPosts: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenMode }) => {
+const SimilarPosts: React.FC<{ post: Post, zenMode: boolean, isAdmin: boolean }> = ({ post, zenMode, isAdmin }) => {
   const [posts, setPosts] = useState<PostWithSimilarity[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiUrl + '/posts');
+        const response = await fetch(isAdmin ? `${apiUrl}/posts/admin/` : `${apiUrl}/posts/`);
         if (!response.ok) throw new Error('Failed to fetch posts');
         const data = await response.json();
 
@@ -437,10 +437,12 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
     console.log('History length: ', window.history.length);
     const fetchPost = async () => {
       try {
-        const response = await fetch(apiUrl + `${admin ? '/admin' : ''}/posts/${Number(id)}`, {
-          method: 'GET',
-          credentials: 'include',
-        });
+        const response = await fetch(
+          admin ? `${apiUrl}/posts/admin/${id}` : `${apiUrl}/posts/${id}`
+          , {
+            method: 'GET',
+            credentials: 'include',
+          });
         if (!response.ok) throw new Error('Post not found');
         const data = await response.json();
         setPost(data);
