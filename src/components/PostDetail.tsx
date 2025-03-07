@@ -437,7 +437,10 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
     console.log('History length: ', window.history.length);
     const fetchPost = async () => {
       try {
-        const response = await fetch(apiUrl + `${admin ? '/admin' : ''}/posts/${Number(id)}`);
+        const response = await fetch(apiUrl + `${admin ? '/admin' : ''}/posts/${Number(id)}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
         if (!response.ok) throw new Error('Post not found');
         const data = await response.json();
         setPost(data);

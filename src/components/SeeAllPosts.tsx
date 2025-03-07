@@ -125,26 +125,26 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
         {posts?.reverse().map((post) => (
           <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
 
-            <Link key={post.id} to={`${isAdmin ? '/admin' : ''}/posts/${post.id}`}>
+            <Link key={post.id} to={`${apiUrl}${isAdmin ? '/admin' : ''}/posts/${post.id}`}>
               <h2 className="text-2xl font-bold mb-2 hover:text-red-600">{post.title}</h2>
             </Link>
             <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
-            <button
-              onClick={() => handleEdit(post.id)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
-            >
+            {admin &&
+            <>
+              <button
+                onClick={() => handleEdit(post.id)}
+                className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
+              >
                 Edit Blood
-            </button>
-            <button
-              onClick={() => handleDelete(post.id)}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-            >
+              </button>
+              <button
+                onClick={() => handleDelete(post.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+              >
                 Delete Blood
-            </button>
-            <div className="mt-2 font-extrabold font-mono font-serif">
-              {' '}
-                ↑ Are you free?
-            </div>
+              </button>
+            </>
+            }
             <p
               className="mb-4 line-clamp-5"
               dangerouslySetInnerHTML={{ __html: post.content }}
