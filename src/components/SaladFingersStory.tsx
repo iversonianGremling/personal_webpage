@@ -33,8 +33,8 @@ const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect =
   }, [index]);
 
   const handleClick = () => {
-    setIndex((prevIndex) => (prevIndex + 1) % textArray.length);
-    if (index === textArray.length - 2) navigate('/');
+    setIndex((prevIndex) => (prevIndex + 1) % (textArray as string[]).length);
+    if (index === (textArray as string[]).length - 2) navigate('/');
   };
 
   const handleMouseEnter = () => {

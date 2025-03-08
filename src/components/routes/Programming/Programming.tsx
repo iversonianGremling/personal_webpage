@@ -82,7 +82,7 @@ const Programming: React.FC = () => {
       <div className="gopher">
         <NavBar />
         <div className="flex h-screen">
-          {!isMobile && <ProgrammingSidebar onPostSelect={setSelectedPostId} t={t} />}
+          {!isMobile && <ProgrammingSidebar onPostSelect={setSelectedPostId} />}
 
           <div className="flex-1 p-8 overflow-y-auto">
             {/* Show default content only when no post is selected */}
