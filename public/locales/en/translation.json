@@ -202,10 +202,9 @@
     "title": "Programming",
     "quote": "printf(\"And folks, let's be honest. Sturgeon was an optimist. Way more than 90% of code is crap.\") – Al viro",
     "recentPosts": "Recent posts",
-    "allPosts": "All posts",
     "terminal": {
       "prompt": "body@velavelucci:~$",
-      "command": "ls -lha posts"
+      "command": "ls -lha latest-posts"
     },
     "loading": "Loading posts...",
     "programmingSidebar": {

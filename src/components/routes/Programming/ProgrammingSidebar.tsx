@@ -5,6 +5,7 @@ import '../../../assets/styles/gopher.css';
 import searchIcon from '../../../assets/icons/search.png';
 import openFolderIcon from '../../../assets/icons/open_folder.png';
 import closedFolderIcon from '../../../assets/icons/closed_folder.png';
+import { useTranslation } from 'react-i18next';
 
 interface Post {
   id: string;
@@ -18,9 +19,7 @@ interface Folder {
   posts?: Post[];
 }
 
-interface ProgrammingSidebarProps {
-  onPostSelect: (postId: string) => void;
-}
+interface ProgrammingSidebarProps { onPostSelect: (postId: string) => void; }
 
 const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
   onPostSelect,
@@ -30,6 +29,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -39,8 +39,8 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
         const data = await response.json();
 
         const programmingPosts = data
-          .filter((post: any) => post.tags?.includes('programming'))
-          .map((post: any) => ({
+          .filter((post) => post.tags?.includes('programming'))
+          .map((post) => ({
             id: post.id.toString(),
             title: post.title,
             tags: post.tags,
@@ -87,7 +87,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
         />
         <input
           type="text"
-          placeholder="Search posts or folders..."
+          placeholder={t('programmingPage.programmingSidebar.searchPlaceholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-3 py-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -118,7 +118,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
                   className="inline-block mr-2 max-h-4"
                 />
               )}
-              Programming
+              {t('programmingPage.programmingSidebar.folderName')}
             </div>
             {expanded && (
               <ul className="mt-2 ml-4">

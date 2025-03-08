@@ -54,7 +54,7 @@ const Programming: React.FC = () => {
             id: post.id.toString(),
             title: post.title,
             tags: post.tags,
-          }));
+          })).slice(0, 5);
 
         setMobilePosts(programmingPosts);
       } catch (error) {
@@ -90,23 +90,8 @@ const Programming: React.FC = () => {
               <div className="p-8">
                 <h1 className="text-3xl font-bold mb-4">{t('programmingPage.title')}</h1>
                 <p>{t('programmingPage.quote')}</p>
-                <p className="text-xl">{t('programmingPage.recentPosts')}</p>
-                <ul className="list-disc pl-5 mt-4">
-                  {latestPosts.map((post) => (
-                    <li key={post.id}>
-                      <Link
-                        to={`/posts/${post.id}`}
-                        className="text-blue-600 hover:underline"
-                        style={{ fontFamily: 'VT323' }}
-                        onClick={() => setSelectedPostId(post.id.toString())}
-                      >
-                        {post.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
 
-                <p className="text-xl">{t('programmingPage.allPosts')}</p>
+                <p className="text-xl">{t('programmingPage.recentPosts')}</p>
                 <div className="bg-black text-white border-1 border-white mt-2 pb-2">
                   <div
                     className="flex flex-col ml-2 text-emerald-400"

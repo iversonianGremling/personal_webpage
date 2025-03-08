@@ -203,10 +203,9 @@
     "title": "Programación",
     "quote": "printf(\"Y gente, seamos honestos. Sturgeon era un optimista. Mucho más del 90% del código es basura.\") – Al viro",
     "recentPosts": "Posts recientes",
-    "allPosts": "Todos los posts",
     "terminal": {
       "prompt": "body@velavelucci:~$",
-      "command": "ls -lha posts"
+      "command": "ls -lha latest-posts"
     },
     "loading": "Cargando posts...",
     "programmingSidebar": {
