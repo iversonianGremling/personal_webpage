@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { apiUrl } from "../../../assets/env-var";
-import "../../../assets/styles/gopher.css";
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import '../../../assets/styles/gopher.css';
 
 interface Post {
   id: string;
@@ -23,7 +23,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
   onPostSelect,
 }) => {
   const [expanded, setExpanded] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -31,12 +31,12 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiUrl + "/posts/tag/programming/");
+        const response = await fetch(apiUrl + '/posts/tag/programming/');
         console.log(response);
         const data = await response.json();
 
         const programmingPosts = data
-          .filter((post: any) => post.tags?.includes("programming"))
+          .filter((post: any) => post.tags?.includes('programming'))
           .map((post: any) => ({
             id: post.id.toString(),
             title: post.title,
@@ -45,7 +45,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
 
         setPosts(programmingPosts);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error('Error fetching posts:', error);
       } finally {
         setLoading(false);
       }
@@ -62,14 +62,14 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
   }, [posts, searchQuery]);
 
   useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "../../src/assets/styles/gopher.css";
-    link.id = "gopher-stylesheet";
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '../../src/assets/styles/gopher.css';
+    link.id = 'gopher-stylesheet';
     document.head.appendChild(link);
 
     return () => {
-      const existingLink = document.getElementById("gopher-stylesheet");
+      const existingLink = document.getElementById('gopher-stylesheet');
       if (existingLink) document.head.removeChild(existingLink);
     };
   }, []);
@@ -125,7 +125,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
                     className="text-gray-600 hover:text-gray-800 cursor-pointer"
                     // onClick={() => onPostSelect(post.id)}
                     onClick={() => navigate(`/posts/${post.id}`)}
-                    style={{ fontFamily: "VT323" }}
+                    style={{ fontFamily: 'VT323' }}
                   >
                     {post.title}
                   </li>

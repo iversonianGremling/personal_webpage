@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createNoise2D } from "simplex-noise";
-import Post from "../../../types";
-import NavBar from "../../NavBar";
-import "../../../assets/styles/writings.css";
-import { Link } from "react-router-dom";
-import { apiUrl } from "../../../assets/env-var";
+import React, { useEffect, useRef, useState } from 'react';
+import { createNoise2D } from 'simplex-noise';
+import Post from '../../../types';
+import NavBar from '../../NavBar';
+import '../../../assets/styles/writings.css';
+import { Link } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import { useTranslation } from 'react-i18next';
 
 const Writings: React.FC = () => {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
@@ -15,13 +17,13 @@ const Writings: React.FC = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 720);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   });
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
-      const response = await fetch(apiUrl + "/posts/tag/writing/latest");
+      const response = await fetch(apiUrl + '/posts/tag/writing/latest');
       const data = await response.json();
       console.log(data);
       setLatestPosts(data);
@@ -40,26 +42,26 @@ const Writings: React.FC = () => {
     }
 
     function handleVisibilityChange() {
-      if (document.visibilityState === "visible") {
+      if (document.visibilityState === 'visible') {
         drawTexture();
       }
     }
 
-    window.addEventListener("resize", handleResize);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     handleResize();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
   const drawTexture = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const width = canvas.width;
@@ -137,23 +139,46 @@ const Writings: React.FC = () => {
     ctx.putImageData(imageData, 0, 0);
   };
 
+  const title = t('writingsPage.title');
+
+  const categories = [
+    {
+      title: t('writingsPage.categories.poetry.title'),
+      imgSrc: 'https://media.tenor.com/BKNAEquzeXEAAAAi/heart-heartbeat.gif',
+      route: 'poetry',
+      description: t('writingsPage.categories.poetry.description'),
+    },
+    {
+      title: t('writingsPage.categories.fiction.title'),
+      imgSrc: 'https://i.gifer.com/S6es.gif',
+      route: 'fiction',
+      description: t('writingsPage.categories.fiction.description'),
+    },
+    {
+      title: t('writingsPage.categories.nonFiction.title'),
+      imgSrc: 'https://animalbiosciences.uoguelph.ca/~swatland/s140.gif',
+      route: 'non-fiction',
+      description: t('writingsPage.categories.nonFiction.description'),
+    },
+  ];
+
   return (
     <div
       style={{
-        position: "relative",
-        width: "100%",
-        minHeight: "100vh",
-        overflow: "hidden",
+        position: 'relative',
+        width: '100%',
+        minHeight: '100vh',
+        overflow: 'hidden',
       }}
     >
       <canvas
         ref={canvasRef}
         className="animated-background"
         style={{
-          display: "block",
-          width: "100%",
-          height: "100%",
-          position: "fixed",
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          position: 'fixed',
           top: 0,
           left: 0,
           zIndex: -1,
@@ -162,28 +187,28 @@ const Writings: React.FC = () => {
 
       <div
         style={{
-          position: "fixed",
+          position: 'fixed',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(100, 10, 40, 0.5)",
-          mixBlendMode: "multiply",
-          pointerEvents: "none",
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(100, 10, 40, 0.5)',
+          mixBlendMode: 'multiply',
+          pointerEvents: 'none',
           zIndex: -1,
         }}
       />
 
       <div
         style={{
-          position: "fixed",
+          position: 'fixed',
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
           background:
-            "radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 90%)",
-          pointerEvents: "none",
+            'radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 90%)',
+          pointerEvents: 'none',
           zIndex: -1,
         }}
       />
@@ -192,25 +217,25 @@ const Writings: React.FC = () => {
       <div
         className="title-container"
         style={{
-          color: "rgba(199, 119, 119, 0.9)",
-          fontSize: `${isMobile ? "4rem" : "8rem"}`,
-          fontFamily: "Lithops, sans-serif",
-          textAlign: "center",
-          padding: "20px 0",
-          cursor: "default",
+          color: 'rgba(199, 119, 119, 0.9)',
+          fontSize: `${isMobile ? '4rem' : '8rem'}`,
+          fontFamily: 'Lithops, sans-serif',
+          textAlign: 'center',
+          padding: '20px 0',
+          cursor: 'default',
         }}
       >
-        {Array.from("WRITINGS").map((char, index) => (
+        {Array.from(title).map((char, index) => (
           <span
             key={index}
             className="wobble-letter"
             style={
               {
-                fontFamily: "Lithops, sans-serif",
-                "--char-index": index,
-                "--random-x": Math.random() * 2 + 1,
-                "--random-y": Math.random() * 2 + 1,
-                "--random-duration": `${Math.random() * 1 + 1}s`,
+                fontFamily: 'Lithops, sans-serif',
+                '--char-index': index,
+                '--random-x': Math.random() * 2 + 1,
+                '--random-y': Math.random() * 2 + 1,
+                '--random-duration': `${Math.random() * 1 + 1}s`,
               } as React.CSSProperties
             }
           >
@@ -221,56 +246,32 @@ const Writings: React.FC = () => {
 
       <div
         style={{
-          position: "relative",
+          position: 'relative',
           zIndex: 2,
-          padding: "20px",
-          paddingBottom: "100px",
+          padding: '20px',
+          paddingBottom: '100px',
         }}
       >
         <div
           className="flex flex-row flex-wrap pb-8"
           style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "flex-start",
-            gap: "20px",
-            flexWrap: "wrap",
+            display: 'flex',
+            justifyContent: 'space-evenly',
+            alignItems: 'flex-start',
+            gap: '20px',
+            flexWrap: 'wrap',
           }}
         >
-          {[
-            {
-              title: "POETRY",
-              imgSrc:
-                "https://media.tenor.com/BKNAEquzeXEAAAAi/heart-heartbeat.gif",
-              route: "poetry",
-              description:
-                "Through each contraction a world is shattered, movement is created, flows lose their stasis. As a heart that has been broken many times the blood, in fractal solidarity, becomes more and more corrupted, until everything that is left is a putrid fluid that never stops. The heart moves as a perpetual motion machine, lingering in the deepest abysses of the excesses of reality",
-            },
-            {
-              title: "FICTION",
-              imgSrc: "https://i.gifer.com/S6es.gif",
-              route: "fiction",
-              description:
-                "Mainly composed of fat tissue and water, the brain serves as the core of the body, capable of translating spikes of electrical current across its surface and inside into phenomenological experiences, its machinations, whether conscious or unconscious, earn it the title of the great dictator of the body, controling: paralysis, acceleration, synthesis...etc. The ultimate protein based machine with the outermost electrical efficiency, capable of creating entirely new realities.",
-            },
-            {
-              title: "NON FICTION",
-              imgSrc:
-                "https://animalbiosciences.uoguelph.ca/~swatland/s140.gif",
-              route: "non-fiction",
-              description:
-                "The intestines hold, retract, puke, respond to the vicious whims of the anxious body as they crumble in pain. They extract as much information from what should not be called food at this point to transform it into energy, they are a translator that subtracts, they subtract everything until all that is left is feces. An everlasting transformation that offers the reflection of reality",
-            },
-          ].map((item, index) => (
+          {categories.map((item, index) => (
             <Link key={index} to={item.route}>
               <div
                 key={index}
                 className="flex flex-col items-center p-5 px-10 pt-7 rounded-lg section-card"
                 style={{
-                  backgroundColor: "rgba(40, 10, 20, 0.8)",
-                  transition: "background-color 0.3s, transform 0.3s",
-                  minHeight: "46rem",
-                  maxHeight: "46rem",
+                  backgroundColor: 'rgba(40, 10, 20, 0.8)',
+                  transition: 'background-color 0.3s, transform 0.3s',
+                  minHeight: '46rem',
+                  maxHeight: '46rem',
                 }}
               >
                 <div className="flex flex-col items-center">
@@ -278,22 +279,22 @@ const Writings: React.FC = () => {
                     src={item.imgSrc}
                     alt={item.title}
                     style={{
-                      height: "200px",
-                      objectFit: "contain",
-                      display: "block",
+                      height: '200px',
+                      objectFit: 'contain',
+                      display: 'block',
                       opacity: 0.8,
                     }}
                   />
                   <div
                     className="text-6xl w-64 lithops-text text-center text-white pt-3 content-center"
-                    style={{ color: "rgba(255, 200, 200, 0.6)" }}
+                    style={{ color: 'rgba(255, 200, 200, 0.6)' }}
                   >
                     {item.title}
                   </div>
                 </div>
                 <div
                   className="flex text-xl w-80 pt-4 ph-2 items-center text-left"
-                  style={{ color: "rgba(255, 200, 200, 1)" }}
+                  style={{ color: 'rgba(255, 200, 200, 1)' }}
                 >
                   {item.description}
                 </div>
@@ -307,40 +308,40 @@ const Writings: React.FC = () => {
             key={post.id}
             to={`/posts/${post.id}`}
             style={{
-              display: "block",
-              textDecoration: "none",
-              transition: "transform 0.3s ease",
+              display: 'block',
+              textDecoration: 'none',
+              transition: 'transform 0.3s ease',
             }}
           >
             <div
               style={
                 {
-                  marginBottom: "20px",
-                  padding: "15px",
-                  backgroundColor: "rgba(40, 10, 20, 0.8)",
-                  borderRadius: "8px",
-                  color: "rgba(255, 230, 230, 0.9)",
-                  cursor: "pointer",
-                  ":hover": {
-                    transform: "scale(1.02)",
-                    backgroundColor: "rgba(60, 20, 30, 0.9)",
+                  marginBottom: '20px',
+                  padding: '15px',
+                  backgroundColor: 'rgba(40, 10, 20, 0.8)',
+                  borderRadius: '8px',
+                  color: 'rgba(255, 230, 230, 0.9)',
+                  cursor: 'pointer',
+                  ':hover': {
+                    transform: 'scale(1.02)',
+                    backgroundColor: 'rgba(60, 20, 30, 0.9)',
                   },
                 } as React.CSSProperties
               }
             >
-              <h2 style={{ marginBottom: "10px" }}>{post.title}</h2>
+              <h2 style={{ marginBottom: '10px' }}>{post.title}</h2>
               <div
                 dangerouslySetInnerHTML={{ __html: post.content }}
                 style={{
-                  marginBottom: "10px",
-                  maxHeight: "100px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
+                  marginBottom: '10px',
+                  maxHeight: '100px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               />
-              <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-                <span>{post.date}</span> | <span>{post.type}</span> |{" "}
-                <span>{post.tags.join(", ")}</span>
+              <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>
+                <span>{post.date}</span> | <span>{post.type}</span> |{' '}
+                <span>{post.tags.join(', ')}</span>
               </div>
             </div>
           </Link>
@@ -349,21 +350,21 @@ const Writings: React.FC = () => {
 
       <footer
         style={{
-          position: "relative",
+          position: 'relative',
           zIndex: 2,
-          textAlign: "center",
-          padding: "10px 0",
-          color: "rgba(255, 200, 200, 0.8)",
-          fontSize: "0.9rem",
-          backgroundColor: "black",
+          textAlign: 'center',
+          padding: '10px 0',
+          color: 'rgba(255, 200, 200, 0.8)',
+          fontSize: '0.9rem',
+          backgroundColor: 'black',
         }}
       >
-        Font Lithops by Anne-Dauphine Borione. Distributed by{" "}
+        {t('writingsPage.footer')}{' '}
         <a
           href="https://velvetyne.fr"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: "rgba(255, 200, 200, 0.9)" }}
+          style={{ color: 'rgba(255, 200, 200, 0.9)' }}
         >
           velvetyne.fr
         </a>

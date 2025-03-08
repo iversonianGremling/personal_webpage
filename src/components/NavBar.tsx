@@ -249,7 +249,7 @@ function NavBar() {
         <div className="search-bar-li">
           <SearchBar />
         </div>
-        {/* <SelectLanguage /> */}
+        <SelectLanguage />
         {/* <ThemeSwitcher /> */}
       </ul>
     </nav>

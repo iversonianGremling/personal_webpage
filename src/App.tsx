@@ -84,15 +84,7 @@ function App() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(apiUrl + '/posts/latest', {
-          method: 'GET',
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Origin: window.location.origin,
-          },
-        });
+        const response = await fetch(apiUrl + '/posts/latest');
 
         if (!response.ok) throw new Error('Failed to fetch posts');
 

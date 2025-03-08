@@ -224,13 +224,13 @@ const PostCard: React.FC<Props> = ({
           </h2>
 
           {/* Tags display */}
-          {tags.length > 0 && (
+          {(tags.length > 0 && tags[0] !== '') && (
             <div className={clsx('tags flex flex-wrap gap-2', {
               'mt-3 mb-4': variant === 'default',
               'mb-2': variant === 'latest',
               'mb-1': variant === 'fiction',
             })}>
-              {tags.map((tag, i) => (
+              {tags.filter(tag => tag !== 'recommendation' && !/^q(-?\d+)$/.test(tag)).map((tag, i) => (
                 <Link key={i} to={`/tag/${tag}`}>
                   <span
                     key={i}
@@ -263,13 +263,11 @@ const PostCard: React.FC<Props> = ({
               <>
                 <span>{formatDate(date)}</span> |
                 <span>{type}</span> |
-                <span>{tags.join(', ')}</span>
               </>
             ) : (
               <>
                 <span>{formatDate(date)}</span>
                 {variant !== 'fiction' && <span> | {type}</span>}
-                {tags.length > 0 && <span> | {tags.join(', ')}</span>}
               </>
             )}
           </div>

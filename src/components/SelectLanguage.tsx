@@ -22,7 +22,7 @@ export const SelectLanguage: React.FC = () => {
         onClick={toggleLanguage}
         className="w-full h-full px-8 transition-all duration-200 content-center bg-black text-white hover:bg-red-600"
       >
-        {currentLanguage === 'en' ? 'English' : 'Español'}
+        {currentLanguage === 'en' ? 'Español' : 'English'}
       </div>
     </div>
   );

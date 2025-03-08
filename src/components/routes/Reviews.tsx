@@ -12,6 +12,7 @@ import opinionPicture from '../../assets/images/opinion.png';
 import programmingPicture from '../../assets/images/programming.png';
 import videogamesPicture from '../../assets/images/videogames.png';
 import artPicture from '../../assets/images/art.png';
+import { useTranslation } from 'react-i18next';
 
 interface GridItemProps {
   name: string;
@@ -33,16 +34,6 @@ const sampleImages = [
 ];
 
 // Updated categories with imageUrl property
-const categories = [
-  { name: 'Music', textColor: '#72955A', backgroundColor: '#E78B21', imageUrl: sampleImages[0] },
-  { name: 'Movies', textColor: '#FDFD00', backgroundColor: '#2C3CD0', imageUrl: sampleImages[1] },
-  { name: 'Videogames', textColor: '#894545', backgroundColor: '#8AD571', imageUrl: sampleImages[2] },
-  { name: 'Literature', textColor: '#D39797', backgroundColor: '#502F56', imageUrl: sampleImages[3] },
-  { name: 'Non-fiction', textColor: '#763939', backgroundColor: '#CD74DD', imageUrl: sampleImages[4] },
-  { name: 'Art', textColor: '#946DBD', backgroundColor: '#403D5A', imageUrl: sampleImages[5] },
-  { name: 'Software', textColor: '#000000', backgroundColor: '#392AC9', imageUrl: sampleImages[6] },
-  { name: 'Recommendations',  textColor: '#D374D6', backgroundColor: '#4B55B0', imageUrl: sampleImages[7] },
-];
 
 const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, imageUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -103,43 +94,57 @@ const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, i
   );
 };
 
-const ReviewsPage: React.FC = () => (
-  <div className="flex flex-col h-screen overflow-hidden">
-    <NavBar />
-    <div className="grid grid-cols-2 md:grid-cols-4 flex-1 min-h-0">
-      {categories.map((category) => (
-        <GridItem
-          key={category.name}
-          name={category.name}
-          textColor={category.textColor}
-          backgroundColor={category.backgroundColor}
-          imageUrl={category.imageUrl}
-        />
-      ))}
-    </div>
-    <footer
-      style={{
-        position: 'relative',
-        zIndex: 2,
-        textAlign: 'center',
-        padding: '10px 0',
-        color: 'rgba(255, 200, 200, 0.8)',
-        fontSize: '0.9rem',
-        backgroundColor: 'black',
-      }}
-    >
-      Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
-      <a
-        href="https://velvetyne.fr"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: 'rgba(255, 200, 200, 0.9)' }}
+const ReviewsPage: React.FC = () => {
+  const { t } = useTranslation();
+  const categories = [
+    { name: t('reviewsPage.music'), textColor: '#72955A', backgroundColor: '#E78B21', imageUrl: sampleImages[0] },
+    { name: t('reviewsPage.movies'), textColor: '#FDFD00', backgroundColor: '#2C3CD0', imageUrl: sampleImages[1] },
+    { name: t('reviewsPage.videogames'), textColor: '#894545', backgroundColor: '#8AD571', imageUrl: sampleImages[2] },
+    { name: t('reviewsPage.literature'), textColor: '#D39797', backgroundColor: '#502F56', imageUrl: sampleImages[3] },
+    { name: t('reviewsPage.non-fiction'), textColor: '#763939', backgroundColor: '#CD74DD', imageUrl: sampleImages[4] },
+    { name: t('reviewsPage.art'), textColor: '#946DBD', backgroundColor: '#403D5A', imageUrl: sampleImages[5] },
+    { name: t('reviewsPage.software'), textColor: '#000000', backgroundColor: '#392AC9', imageUrl: sampleImages[6] },
+    { name: t('reviewsPage.recommendations'),  textColor: '#D374D6', backgroundColor: '#4B55B0', imageUrl: sampleImages[7] },
+  ];
+
+  return (
+    <div className="flex flex-col h-screen overflow-hidden">
+      <NavBar />
+      <div className="grid grid-cols-2 md:grid-cols-4 flex-1 min-h-0">
+        {categories.map((category) => (
+          <GridItem
+            key={category.name}
+            name={category.name}
+            textColor={category.textColor}
+            backgroundColor={category.backgroundColor}
+            imageUrl={category.imageUrl}
+          />
+        ))}
+      </div>
+      <footer
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          textAlign: 'center',
+          padding: '10px 0',
+          color: 'rgba(255, 200, 200, 0.8)',
+          fontSize: '0.9rem',
+          backgroundColor: 'black',
+        }}
       >
+      Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
+        <a
+          href="https://velvetyne.fr"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'rgba(255, 200, 200, 0.9)' }}
+        >
         velvetyne.fr
-      </a>
+        </a>
       .
-    </footer>
-  </div>
-);
+      </footer>
+    </div>
+  );
+};
 
 export default ReviewsPage;

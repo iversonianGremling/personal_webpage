@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { apiUrl } from "../assets/env-var";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { apiUrl } from '../assets/env-var';
+import { useTranslation } from 'react-i18next';
 
 interface Post {
   id: number;
@@ -28,7 +29,8 @@ type CategorizedSuggestions = {
 };
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
+  const { t } = useTranslation();
+  const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<CategorizedSuggestions>({
     full: [],
     title: [],
@@ -44,7 +46,7 @@ const SearchBar = () => {
     const terms: string[] = [];
 
     input.split(/\s+/).forEach((token) => {
-      if (token.startsWith("tag:")) {
+      if (token.startsWith('tag:')) {
         tags.push(token.slice(4));
       } else {
         terms.push(token);
@@ -52,7 +54,7 @@ const SearchBar = () => {
     });
 
     return {
-      q: terms.join(" "),
+      q: terms.join(' '),
       tags: tags.length > 0 ? tags : undefined,
     };
   };
@@ -78,7 +80,7 @@ const SearchBar = () => {
     const lowerQuery = parsed.q.toLowerCase();
 
     try {
-      const response = await axios.get<Post[]>(apiUrl + "/posts/search", {
+      const response = await axios.get<Post[]>(apiUrl + '/posts/search', {
         params: {
           q: parsed.q,
           tags: parsed.tags,
@@ -126,7 +128,7 @@ const SearchBar = () => {
         other: categorized.other.slice(0, 3),
       });
     } catch (error) {
-      console.error("Error fetching suggestions:", error);
+      console.error('Error fetching suggestions:', error);
       setSuggestions({ full: [], title: [], content: [], tags: [], other: [] });
     }
   };
@@ -155,35 +157,35 @@ const SearchBar = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const categories = [
-    { type: "full", label: "Full Matches" },
-    { type: "title", label: "Title Matches" },
-    { type: "content", label: "Content Matches" },
-    { type: "tags", label: "Tag Matches" },
-    { type: "other", label: "Other Matches" },
+    { type: 'full', label: t('searchBar.categories.full') },
+    { type: 'title', label: t('searchBar.categories.title') },
+    { type: 'content', label: t('searchBar.categories.content') },
+    { type: 'tags', label: t('searchBar.categories.tags') },
+    { type: 'other', label: t('searchBar.categories.other') },
   ] as const;
 
   return (
     <div className="search-container" ref={searchRef}>
       <input
         type="text"
-        placeholder="Search posts by title, content, tags..."
+        placeholder={t('searchBar.placeholder')}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => setIsFocused(true)}
         style={{
-          width: "100%",
-          marginRight: "0.7rem",
+          width: '100%',
+          marginRight: '0.7rem',
         }}
       />
       {isFocused && query && suggestions.full.length > 0 ? (
         <div className="suggestions-dropdown">
           {categories.map(({ type, label }) => {
-            const categoryPosts = suggestions[type];
+            const categoryPosts = suggestions[type as keyof CategorizedSuggestions];
             if (categoryPosts.length === 0) return null;
 
             return (
@@ -195,7 +197,7 @@ const SearchBar = () => {
                     to={`/posts/${post.id}`}
                     className="suggestion-item"
                     onClick={() => {
-                      setQuery("");
+                      setQuery('');
                       setSuggestions({
                         full: [],
                         title: [],
@@ -208,7 +210,7 @@ const SearchBar = () => {
                     <div className="match-type">{label}</div>
                     <div className="suggestion-title">{post.title}</div>
                     <div className="suggestion-tags">
-                      {post.tags?.join(", ")}
+                      {post.tags?.join(', ')}
                     </div>
                     <div className="suggestion-date">
                       {new Date(post.date).toLocaleDateString()}
@@ -220,7 +222,7 @@ const SearchBar = () => {
           })}
         </div>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

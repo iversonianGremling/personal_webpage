@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "../../../assets/styles/poetry.css";
-import NavBar from "../../NavBar";
-import PostCard from "../../PostCard";
-import { useNavigate } from "react-router-dom";
-import { apiUrl } from "../../../assets/env-var";
-import insideHeartImage from "../../../assets/images/inside_heart.webp";
+import React, { useEffect, useState } from 'react';
+import '../../../assets/styles/poetry.css';
+import NavBar from '../../NavBar';
+import PostCard from '../../PostCard';
+import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../../assets/env-var';
+import insideHeartImage from '../../../assets/images/inside_heart.webp';
+import { useTranslation } from 'react-i18next';
 
 type Post = {
   id: number;
@@ -15,6 +16,7 @@ type Post = {
 };
 
 const Poetry: React.FC = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
   const navigate = useNavigate();
@@ -23,19 +25,22 @@ const Poetry: React.FC = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 720);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + "/posts/tag/poetry");
+      const response = await fetch(apiUrl + '/posts/tag/poetry');
       const data = await response.json();
       console.log(data);
       setPosts(data);
     };
     fetchPosts();
   }, []);
+
+  const title = t('poetryPage.title');
+  const backButtonText = t('poetryPage.backButton');
 
   return (
     <>
@@ -46,13 +51,13 @@ const Poetry: React.FC = () => {
           onClick={() => navigate(-1)}
           className="back-button-poetry"
           style={{
-            position: "fixed",
-            top: "90px",
-            left: "15px",
+            position: 'fixed',
+            top: '90px',
+            left: '15px',
           }}
         >
-          {Array.from("Return  to  my  body").map((char, index) => {
-            if (char === " ") {
+          {Array.from(backButtonText).map((char, index) => {
+            if (char === ' ') {
               return <span key={index}>&nbsp;</span>;
             } else {
               return (
@@ -61,10 +66,10 @@ const Poetry: React.FC = () => {
                   className="wobble-letter"
                   style={
                     {
-                      "--char-index": index,
-                      "--random-x": Math.random() * 0.5 + 1,
-                      "--random-y": Math.random() * 0.5 + 1,
-                      "--random-duration": `${Math.random() * 1 + 1}s`,
+                      '--char-index': index,
+                      '--random-x': Math.random() * 0.5 + 1,
+                      '--random-y': Math.random() * 0.5 + 1,
+                      '--random-duration': `${Math.random() * 1 + 1}s`,
                     } as React.CSSProperties
                   }
                 >
@@ -79,28 +84,28 @@ const Poetry: React.FC = () => {
           alt="poetry"
           className="poetry-image"
           style={{
-            position: "fixed",
+            position: 'fixed',
             top: 0,
             left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
             zIndex: -1,
           }}
         />
-        <div className={`${isMobile ? "text-7xl" : "text-9xl"} header-poetry`}>
-          {Array.from("POETRY").map((char, index) => (
+        <div className={`${isMobile ? 'text-7xl' : 'text-9xl'} header-poetry`}>
+          {Array.from(title).map((char, index) => (
             <span
               key={index}
               className="wobble-letter"
               style={
                 {
-                  cursor: "default",
-                  fontFamily: "Lithops, sans-serif",
-                  "--char-index": index,
-                  "--random-x": Math.random() * 2 + 1,
-                  "--random-y": Math.random() * 2 + 1,
-                  "--random-duration": `${Math.random() * 1 + 1}s`,
+                  cursor: 'default',
+                  fontFamily: 'Lithops, sans-serif',
+                  '--char-index': index,
+                  '--random-x': Math.random() * 2 + 1,
+                  '--random-y': Math.random() * 2 + 1,
+                  '--random-duration': `${Math.random() * 1 + 1}s`,
                 } as React.CSSProperties
               }
             >

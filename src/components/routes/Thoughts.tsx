@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useTransition } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import { useDebounce } from 'use-debounce';
 import { apiUrl } from '../../assets/env-var';
+import { useTranslation } from 'react-i18next';
 
 const ThoughtsPage: React.FC = () => {
   const [thoughts, setThoughts] = useState<Post[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch] = useDebounce(searchQuery, 500);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t } = useTranslation();
 
   const fetchThoughts = useCallback(async (query = '') => {
     try {
@@ -94,7 +96,7 @@ const ThoughtsPage: React.FC = () => {
         ></canvas>
         <input
           type="text"
-          placeholder="Where's my head at?..."
+          placeholder={t('thoughtsPage.wheresMyHead')}
           className="mb-4 w-full text-2xl"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

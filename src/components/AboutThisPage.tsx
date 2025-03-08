@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next'; // Add this import
 
 const AboutPage: React.FC = () => {
+  const { t } = useTranslation(); // Add this hook
+
   return (
     <div className="min-h-screen bg-black text-white p-8 pt-20">
       <style>
@@ -16,7 +19,7 @@ const AboutPage: React.FC = () => {
           textShadow: '0 0 15px rgba(255,255,255,0.4)'
         }}
       >
-        Why This Exists
+        {t('about.whyThisExists')}
       </h1>
 
       <div className="max-w-3xl mx-auto space-y-12 text-xl">
@@ -29,7 +32,8 @@ const AboutPage: React.FC = () => {
           }}
         >
           <span style={{ fontFamily: 'Shadows Into Light, cursive' }}></span>
-          <span style={{ fontFamily: 'Indie Flower, cursive' }}>My blood </span>         </p>
+          <span style={{ fontFamily: 'Indie Flower, cursive' }}>{t('about.myBlood')} </span>
+        </p>
 
         <div
           className="p-6 border rounded-lg"
@@ -40,12 +44,12 @@ const AboutPage: React.FC = () => {
             fontSize: '1.8rem'
           }}
         >
-          The methodologies and inner mechanisms are <span style={{ fontFamily: 'Permanent Marker, cursive' }}>completely irrelevant but include: </span>
+          {t('about.methodologiesIrrelevant')} <span style={{ fontFamily: 'Permanent Marker, cursive' }}>{t('about.completelyIrrelevant')} </span>
           <span style={{ fontFamily: 'Caveat, cursive' }}> </span><br/>
-          <span className="ml-8">→</span> Ego death<br/>
-          <span className="ml-8">→</span> Digital brutalism<br/>
-          <span className="ml-8">→</span> Philosophical fragments<br/>
-          <span className="ml-8">→</span> Software demonic rituals
+          <span className="ml-8">→</span> {t('about.egoDeath')}<br/>
+          <span className="ml-8">→</span> {t('about.digitalBrutalism')}<br/>
+          <span className="ml-8">→</span> {t('about.philosophicalFragments')}<br/>
+          <span className="ml-8">→</span> {t('about.softwareDemonicRituals')}
         </div>
 
         <p
@@ -56,10 +60,9 @@ const AboutPage: React.FC = () => {
             textShadow: '0 0 8px rgba(255,255,255,0.2)'
           }}
         >
-          <span style={{ fontFamily: 'Dancing Script, cursive' }}>As everything that has life</span>, it's unpolished.
-          <span style={{ fontFamily: 'Permanent Marker, cursive' }}> As every piece of software</span>, it's
-          forever-unfinished
-          <span style={{ fontFamily: 'Caveat, cursive' }}> this website preexists</span> modern web development.
+          <span style={{ fontFamily: 'Dancing Script, cursive' }}>{t('about.asEverythingWithLife')}</span>, {t('about.itsUnpolished')}.
+          <span style={{ fontFamily: 'Permanent Marker, cursive' }}> {t('about.asEverySoftware')}</span> {t('about.foreverUnfinished')}
+          <span style={{ fontFamily: 'Caveat, cursive' }}> {t('about.websitePreexists')}</span> {t('about.modernWebDev')}.
         </p>
 
         <div
@@ -71,12 +74,12 @@ const AboutPage: React.FC = () => {
           }}
         >
           <div className="text-center mb-4" style={{ fontFamily: 'Permanent Marker, cursive', fontSize: '1.8rem' }}>
-            ↗ OOP Patterns used ↗
+            ↗ {t('about.oopPatternsUsed')} ↗
           </div>
           <div className="text-center" style={{ fontFamily: 'Caveat, cursive', fontSize: '1.4rem' }}>
-            No spooky cookies<br/>
-            No ads that steal time<br/>
-            "Emptiness as a concept"
+            {t('about.noSpookyCookies')}<br/>
+            {t('about.noTimeStealingAds')}<br/>
+            "{t('about.emptinessAsConcept')}"
           </div>
         </div>
 
@@ -87,12 +90,12 @@ const AboutPage: React.FC = () => {
             borderColor: 'rgba(255,255,255,0.1)'
           }}
         >
-          <h2 className="text-3xl mb-6" style={{ fontFamily: 'Permanent Marker, cursive' }}>Blood Components:</h2>
+          <h2 className="text-3xl mb-6" style={{ fontFamily: 'Permanent Marker, cursive' }}>{t('about.bloodComponents')}:</h2>
           <ul className="space-y-4 text-2xl pl-8">
-            <li style={{ fontFamily: 'Caveat, cursive' }}>→ <span className="underline">The reanimated corpse of my </span>CV</li>
-            <li style={{ fontFamily: 'Shadows Into Light, cursive' }}>→ Trauma</li>
-            <li style={{ fontFamily: 'Dancing Script, cursive' }}>→ Love, passion, romanticism</li>
-            <li style={{ fontFamily: 'Indie Flower, cursive' }}>→ Stolen time</li>
+            <li style={{ fontFamily: 'Caveat, cursive' }}>→ <span className="underline">{t('about.reanimatedCorpse')}</span> CV</li>
+            <li style={{ fontFamily: 'Shadows Into Light, cursive' }}>→ {t('about.trauma')}</li>
+            <li style={{ fontFamily: 'Dancing Script, cursive' }}>→ {t('about.lovePassion')}</li>
+            <li style={{ fontFamily: 'Indie Flower, cursive' }}>→ {t('about.stolenTime')}</li>
             <li
               className="text-red-300"
               style={{
@@ -100,7 +103,7 @@ const AboutPage: React.FC = () => {
                 textShadow: '0 0 10px rgba(255,0,0,0.3)'
               }}
             >
-              → Finger bleeding keystrokes
+              → {t('about.fingerBleeding')}
             </li>
           </ul>
         </div>
