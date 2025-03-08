@@ -2,6 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../../assets/env-var';
 import '../../../assets/styles/gopher.css';
+import searchIcon from '../../../assets/icons/search.png';
+import openFolderIcon from '../../../assets/icons/open_folder.png';
+import closedFolderIcon from '../../../assets/icons/closed_folder.png';
 
 interface Post {
   id: string;
@@ -78,7 +81,7 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
     <div className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-4">
       <div className="mb-4 flex flex-row items-center">
         <img
-          src="../../src/assets/icons/search.png"
+          src={searchIcon}
           alt="Search"
           className="pr-1 py-1 size-8"
         />
@@ -104,13 +107,13 @@ const ProgrammingSidebar: React.FC<ProgrammingSidebarProps> = ({
             >
               {expanded ? (
                 <img
-                  src="../../src/assets/icons/open_folder.png"
+                  src={openFolderIcon}
                   alt="Open Folder"
                   className="inline-block mr-2 max-h-4"
                 />
               ) : (
                 <img
-                  src="../../src/assets/icons/closed_folder.png"
+                  src={closedFolderIcon}
                   alt="Closed Folder"
                   className="inline-block mr-2 max-h-4"
                 />
