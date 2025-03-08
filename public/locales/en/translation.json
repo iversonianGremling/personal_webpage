@@ -253,7 +253,7 @@
     "title": "NonFiction",
     "backButton": "Return  to  my  body"
   },
-  "searchBar": {
+    "searchBar": {
     "placeholder": "Search posts by title, content, tags...",
     "categories": {
       "full": "Full Matches",
