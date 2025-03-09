@@ -231,8 +231,10 @@ const TableOfContents: React.FC<{ post: Post, isMobile: boolean, zenMode: boolea
 
   return (
     <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-white'} p-4 pl-6 min-w-60 h-auto`}>
-      <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl overflow-scroll`}>Table of Contents (clickable)</div>
-      <RenderHeadings items={headings} zenMode={zenMode}/>
+      <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl`}>Table of Contents (clickable)</div>
+      <div className="overflow-y-scroll">
+        <RenderHeadings items={headings} zenMode={zenMode}/>
+      </div>
     </div>
   );
 };
