@@ -43,7 +43,7 @@ const EditPost: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get<Post>(`${apiUrl}/posts/${id}/admin`, {
+        const response = await axios.get<Post>(`${apiUrl}/posts/admin/${id}`, {
           withCredentials: true,
         });
         setFormData({
