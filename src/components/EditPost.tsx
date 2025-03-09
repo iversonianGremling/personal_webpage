@@ -249,7 +249,6 @@ const EditPost: React.FC = () => {
                   value={formData.content}
                   onChange={handleInputChange}
                   className="w-full h-64 px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  maxLength={2000}
                 />
               </div>
             )}
