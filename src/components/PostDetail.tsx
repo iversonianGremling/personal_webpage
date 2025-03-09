@@ -162,44 +162,76 @@ const TableOfContents: React.FC<{ post: Post, isMobile: boolean, zenMode: boolea
     }, 100);
   }, [post.content]);
 
-  const RenderHeadings = ({ items, zenMode }: { items: HeadingItem[], zenMode?: boolean }) => (
-    <ul className="pl-4 py-1">
-      {items.map((item) => (
-        <li key={item.id} className="py-1">
-          <a
-            href="#"  // Use a placeholder href
-            className={`${zenMode ? 'text-white bg-black' : 'text-violet-600 '}hover:underline transition-colors `}
-            onClick={(e) => {
-              e.preventDefault();  // Prevent default anchor behavior
+  const RenderHeadings = ({
+    items,
+    zenMode,
+    depth = 0
+  }: {
+  items: HeadingItem[],
+  zenMode?: boolean,
+  depth?: number
+}) => {
+  // Define prefixes based on depth
+    const getPrefixByDepth = (depth: number): string => {
+      switch (depth) {
+        case 0:
+          return '● '; // Bullet for top level
+        case 1:
+          return '○ '; // Circle for second level
+        case 2:
+          return '► '; // Triangle for third level
+        case 3:
+          return '▷ '; // Open triangle for fourth level
+        default:
+          return '- '; // Default for deeper levels
+      }
+    };
 
-              const element = document.getElementById(item.id);
-              if (element) {
-                const navbarHeight = 100;
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+    return (
+      <ul className="pl-4 py-1">
+        {items.map((item) => (
+          <li key={item.id} className="py-1">
+            <a
+              href="#"  // Use a placeholder href
+              className={`${zenMode ? 'text-white bg-black' : 'text-violet-600 '}hover:underline transition-colors `}
+              onClick={(e) => {
+                e.preventDefault();  // Prevent default anchor behavior
 
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
-                });
-              }
-            }}
-          >
-            <div className={` ${zenMode ? 'text-white bg-black' : 'text-white bg-violet-600'} p-2 rounded-lg`}>
-              {'- ' + item.text}
-            </div>
-          </a>
-          {item.children.length > 0 && <RenderHeadings items={item.children} zenMode={zenMode} />}
-        </li>
-      ))}
-    </ul>
-  );
+                const element = document.getElementById(item.id);
+                if (element) {
+                  const navbarHeight = 100;
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+            >
+              <div className={` ${zenMode ? 'text-white bg-black' : 'text-white bg-violet-600'} p-2 rounded-lg`}>
+                {getPrefixByDepth(depth) + item.text}
+              </div>
+            </a>
+            {item.children.length > 0 &&
+            <RenderHeadings
+              items={item.children}
+              zenMode={zenMode}
+              depth={depth + 1}
+            />
+            }
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   if (headings.length === 0) return null;
 
   return (
     <div className={`mb-6 mr-4 bg-black  ${zenMode ? '' : 'border border-white'} p-4 pl-6 min-w-60 h-auto`}>
-      <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl`}>Table of Contents (clickable)</div>
+      <div className={`${zenMode ? 'text-white' : 'text-violet-500'} text-violet-500 text-xl overflow-scroll`}>Table of Contents (clickable)</div>
       <RenderHeadings items={headings} zenMode={zenMode}/>
     </div>
   );
