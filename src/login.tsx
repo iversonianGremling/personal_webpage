@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { apiUrl } from "./assets/env-var";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './components/AuthContext';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -23,24 +24,20 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage("");
+    setErrorMessage('');
 
     try {
-      const response = await fetch(apiUrl + "/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        credentials: "include", // Ensures cookies are sent with the request
-      });
+      console.log('Attempting login with:', formData.username);
+      const success = await login(formData.username, formData.password);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+      if (success) {
+        console.log('Login successful, redirecting to home');
+        navigate('/'); // Navigate back to the main page
+      } else {
+        throw new Error('Invalid username or password');
       }
-
-      console.log("Login successful");
-      navigate("/"); // Navigate back to the main page
     } catch (error) {
+      console.error('Login error:', error);
       setErrorMessage((error as Error).message);
     } finally {
       setIsLoading(false);
@@ -99,7 +96,7 @@ const Login: React.FC = () => {
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
             disabled={isLoading}
           >
-            {isLoading ? "Logging in..." : "Login"}
+            {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
       </div>

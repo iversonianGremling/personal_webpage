@@ -329,7 +329,7 @@ const EditPost: React.FC = () => {
                 variant="article"
                 title={formData.title || ''}
                 content={formData.content || ''}
-                tags={(formData.tags as string[] || [])}
+                tags={(formData?.tags as string[] || [])}
                 image={formData.image || ''}
                 date={new Date().toISOString()}
                 type={formData.type || 'blog'}
