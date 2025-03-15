@@ -56,7 +56,7 @@ function QualityBadge({ tags }: { tags: string[] }) {
   if (!qualityTag) return null;
 
   // Extract number from qualityTag
-  const rating = parseInt(qualityTag.substring(1));
+  const rating = parseInt(qualityTag.substring(1)) - 1;
 
   const qualitySymbols = ['Ω','∀','א','∞','⧜'];
   const qualityText = ['Masterpiece', 'Indispensable', 'Medium defining', 'Cult classic', 'Worth experiencing'];
