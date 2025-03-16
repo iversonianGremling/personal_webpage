@@ -341,7 +341,7 @@ const PostContent: React.FC<{ post: Post, isMobile: boolean, zenMode: boolean }>
       </header>
 
       <section
-        className="tiptap-content prose prose-invert max-w-none justify-center"
+        className="flex flex-col tiptap-content prose prose-invert max-w-none justify-center"
         dangerouslySetInnerHTML={createMarkup(post.content)}
       />
     </>
@@ -395,7 +395,7 @@ const RecommendationContent: React.FC<{ post: Post, zenMode: boolean }> = ({ pos
       </header>
 
       <section
-        className="tiptap-content prose prose-invert max-w-none text-center flex content-center items-center"
+        className="flex flex-col tiptap-content prose prose-invert max-w-none text-center flex content-center items-center"
         dangerouslySetInnerHTML={createMarkup(post.content)}
       />
     </div>
@@ -442,7 +442,7 @@ const ThoughtContent: React.FC<{ post: Post, zenMode: boolean }> = ({ post, zenM
       </header>
 
       <section
-        className="tiptap-content prose prose-invert max-w-none text-center"
+        className="flex flex-col tiptap-content prose prose-invert max-w-none text-center"
         dangerouslySetInnerHTML={createMarkup(post.content)}
       />
     </>
