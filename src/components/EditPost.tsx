@@ -14,7 +14,7 @@ const EditPost: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    tags: [],
+    tags: '',
     image: '',
     type: 'blog',
     visibility: 'public',
@@ -48,7 +48,7 @@ const EditPost: React.FC = () => {
         });
         setFormData({
           ...response.data,
-          tags: response.data.tags,
+          tags: response.data.tags.join(', '),
         });
         editor?.commands.setContent(response.data.content);
       } catch (error) {
@@ -114,23 +114,29 @@ const EditPost: React.FC = () => {
     setErrorMessage(null);
 
     try {
+      // Convert tags from string to array before sending to API
+      const formDataToSubmit = {
+        ...formData,
+        tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : []
+      };
+
       const response = await fetch(apiUrl + `/posts/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formDataToSubmit),
         credentials: 'include',
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update post');
+      if (response.ok) {
+        navigate('/posts/admin'); // Redirect to admin page on success
+      } else {
+        setErrorMessage('Failed to update post');
       }
-
-      navigate('/posts/admin'); // Redirect to all posts page
-    } catch (error) {
-      setErrorMessage((error as Error).message);
-    } finally {
+    }
+    finally {
       setIsSubmitting(false);
     }
+    // Missing code to set setIsSubmitting(false)
   };
 
   return (
@@ -329,11 +335,12 @@ const EditPost: React.FC = () => {
                 variant="article"
                 title={formData.title || ''}
                 content={formData.content || ''}
-                tags={(formData?.tags as string[] || [])}
+                tags={formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : []}
                 image={formData.image || ''}
                 date={new Date().toISOString()}
                 type={formData.type || 'blog'}
                 visibility={formData.visibility || 'public'}
+                showtags={true} // Change to true if you want tags to show
               />
             </div>
           </div>

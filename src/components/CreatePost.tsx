@@ -325,7 +325,7 @@ const CreatePost: React.FC = () => {
               Preview
             </h3>
             <div className="space-y-4 ">
-              <PostDetailPreview variant='article' title={formData.title} content={formData.content} tags={formData.tags.split(',')} image={formData.image} date={Date.now().toString()} type={formData.type} visibility={formData.visibility} />
+              <PostDetailPreview variant='article' title={formData.title} content={formData.content} tags={formData.tags.split(',')} image={formData.image} date={Date.now().toString()} type={formData.type} visibility={formData.visibility} showtags={true} />
             </div>
           </div>
         </div>
