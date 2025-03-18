@@ -10,6 +10,7 @@ import PatreonButton from './PatreonButton';
 import { PostMetrics } from './ViewCounter';
 import LikeButton from './LikeButton';
 import CommentSection from './CommentSection';
+import PostNavigation from './PostNavigation';
 
 interface PostDetailProps {
   variant?: 'programming' | 'thoughts' | 'gaming' | 'pink' | 'article';
@@ -524,7 +525,9 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
     );
 
   if (error) return <div className="text-red-500 p-6">Error: {error}</div>;
-  if (!post) return <div className="p-6">Post not found</div>;
+  if (!post) return (<>
+    <div className="p-6">Post not found</div>
+  </>);
 
   return (
     <div className="">
@@ -608,6 +611,7 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
               </div>
             </div>
           }
+          <PostNavigation currentPostId={post.id} zenMode={zenMode} isAdmin={admin} />
           <PostMetrics post={post} />
           <LikeButton postId={post.id} initialLikes={post.likes} />
           <CommentSection postId={post.id} />
