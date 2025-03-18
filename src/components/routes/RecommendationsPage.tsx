@@ -365,7 +365,7 @@ const RecommendationSection: React.FC<{
   return (
     <div className="mb-12">
       <div className='karrik-regular-text text-2xl text-left mb-4'>{text.toUpperCase()}</div>
-      <div className={`flex flex-nowrap w-full gap-4 ${isMobileOrTablet ? 'flex-col' : 'flex-row'}`}>
+      <div className={`flex flex-nowrap w-full gap-4 ${isMobileOrTablet ? 'flex-col overflow-scroll' : 'flex-row overflow-scroll'}`}>
         {posts.map((post) => (
           <RecommendationCard key={post.id} post={post} quality={quality}/>
         ))}
