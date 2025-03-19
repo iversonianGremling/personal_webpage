@@ -7,24 +7,31 @@ import { useNavigate } from 'react-router-dom';
 import Post from '../types';
 import DOMPurify from 'dompurify';
 import { apiUrl } from '../assets/env-var';
-import PostDetail from './PostDetail';
-import PostDetailPreview from './PostDetailPreview';
-import ImageSearch from './ImageSearch';
+import MetadataSearch from './MetadataSearch';
 
-const CreatePost: React.FC = () => {
+const CreateRecommendation: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    tags: 'recommendation',
+    tags: '',
     image: '',
     type: 'recommendation',
     visibility: 'public',
+    author: '',
+    country: '',
+    year: '',
+    themes: '',
+    quality: 'q0',
   });
+
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [contentType, setContentType] = useState<'Text' | 'HTML'>('Text');
+  const qualitySymbols = ['Ω','∀','א','∞','⧜','✓'];
+  const qualityText = ['Masterpiece', 'Indispensable', 'Medium defining', 'Cult classic', 'Worth experiencing', 'Check it out eventually'];
+  const qualityTags = ['q5', 'q4', 'q3', 'q2', 'q1', 'q0'];
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -125,12 +132,31 @@ const CreatePost: React.FC = () => {
     setIsSubmitting(true);
     setErrorMessage(null);
 
+    // Always include recommendation tag (even if user deletes it)
+    const postTags = formData.tags.split(',')
+      .map((tag) => tag.trim())
+      .filter(tag => tag.length > 0);
+
+    // Ensure recommendation tag is included
+    if (!postTags.includes('recommendation')) {
+      postTags.push('recommendation');
+    }
+
+    // Add prefixed author, country, and year tags
+    postTags.push(`author:${formData.author}`, `country:${formData.country}`, `year:${formData.year}`);
+
+    // Add themes without prefix
+    postTags.push(...formData.themes.split(',').map((theme) => theme.trim()).filter(theme => theme.length > 0));
+
+    // Add quality tag (q5, q4, etc.)
+    postTags.push(formData.quality);
+
     const post: Partial<Post> = {
       title: formData.title,
       content: formData.content,
-      tags: formData.tags.split(',').map((tag) => tag.trim()),
+      tags: postTags,
       image: formData.image,
-      type: formData.type,
+      type: 'recommendation', // Always recommendation
       visibility: formData.visibility === 'public' ? 'public' : 'private',
     };
 
@@ -161,6 +187,87 @@ const CreatePost: React.FC = () => {
     }
   };
 
+  const handleMediaSelect = async (mediaData: {
+    title: string;
+    author: string;
+    country: string;
+    year: string;
+    themes: string;
+    image?: string;
+  }) => {
+    // First, update the form data with the media metadata
+    setFormData(prev => ({
+      ...prev,
+      title: mediaData.title,
+      author: mediaData.author,
+      country: mediaData.country,
+      year: mediaData.year,
+      themes: mediaData.themes,
+    }));
+    
+    // If there's an image URL, handle it
+    if (mediaData.image) {
+      try {
+        setIsUploading(true);
+        setErrorMessage(null);
+        
+        // Fetch the image as a blob
+        const imageResponse = await fetch(mediaData.image);
+        if (!imageResponse.ok) {
+          throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
+        }
+        
+        // Convert the response to a blob
+        const imageBlob = await imageResponse.blob();
+        
+        // Create a File object from the blob
+        const fileName = `${mediaData.title.replace(/\s+/g, '-')}.jpg`;
+        const imageFile = new File([imageBlob], fileName, {
+          type: imageBlob.type || 'image/jpeg'
+        });
+        
+        // Upload the image using the existing upload function
+        const uploadedImageUrl = await handleImageUpload(imageFile);
+        
+        // Update the form data with the image URL
+        setFormData(prev => ({
+          ...prev,
+          image: uploadedImageUrl
+        }));
+        
+        // Add the image to the content based on the active editor mode
+        if (contentType === 'HTML') {
+          // For HTML mode, directly append image HTML to content
+          const imageHtml = `<figure class="image-container">
+    <img src="${uploadedImageUrl}" alt="${mediaData.title}" class="recommendation-image" />
+    <figcaption>${mediaData.title} (${mediaData.year})</figcaption>
+  </figure>`;
+          
+          setFormData(prev => ({
+            ...prev,
+            content: prev.content ? prev.content + imageHtml : imageHtml
+          }));
+        } else if (editor) {
+          // For text mode with TipTap editor
+          editor.chain().focus().setImage({ 
+            src: uploadedImageUrl, 
+            alt: mediaData.title 
+          }).run();
+        }
+        
+        console.log('Media selected and image added:', mediaData.title);
+      } catch (error) {
+        console.error('Error processing image:', error);
+        setErrorMessage(
+          error instanceof Error 
+            ? `Error processing image: ${error.message}` 
+            : 'Failed to process the image'
+        );
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
 
   const createMarkup = (html: string) => {
     return {
@@ -293,6 +400,24 @@ const CreatePost: React.FC = () => {
             )}
 
             <div className="mb-4">
+              <label htmlFor="quality" className="block text-sm font-medium mb-1">
+                Quality Rating
+              </label>
+              <select
+                id="quality"
+                value={formData.quality}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {qualitySymbols.map((symbol, index) => (
+                  <option key={index} value={qualityTags[index]}>
+                    {`${symbol}-${qualityText[index]}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
               <label>Tags</label>
               <input
                 type="text"
@@ -304,17 +429,47 @@ const CreatePost: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="type" className="block text-sm font-medium mb-1">
-                Post Type
-              </label>
-              <select
-                id="type"
-                value={formData.type}
+              <label>Author</label>
+              <input
+                type="text"
+                id="author"
+                value={formData.author}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              >
-                <option value="recommendation">Recommendation</option>
-              </select>
+              />
+            </div>
+
+            <div className="mb-4">
+              <label>Country</label>
+              <input
+                type="text"
+                id="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label>Year</label>
+              <input
+                type="text"
+                id="year"
+                value={formData.year}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label>Themes</label>
+              <input
+                type="text"
+                id="themes"
+                value={formData.themes}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div className="mb-4">
@@ -343,7 +498,9 @@ const CreatePost: React.FC = () => {
               {isSubmitting ? 'Submitting...' : 'Create Post'}
             </button>
           </form>
-          <ImageSearch/>
+
+          {/* Replace ImageSearch with MediaSearch */}
+          <MetadataSearch onSelectMedia={handleMediaSelect} />
         </div>
 
       </div>
@@ -351,4 +508,4 @@ const CreatePost: React.FC = () => {
   );
 };
 
-export default CreatePost;
+export default CreateRecommendation;
