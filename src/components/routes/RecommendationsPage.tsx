@@ -20,40 +20,10 @@ const RecommendationsPage: React.FC = () => {
   const [tagCounts, setTagCounts] = useState<Record<string, number>>({});
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [newTag, setNewTag] = useState<string>('');
-  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
 
-  // List of countries
-  const countries = [
-    'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 
-    'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 
-    'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 
-    'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 
-    'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 
-    'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 
-    'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 
-    'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 
-    'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 
-    'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 
-    'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South', 'Kosovo', 
-    'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 
-    'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 
-    'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 
-    'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 
-    'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway', 'Oman', 
-    'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 
-    'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 
-    'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 
-    'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 
-    'Solomon Islands', 'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 
-    'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 
-    'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 
-    'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 
-    'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
-  ];
-
-  // The pre-defined sections/categories
-  const sections = [
+  // The pre-defined sections/categories (renamed to Medium)
+  const mediums = [
     'Music',
     'Movies',
     'Books',
@@ -109,7 +79,7 @@ const RecommendationsPage: React.FC = () => {
     fetchPosts();
   }, []);
 
-  // Filter posts based on selected tags, search term, and country
+  // Filter posts based on selected tags and search term
   useEffect(() => {
     let filtered = posts;
     
@@ -119,13 +89,6 @@ const RecommendationsPage: React.FC = () => {
         selectedTags.some(tag => 
           post.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
         )
-      );
-    }
-    
-    // Filter by country if selected
-    if (selectedCountry) {
-      filtered = filtered.filter(post => 
-        post.tags.some(tag => tag.toLowerCase() === selectedCountry.toLowerCase())
       );
     }
     
@@ -140,7 +103,23 @@ const RecommendationsPage: React.FC = () => {
     }
     
     setFilteredPosts(filtered);
-  }, [posts, selectedTags, searchTerm, selectedCountry]);
+  }, [posts, selectedTags, searchTerm]);
+
+  // Update tag suggestions based on search term
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      
+      // Get all tags that include the search term
+      const matchingTags = Object.keys(tagCounts)
+        .filter(tag => tag.toLowerCase().includes(term) && !selectedTags.includes(tag))
+        .slice(0, 5);  // Limit to 5 suggestions
+        
+      setTagSuggestions(matchingTags);
+    } else {
+      setTagSuggestions([]);
+    }
+  }, [searchTerm, tagCounts, selectedTags]);
 
   // Toggle tag selection
   const toggleTag = (tag: string) => {
@@ -151,12 +130,12 @@ const RecommendationsPage: React.FC = () => {
     }
   };
 
-  // Add a new custom tag
-  const addNewTag = () => {
-    if (newTag && !selectedTags.includes(newTag)) {
-      setSelectedTags([...selectedTags, newTag]);
-      setNewTag('');
+  // Format tag name for display (remove prefixes)
+  const formatTagName = (tag: string) => {
+    if (tag.startsWith('author:') || tag.startsWith('country:') || tag.startsWith('year:')) {
+      return tag.split(':')[1].trim();
     }
+    return tag;
   };
 
   // Filter by quality level
@@ -164,12 +143,27 @@ const RecommendationsPage: React.FC = () => {
     return filteredPosts.filter(post => post.tags.includes(qualityTag));
   };
 
+  // Get top 20 most used tags (excluding specified prefixes and mediums)
+  const getTopTags = () => {
+    const excludedPrefixes = ['author:', 'country:', 'year:'];
+    const excludedTags = ['recommendation', ...mediums.map(m => m.toLowerCase())];
+    
+    return Object.entries(tagCounts)
+      .filter(([tag]) => 
+        !excludedTags.includes(tag.toLowerCase()) && 
+        !tag.match(/^q[0-5]$/) && 
+        !excludedPrefixes.some(prefix => tag.startsWith(prefix))
+      )
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20);
+  };
+
   return (
     <>
       <NavBar />
       <div className='bg-white text-black p-8 karrik-regular-text'>
         {/* Search bar */}
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <h3 className="karrik-regular-text text-xl mb-2 text-left">SEARCH:</h3>
           <input
             type="text"
@@ -178,42 +172,25 @@ const RecommendationsPage: React.FC = () => {
             placeholder="Search titles, content, or tags..."
             className="w-full p-2 border-2 border-black karrik-regular-text"
           />
-        </div>
-        
-        {/* Country filter */}
-        <div className="mb-6">
-          <h3 className="karrik-regular-text text-xl mb-2 text-left">FILTER BY COUNTRY:</h3>
-          <select
-            value={selectedCountry}
-            onChange={(e) => setSelectedCountry(e.target.value)}
-            className="w-full p-2 border-2 border-black karrik-regular-text"
-          >
-            <option value="">All Countries</option>
-            {countries.map(country => (
-              <option key={country} value={country}>{country}</option>
-            ))}
-          </select>
-        </div>
-        
-        {/* Custom tag input */}
-        <div className="mb-6">
-          <h3 className="karrik-regular-text text-xl mb-2 text-left">ADD CUSTOM TAG:</h3>
-          <div className="flex">
-            <input
-              type="text"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              placeholder="Enter a new tag..."
-              className="flex-grow p-2 border-2 border-black border-r-0 karrik-regular-text"
-              onKeyPress={(e) => e.key === 'Enter' && addNewTag()}
-            />
-            <button
-              onClick={addNewTag}
-              className="px-4 py-2 border-2 border-black bg-black text-white hover:bg-gray-800"
-            >
-              Add
-            </button>
-          </div>
+          
+          {/* Tag suggestions */}
+          {tagSuggestions.length > 0 && (
+            <div className="absolute z-10 w-full bg-white border-2 border-black border-t-0 mt-0">
+              {tagSuggestions.map(tag => (
+                <div 
+                  key={tag}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    toggleTag(tag);
+                    setSearchTerm('');
+                    setTagSuggestions([]);
+                  }}
+                >
+                  {formatTagName(tag)}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         
         {/* Selected tags */}
@@ -226,7 +203,7 @@ const RecommendationsPage: React.FC = () => {
                   key={tag} 
                   className="px-3 py-1 border-2 border-black bg-black text-white flex items-center"
                 >
-                  {tag}
+                  {formatTagName(tag)}
                   <button 
                     onClick={() => toggleTag(tag)}
                     className="ml-2 text-white font-bold"
@@ -245,48 +222,43 @@ const RecommendationsPage: React.FC = () => {
           </div>
         )}
         
-        {/* Tag categories */}
+        {/* Medium categories (renamed from "Filter by Category") */}
         <div className="mb-8">
-          <h3 className="karrik-regular-text text-xl mb-2 text-left">FILTER BY CATEGORY:</h3>
+          <h3 className="karrik-regular-text text-xl mb-2 text-left">FILTER BY MEDIUM:</h3>
           <div className='flex flex-wrap gap-2'>
-            {sections.map((section) => (
+            {mediums.map((medium) => (
               <button
-                key={section}
+                key={medium}
                 className={`karrik-regular-text text-lg px-3 py-1 border-2 border-black ${
-                  selectedTags.includes(section.toLowerCase()) 
+                  selectedTags.includes(medium.toLowerCase()) 
                     ? 'bg-black text-white' 
                     : 'bg-white text-black hover:bg-gray-100'
                 }`}
-                onClick={() => toggleTag(section.toLowerCase())}
+                onClick={() => toggleTag(medium.toLowerCase())}
               >
-                {section} {tagCounts[section.toLowerCase()] ? `(${tagCounts[section.toLowerCase()]})` : '(0)'}
+                {medium} {tagCounts[medium.toLowerCase()] ? `(${tagCounts[medium.toLowerCase()]})` : '(0)'}
               </button>
             ))}
           </div>
         </div>
         
-        {/* All other tags */}
+        {/* Top 20 tags (renamed from "Other Tags") */}
         <div className="mb-8">
-          <h3 className="karrik-regular-text text-xl mb-2 text-left">OTHER TAGS:</h3>
+          <h3 className="karrik-regular-text text-xl mb-2 text-left">TAGS:</h3>
           <div className='flex flex-wrap gap-2'>
-            {Object.keys(tagCounts)
-              .filter(tag => !sections.map(s => s.toLowerCase()).includes(tag.toLowerCase()) && !tag.match(/^q[0-5]$/))
-              .sort()
-              .map((tag) => (
-                tag !== 'recommendation' &&
-                <button
-                  key={tag}
-                  className={`karrik-regular-text text-lg px-3 py-1 border-2 border-black ${
-                    selectedTags.includes(tag) 
-                      ? 'bg-black text-white' 
-                      : 'bg-white text-black hover:bg-gray-100'
-                  }`}
-                  onClick={() => toggleTag(tag)}
-                >
-                  {tag} ({tagCounts[tag]})
-                </button>
-              ))
-            }
+            {getTopTags().map(([tag, count]) => (
+              <button
+                key={tag}
+                className={`karrik-regular-text text-lg px-3 py-1 border-2 border-black ${
+                  selectedTags.includes(tag) 
+                    ? 'bg-black text-white' 
+                    : 'bg-white text-black hover:bg-gray-100'
+                }`}
+                onClick={() => toggleTag(tag)}
+              >
+                {formatTagName(tag)} ({count})
+              </button>
+            ))}
           </div>
         </div>
         
@@ -365,7 +337,7 @@ const RecommendationSection: React.FC<{
   return (
     <div className="mb-12">
       <div className='karrik-regular-text text-2xl text-left mb-4'>{text.toUpperCase()}</div>
-      <div className={`flex flex-nowrap w-full gap-4 ${isMobileOrTablet ? 'flex-col overflow-scroll' : 'flex-row overflow-scroll'}`}>
+      <div className={`flex flex-nowrap w-full gap-4 ${isMobileOrTablet ? 'flex-col overflow-scroll-y' : 'flex-row overflow-scroll-x'}`}>
         {posts.map((post) => (
           <RecommendationCard key={post.id} post={post} quality={quality}/>
         ))}
