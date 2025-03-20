@@ -128,7 +128,7 @@ const MetadataSearch: React.FC<MediaSearchProps> = ({ onSelectMedia }) => {
       country: album.country || 'Unknown',
       year: album.year || 'Unknown',
       themes: album.genre || [],
-      image: album.thumb || album.cover_image
+      image: album.cover_image
     }));
   };
 

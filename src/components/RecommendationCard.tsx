@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from '../types';
 import '../assets/styles/recommendation-card.css';
+import { apiUrl } from '../assets/env-var';
 
 interface RecommendationCardProps {
   post: Post;
@@ -27,13 +28,51 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
     };
   }, []);
 
+  // Helper function to check if a URL is external
+  const isExternalUrl = (url: string): boolean => {
+    if (!url) return false;
+
+    try {
+      // Check if the URL is absolute (has protocol)
+      if (!/^https?:\/\//i.test(url)) return false;
+
+      // Get the current domain
+      const currentDomain = window.location.hostname;
+
+      // Create a URL object to extract the hostname
+      const urlObj = new URL(url);
+
+      // Check if the URL's hostname is different from the current domain
+      return urlObj.hostname !== currentDomain;
+    } catch (error) {
+      console.error('Error checking if URL is external:', error);
+      return false;
+    }
+  };
+
+  // Function to proxy external image URLs
+  const getProxiedImageUrl = (url: string): string => {
+    if (!url) return '';
+
+    if (isExternalUrl(url)) {
+      // Encode the URL to be used as a query parameter
+      const encodedUrl = encodeURIComponent(url);
+      return `${apiUrl}/proxy/image?url=${encodedUrl}`;
+    }
+
+    return url;
+  };
+
   // Extract the first image, description, and link from the post content
   const extractContentElements = () => {
     const parser = new DOMParser();
     const htmlDoc = parser.parseFromString(post.content, 'text/html');
 
     const firstImage = htmlDoc.querySelector('img');
-    const imageSrc = firstImage ? firstImage.src : '';
+    const rawImageSrc = firstImage ? firstImage.src : '';
+
+    // Proxy the image URL if it's external
+    const imageSrc = getProxiedImageUrl(rawImageSrc);
 
     // Get the first paragraph as description
     const paragraphs = htmlDoc.querySelectorAll('p');

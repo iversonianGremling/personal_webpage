@@ -204,37 +204,43 @@ const CreateRecommendation: React.FC = () => {
       year: mediaData.year,
       themes: mediaData.themes,
     }));
-    
+
     // If there's an image URL, handle it
     if (mediaData.image) {
       try {
         setIsUploading(true);
         setErrorMessage(null);
-        
+
+        let imageResponse: Response;
         // Fetch the image as a blob
-        const imageResponse = await fetch(mediaData.image);
+        if (import.meta.env.ENV === 'development') {
+          imageResponse = await fetch(`${apiUrl}/proxy/image?url=${mediaData.image}`);
+        } else {
+          imageResponse = await fetch(`${apiUrl}/proxy/image?url=${mediaData.image}`);
+        }
+
         if (!imageResponse.ok) {
           throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
         }
-        
+
         // Convert the response to a blob
         const imageBlob = await imageResponse.blob();
-        
+
         // Create a File object from the blob
         const fileName = `${mediaData.title.replace(/\s+/g, '-')}.jpg`;
         const imageFile = new File([imageBlob], fileName, {
           type: imageBlob.type || 'image/jpeg'
         });
-        
+
         // Upload the image using the existing upload function
         const uploadedImageUrl = await handleImageUpload(imageFile);
-        
+
         // Update the form data with the image URL
         setFormData(prev => ({
           ...prev,
           image: uploadedImageUrl
         }));
-        
+
         // Add the image to the content based on the active editor mode
         if (contentType === 'HTML') {
           // For HTML mode, directly append image HTML to content
@@ -242,25 +248,25 @@ const CreateRecommendation: React.FC = () => {
     <img src="${uploadedImageUrl}" alt="${mediaData.title}" class="recommendation-image" />
     <figcaption>${mediaData.title} (${mediaData.year})</figcaption>
   </figure>`;
-          
+
           setFormData(prev => ({
             ...prev,
             content: prev.content ? prev.content + imageHtml : imageHtml
           }));
         } else if (editor) {
           // For text mode with TipTap editor
-          editor.chain().focus().setImage({ 
-            src: uploadedImageUrl, 
-            alt: mediaData.title 
+          editor.chain().focus().setImage({
+            src: uploadedImageUrl,
+            alt: mediaData.title
           }).run();
         }
-        
+
         console.log('Media selected and image added:', mediaData.title);
       } catch (error) {
         console.error('Error processing image:', error);
         setErrorMessage(
-          error instanceof Error 
-            ? `Error processing image: ${error.message}` 
+          error instanceof Error
+            ? `Error processing image: ${error.message}`
             : 'Failed to process the image'
         );
       } finally {
