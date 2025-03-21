@@ -6,14 +6,23 @@ import { apiUrl } from '../assets/env-var';
 interface RecommendationCardProps {
   post: Post;
   quality: number;
+  tagCounts: Record<string, number>;
+  onTagClick: (tag: string) => void;
+  onShowSimilar: (postId: string) => void;
 }
 
 const qualitySymbols = ['Ω','∀','א','∞','⧜'];
-const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }) => {
+const RecommendationCard: React.FC<RecommendationCardProps> = ({
+  post,
+  quality,
+  tagCounts,
+  onTagClick,
+  onShowSimilar
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [wasClicked, setWasClicked] = useState(false);
-
+  const [showTags, setShowTags] = useState(false);
   // Check if device is mobile or tablet
   useEffect(() => {
     const checkDevice = () => {
@@ -94,7 +103,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
   // Define the style with React.CSSProperties type
     const style: React.CSSProperties = {
       margin: '0',
-      textAlign: 'center', // 'center' is a valid value for textAlign
+      textAlign: 'center',
       color: '#000',
       fontWeight: 'bold',
       overflow: 'hidden',
@@ -117,37 +126,54 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
   };
 
   const { imageSrc, description, linkUrl, linkText } = extractContentElements();
-
+  // Sort the tags by usage count (highest first)
+  const sortedTags = [...post.tags]
+    .filter(tag => !tag.match(/^q[0-5]$/)) // Remove quality tags
+    .sort((a, b) => (tagCounts[b] || 0) - (tagCounts[a] || 0));
   // Handle card clicks for mobile/tablet
-  const handleCardClick = () => {
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Prevent propagation for tag elements and the show similar button
+    if ((e.target as HTMLElement).closest('.tag-item') ||
+        (e.target as HTMLElement).closest('.show-similar-btn')) {
+      return;
+    }
+    // Prevent handling if clicking on the link
+    if ((e.target as HTMLElement).closest('a')) {
+      return;
+    }
     if (isMobileOrTablet) {
       if (!wasClicked) {
         // First click - show hover effect
         setWasClicked(true);
         setIsHovered(true);
+      } else if (!showTags) {
+        // Second click - show tags
+        setShowTags(true);
       } else {
-        // Second click - navigate to link if exists, otherwise toggle back
-        if (linkUrl) {
-          window.location.href = linkUrl;
-        } else {
-          // If no link, toggle back to non-hover state
-          setWasClicked(false);
-          setIsHovered(false);
-        }
+        // Third click - reset
+        setWasClicked(false);
+        setIsHovered(false);
+        setShowTags(false);
       }
+    } else {
+      // For desktop, toggle tags view
+      setShowTags(!showTags);
     }
   };
 
   // Reset clicked state when mouse leaves
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setWasClicked(false);
+    if (!showTags) {
+      setIsHovered(false);
+      setWasClicked(false);
+    }
   };
 
   return (
     <div
       className="recommendation-card karrik-regular-text"
       onClick={handleCardClick}
+      style={{ position: 'relative' }}
     >
       <div
         className="image-container"
@@ -180,7 +206,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
             margin: '0',
             zIndex: 2,
             transition: 'opacity 0.3s ease',
-            opacity: isHovered ? 0 : 1
+            opacity: (isHovered && !showTags) ? 0 : 1
           }}
         >
           { post.title + ' ' + qualitySymbols[5 - quality]}
@@ -198,70 +224,131 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({ post, quality }
         />
 
         {/* Description and link overlay (visible on hover) */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem',
-            background: isHovered ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
-            opacity: isHovered ? 1 : 0,
-            transition: 'opacity 0.3s ease',
-            pointerEvents: isHovered ? 'auto' : 'none',
-            zIndex: 3
-          }}
-        >
-          <p
-            className="description"
-            style={getDescriptionStyle()}
+        {!showTags && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '1.5rem',
+              background: isHovered ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
+              opacity: isHovered ? 1 : 0,
+              transition: 'opacity 0.3s ease',
+              pointerEvents: isHovered ? 'auto' : 'none',
+              zIndex: 3
+            }}
           >
-            {description}
-          </p>
-
-          {/* Optional link button */}
-          {linkUrl && (
-            <a
-              href={linkUrl}
-              onClick={(e) => {
-                if (isMobileOrTablet && !wasClicked) {
-                  e.preventDefault();
+            <p
+              className="description"
+              style={getDescriptionStyle()}
+            >
+              {description}
+            </p>
+            {/* Optional link button */}
+            {linkUrl && (
+              <a
+                href={linkUrl}
+                onClick={(e) => {
                   e.stopPropagation();
-                }
-              }}
-              style={{
-                marginTop: '1rem',
-                padding: '0.5rem 1rem',
-                backgroundColor: '#000',
-                color: '#fff',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                border: '2px solid #000',
-                display: 'inline-block',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#fff';
-                e.currentTarget.style.color = '#000';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#000';
-                e.currentTarget.style.color = '#fff';
+                  if (isMobileOrTablet && !wasClicked) {
+                    e.preventDefault();
+                  }
+                }}
+                style={{
+                  marginTop: '1rem',
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  border: '2px solid #000',
+                  display: 'inline-block',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.color = '#000';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#000';
+                  e.currentTarget.style.color = '#fff';
+                }}
+              >
+                {linkText}
+              </a>
+            )}
+          </div>
+        )}
+        {/* Tags overlay (visible when showTags is true) */}
+        {showTags && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '1rem',
+              background: 'rgba(255, 255, 255, 0.95)',
+              zIndex: 4,
+              overflow: 'auto'
+            }}
+          >
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-bold">TAGS</h3>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowTags(false);
+                }}
+                className="text-lg font-bold"
+              >
+                ×
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {sortedTags.map((tag) => (
+                <div
+                  key={tag}
+                  className="tag-item px-2 py-1 border-2 border-black bg-white text-black hover:bg-gray-100 cursor-pointer text-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onTagClick(tag);
+                  }}
+                >
+                  {formatTagName(tag)} {tagCounts[tag] ? `(${tagCounts[tag]})` : ''}
+                </div>
+              ))}
+            </div>
+            <button
+              className="show-similar-btn mt-auto px-3 py-2 border-2 border-black bg-black text-white hover:bg-gray-800"
+              onClick={(e) => {
+                e.stopPropagation();
+                onShowSimilar(post.id.toString());
               }}
             >
-              {linkText}
-            </a>
-          )}
-        </div>
+              Similar Recommendations
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
+// Format tag name for display (remove prefixes)
+const formatTagName = (tag: string) => {
+  if (tag.startsWith('author:') || tag.startsWith('country:') || tag.startsWith('year:')) {
+    return tag.split(':')[1].trim();
+  }
+  return tag;
+};
 export default RecommendationCard;
