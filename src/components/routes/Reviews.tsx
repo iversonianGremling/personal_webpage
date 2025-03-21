@@ -1,4 +1,3 @@
-
 import React, { useState, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar';
@@ -19,23 +18,16 @@ interface GridItemProps {
   textColor: string;
   backgroundColor: string;
   imageUrl: string;
+  englishName: string; // Add English name for routing
 }
 
-// Sample black-and-white images
-const sampleImages = [
-  musicPicture,
-  moviesPicture,
-  videogamesPicture,
-  literaturePicture,
-  nonFictionPicture,
-  artPicture,
-  programmingPicture,
-  opinionPicture,
-];
-
-// Updated categories with imageUrl property
-
-const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, imageUrl }) => {
+const GridItem: React.FC<GridItemProps> = ({
+  name,
+  textColor,
+  backgroundColor,
+  imageUrl,
+  englishName // English name for routing
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const containerStyle: CSSProperties = {
@@ -84,7 +76,7 @@ const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, i
     >
       <Link
         className='linealVF-text'
-        to={`${name === 'Recommendations' ? '/recommendations' : '/reviews/' + name.toLowerCase()}`}
+        to={`${englishName === 'Recommendations' ? '/recommendations' : '/reviews/' + englishName.toLowerCase()}`}
         style={linkStyle}
       >
         <img src={imageUrl} alt={name} style={imageStyle} />
@@ -94,17 +86,79 @@ const GridItem: React.FC<GridItemProps> = ({ name, textColor, backgroundColor, i
   );
 };
 
+// Sample black-and-white images
+const sampleImages = [
+  musicPicture,
+  moviesPicture,
+  videogamesPicture,
+  literaturePicture,
+  nonFictionPicture,
+  artPicture,
+  programmingPicture,
+  opinionPicture,
+];
+
 const ReviewsPage: React.FC = () => {
   const { t } = useTranslation();
+
+  // Define both translated and English category names
   const categories = [
-    { name: t('reviewsPage.music'), textColor: '#72955A', backgroundColor: '#E78B21', imageUrl: sampleImages[0] },
-    { name: t('reviewsPage.movies'), textColor: '#FDFD00', backgroundColor: '#2C3CD0', imageUrl: sampleImages[1] },
-    { name: t('reviewsPage.videogames'), textColor: '#894545', backgroundColor: '#8AD571', imageUrl: sampleImages[2] },
-    { name: t('reviewsPage.literature'), textColor: '#D39797', backgroundColor: '#502F56', imageUrl: sampleImages[3] },
-    { name: t('reviewsPage.non-fiction'), textColor: '#763939', backgroundColor: '#CD74DD', imageUrl: sampleImages[4] },
-    { name: t('reviewsPage.art'), textColor: '#946DBD', backgroundColor: '#403D5A', imageUrl: sampleImages[5] },
-    { name: t('reviewsPage.software'), textColor: '#000000', backgroundColor: '#392AC9', imageUrl: sampleImages[6] },
-    { name: t('reviewsPage.recommendations'),  textColor: '#D374D6', backgroundColor: '#4B55B0', imageUrl: sampleImages[7] },
+    {
+      name: t('reviewsPage.music'),
+      englishName: 'Music',
+      textColor: '#72955A',
+      backgroundColor: '#E78B21',
+      imageUrl: sampleImages[0]
+    },
+    {
+      name: t('reviewsPage.movies'),
+      englishName: 'Movies',
+      textColor: '#FDFD00',
+      backgroundColor: '#2C3CD0',
+      imageUrl: sampleImages[1]
+    },
+    {
+      name: t('reviewsPage.videogames'),
+      englishName: 'Videogames',
+      textColor: '#894545',
+      backgroundColor: '#8AD571',
+      imageUrl: sampleImages[2]
+    },
+    {
+      name: t('reviewsPage.literature'),
+      englishName: 'Literature',
+      textColor: '#D39797',
+      backgroundColor: '#502F56',
+      imageUrl: sampleImages[3]
+    },
+    {
+      name: t('reviewsPage.non-fiction'),
+      englishName: 'Non-fiction',
+      textColor: '#763939',
+      backgroundColor: '#CD74DD',
+      imageUrl: sampleImages[4]
+    },
+    {
+      name: t('reviewsPage.art'),
+      englishName: 'Art',
+      textColor: '#946DBD',
+      backgroundColor: '#403D5A',
+      imageUrl: sampleImages[5]
+    },
+    {
+      name: t('reviewsPage.software'),
+      englishName: 'Software',
+      textColor: '#000000',
+      backgroundColor: '#392AC9',
+      imageUrl: sampleImages[6]
+    },
+    {
+      name: t('reviewsPage.recommendations'),
+      englishName: 'Recommendations',
+      textColor: '#D374D6',
+      backgroundColor: '#4B55B0',
+      imageUrl: sampleImages[7]
+    },
   ];
 
   return (
@@ -115,6 +169,7 @@ const ReviewsPage: React.FC = () => {
           <GridItem
             key={category.name}
             name={category.name}
+            englishName={category.englishName}
             textColor={category.textColor}
             backgroundColor={category.backgroundColor}
             imageUrl={category.imageUrl}
@@ -132,16 +187,16 @@ const ReviewsPage: React.FC = () => {
           backgroundColor: 'black',
         }}
       >
-      Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
+        Font Lineal by Frank Adebiaye, with the contribution of Anton Moglia, Ariel Martín Pérez. Distributed by
         <a
           href="https://velvetyne.fr"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: 'rgba(255, 200, 200, 0.9)' }}
         >
-        velvetyne.fr
+          velvetyne.fr
         </a>
-      .
+        .
       </footer>
     </div>
   );
