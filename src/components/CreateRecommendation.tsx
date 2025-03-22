@@ -9,7 +9,22 @@ import DOMPurify from 'dompurify';
 import { apiUrl } from '../assets/env-var';
 import MetadataSearch from './MetadataSearch';
 
+enum MediaType {
+  Music = 'music',
+  Book = 'book',
+  Movie = 'movie',
+  Series = 'series',
+  Game = 'game',
+  Comic = 'comic',
+  Art = 'art',
+  Paper = 'paper',
+  Essay = 'essay',
+  Website = 'website',
+  Account = 'account',
+  Software = 'software',
+}
 const CreateRecommendation: React.FC = () => {
+  const mediaType = ['music', 'book', 'movie', 'series', 'game', 'comic', 'art', 'paper', 'essay', 'website', 'account', 'software'];
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -17,6 +32,7 @@ const CreateRecommendation: React.FC = () => {
     image: '',
     type: 'recommendation',
     visibility: 'public',
+    medium: '',
     author: '',
     country: '',
     year: '',
@@ -137,22 +153,25 @@ const CreateRecommendation: React.FC = () => {
       .map((tag) => tag.trim())
       .filter(tag => tag.length > 0);
 
-    // Ensure recommendation tag is included
-    if (!postTags.includes('recommendation')) {
-      postTags.push('recommendation');
-    }
-
     // Add prefixed author, country, and year tags
-    postTags.push(`author:${formData.author}`, `country:${formData.country}`, `year:${formData.year}`);
+    postTags.push(`${formData.author}`, `${formData.country}`, `${formData.year}`);
 
     // Add themes without prefix
     postTags.push(...formData.themes.split(',').map((theme) => theme.trim()).filter(theme => theme.length > 0));
 
     // Add quality tag (q5, q4, etc.)
     postTags.push(formData.quality);
+    // Add medium tag
+    postTags.push(`${formData.medium}`);
+
+    // Create title
+    let postTitle = formData.title;
+    postTitle += ` (${formData.year})`;
+    postTitle += ` - ${formData.author}`;
+    postTitle += ` (${formData.country})`;
 
     const post: Partial<Post> = {
-      title: formData.title,
+      title: postTitle,
       content: formData.content,
       tags: postTags,
       image: formData.image,
@@ -273,12 +292,6 @@ const CreateRecommendation: React.FC = () => {
         setIsUploading(false);
       }
     }
-  };
-
-  const createMarkup = (html: string) => {
-    return {
-      __html: DOMPurify.sanitize(html),
-    };
   };
 
   return (
@@ -418,6 +431,24 @@ const CreateRecommendation: React.FC = () => {
                 {qualitySymbols.map((symbol, index) => (
                   <option key={index} value={qualityTags[index]}>
                     {`${symbol}-${qualityText[index]}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="medium" className="block text-sm font-medium mb-1">
+                Medium
+              </label>
+              <select
+                id="medium"
+                value={formData.medium}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {mediaType.map((type, index) => (
+                  <option key={index} value={qualityTags[index]}>
+                    {`${mediaType[index]}`}
                   </option>
                 ))}
               </select>
