@@ -519,10 +519,10 @@ const RecommendationSection: React.FC<{
             <div 
               key={post.id} 
               style={{ 
-                minWidth: isMobileOrTablet ? 'auto' : '425px',
-                minHeight: isMobileOrTablet ? 'auto' : '425px',
-                width: isMobileOrTablet ? '100%' : '425px',
-                height: isMobileOrTablet ? 'auto' : '425px',
+                minWidth: isMobileOrTablet ? 'auto' : '300px',
+                minHeight: isMobileOrTablet ? 'auto' : '300px',
+                width: isMobileOrTablet ? '100%' : '300px',
+                height: isMobileOrTablet ? 'auto' : '300px',
                 flex: isMobileOrTablet ? '1 0 auto' : '0 0 auto'
               }}
             >
