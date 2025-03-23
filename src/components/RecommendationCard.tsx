@@ -11,7 +11,7 @@ interface RecommendationCardProps {
   onShowSimilar: (postId: string) => void;
 };
 
-const qualitySymbols = ['✓', '⧜', '∞', 'א', '∀', 'Ω'];
+const qualitySymbols = ['Ω', '∀', 'א', '∞', '⧜', '✓'];
 
 const RecommendationCard: React.FC<RecommendationCardProps> = ({
   post,
@@ -309,6 +309,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
               width: '100%',
               height: '100%',
               display: 'flex',
+              margin: '2',
               flexDirection: 'column',
               padding: '1rem',
               background: 'rgba(255, 255, 255, 0.95)',
@@ -329,7 +330,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
               </button>
             </div>
             <div className="flex flex-wrap gap-2 mb-4">
-              {sortedTags.map((tag) => (
+              {sortedTags.map((tag) => ( tag !== 'recommendation' &&
                 <div
                   key={tag}
                   className="tag-item px-2 py-1 border-2 border-black bg-white text-black hover:bg-gray-100 cursor-pointer text-sm"
