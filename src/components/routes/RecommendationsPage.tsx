@@ -424,22 +424,23 @@ const RecommendationSection: React.FC<{
     };
   }, []);
 
+  const cardWidth = 300; // Width of each card
   // Handle scrolling with arrows
   const scroll = (direction: 'left' | 'right') => {
     if (sectionRef.current) {
-      const scrollAmount = 260; // Match card width
-      const newPosition = direction === 'left' 
+      const scrollAmount = cardWidth * 4; // Match card width
+      const newPosition = direction === 'left'
         ? Math.max(0, scrollPosition - scrollAmount)
         : Math.min(
-            sectionRef.current.scrollWidth - sectionRef.current.clientWidth,
-            scrollPosition + scrollAmount
-          );
-      
+          sectionRef.current.scrollWidth - sectionRef.current.clientWidth,
+          scrollPosition + scrollAmount
+        );
+
       sectionRef.current.scrollTo({
         left: newPosition,
         behavior: 'smooth'
       });
-      
+
       setScrollPosition(newPosition);
     }
   };
@@ -466,23 +467,23 @@ const RecommendationSection: React.FC<{
   }
 
   const showLeftArrow = !isMobileOrTablet && scrollPosition > 10;
-  const showRightArrow = !isMobileOrTablet && sectionRef.current && 
+  const showRightArrow = !isMobileOrTablet && sectionRef.current &&
     scrollPosition < (sectionRef.current.scrollWidth - sectionRef.current.clientWidth - 10);
 
   return (
     <div className="mb-12 relative">
       <div className='karrik-regular-text text-2xl text-left mb-4'>{text.toUpperCase()}</div>
-      
+
       {/* Left fade and arrow */}
       {showLeftArrow && (
-        <div 
+        <div
           className="absolute left-0 top-1/2 z-10 transform -translate-y-1/2 h-full flex items-center"
           style={{
             background: 'linear-gradient(to right, white 20%, rgba(255,255,255,0) 100%)',
             width: '60px'
           }}
         >
-          <button 
+          <button
             onClick={() => scroll('left')}
             className="bg-white border-2 border-black rounded-full w-10 h-10 flex items-center justify-center ml-2 shadow-md hover:bg-gray-100"
             aria-label="Scroll left"
@@ -491,9 +492,9 @@ const RecommendationSection: React.FC<{
           </button>
         </div>
       )}
-      
+
       {/* Cards container */}
-      <div 
+      <div
         ref={sectionRef}
         className={`flex ${isMobileOrTablet ? 'flex-col overflow-y-auto' : 'flex-row overflow-x-auto scrollable-cards'} gap-4`}
         style={{
@@ -514,15 +515,15 @@ const RecommendationSection: React.FC<{
               }
             }
           }
-          
+
           return (
-            <div 
-              key={post.id} 
-              style={{ 
-                minWidth: isMobileOrTablet ? 'auto' : '300px',
-                minHeight: isMobileOrTablet ? 'auto' : '300px',
-                width: isMobileOrTablet ? '100%' : '300px',
-                height: isMobileOrTablet ? 'auto' : '300px',
+            <div
+              key={post.id}
+              style={{
+                minWidth: isMobileOrTablet ? 'auto' : `${cardWidth}px`,
+                minHeight: isMobileOrTablet ? 'auto' : `${cardWidth}px`,
+                width: isMobileOrTablet ? '100%' : `${cardWidth}px`,
+                height: isMobileOrTablet ? 'auto' : `${cardWidth}px`,
                 flex: isMobileOrTablet ? '1 0 auto' : '0 0 auto'
               }}
             >
@@ -537,17 +538,17 @@ const RecommendationSection: React.FC<{
           );
         })}
       </div>
-      
+
       {/* Right fade and arrow */}
       {showRightArrow && (
-        <div 
+        <div
           className="absolute right-0 top-1/2 z-10 transform -translate-y-1/2 h-full flex items-center justify-end"
           style={{
             background: 'linear-gradient(to left, white 20%, rgba(255,255,255,0) 100%)',
             width: '60px'
           }}
         >
-          <button 
+          <button
             onClick={() => scroll('right')}
             className="bg-white border-2 border-black rounded-full w-10 h-10 flex items-center justify-center mr-2 shadow-md hover:bg-gray-100"
             aria-label="Scroll right"
