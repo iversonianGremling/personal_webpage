@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Post from '../types';
-import '../assets/styles/recommendation-card.css';
 import { apiUrl } from '../assets/env-var';
 
+// Updated RecommendationCard component
 interface RecommendationCardProps {
   post: Post;
   quality: number;
   tagCounts: Record<string, number>;
   onTagClick: (tag: string) => void;
   onShowSimilar: (postId: string) => void;
-}
+};
 
-const qualitySymbols = ['Ω','∀','א','∞','⧜'];
+const qualitySymbols = ['✓', '⧜', '∞', 'א', '∀', 'Ω'];
+
 const RecommendationCard: React.FC<RecommendationCardProps> = ({
   post,
   quality,
@@ -23,6 +24,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [wasClicked, setWasClicked] = useState(false);
   const [showTags, setShowTags] = useState(false);
+
   // Check if device is mobile or tablet
   useEffect(() => {
     const checkDevice = () => {
@@ -100,7 +102,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
 
   // Add this function in your component
   const getDescriptionStyle = () => {
-  // Define the style with React.CSSProperties type
+    // Define the style with React.CSSProperties type
     const style: React.CSSProperties = {
       margin: '0',
       textAlign: 'center',
@@ -109,27 +111,31 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
       overflow: 'hidden',
       display: '-webkit-box',
       WebkitBoxOrient: 'vertical',
+      WebkitLineClamp: 8, // Show more lines of text
+      maxHeight: '250px' // Allow more height for the description
     };
 
     // Conditionally set fontSize
     if (description.length > 200) {
-      style.fontSize = '0.75rem';
+      style.fontSize = '0.875rem'; // Slightly larger for readability
     } else if (description.length > 150) {
-      style.fontSize = '0.825rem';
-    } else if (description.length > 100) {
       style.fontSize = '1rem';
+    } else if (description.length > 100) {
+      style.fontSize = '1.125rem';
     } else {
-      style.fontSize = '1.2rem';
+      style.fontSize = '1.25rem';
     }
 
     return style;
   };
 
   const { imageSrc, description, linkUrl, linkText } = extractContentElements();
+
   // Sort the tags by usage count (highest first)
   const sortedTags = [...post.tags]
     .filter(tag => !tag.match(/^q[0-5]$/)) // Remove quality tags
     .sort((a, b) => (tagCounts[b] || 0) - (tagCounts[a] || 0));
+
   // Handle card clicks for mobile/tablet
   const handleCardClick = (e: React.MouseEvent) => {
     // Prevent propagation for tag elements and the show similar button
@@ -173,7 +179,11 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
     <div
       className="recommendation-card karrik-regular-text"
       onClick={handleCardClick}
-      style={{ position: 'relative' }}
+      style={{
+        position: 'relative',
+        height: '100%',
+        width: '100%'
+      }}
     >
       <div
         className="image-container"
@@ -184,6 +194,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
           overflow: 'hidden',
           aspectRatio: '1/1',
           width: '100%',
+          height: '100%',
           transition: 'transform 0.3s ease',
           transform: isHovered ? 'scale(1.05)' : 'scale(1)'
         }}
@@ -200,6 +211,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
             padding: '1rem',
             textAlign: 'center',
             alignItems: 'center',
+            justifyContent: 'center',
             textTransform: 'uppercase',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             color: 'white',
@@ -237,11 +249,12 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
               alignItems: 'center',
               justifyContent: 'center',
               padding: '1.5rem',
-              background: isHovered ? 'rgba(255, 255, 255, 0.8)' : 'transparent',
+              background: isHovered ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
               opacity: isHovered ? 1 : 0,
               transition: 'opacity 0.3s ease',
               pointerEvents: isHovered ? 'auto' : 'none',
-              zIndex: 3
+              zIndex: 3,
+              overflowY: 'auto'
             }}
           >
             <p
@@ -344,11 +357,13 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
     </div>
   );
 };
-// Format tag name for display (remove prefixes)
+
+// Add this function at the bottom of your file before the export
 const formatTagName = (tag: string) => {
   if (tag.startsWith('author:') || tag.startsWith('country:') || tag.startsWith('year:')) {
     return tag.split(':')[1].trim();
   }
   return tag;
 };
+
 export default RecommendationCard;
