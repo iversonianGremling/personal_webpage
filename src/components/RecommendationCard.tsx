@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Post from '../types';
 import { apiUrl } from '../assets/env-var';
 
@@ -24,9 +24,6 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [wasClicked, setWasClicked] = useState(false);
   const [showTags, setShowTags] = useState(false);
-  const [fontSize, setFontSize] = useState('1rem');
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Check if device is mobile or tablet
   useEffect(() => {
@@ -78,7 +75,7 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
   };
 
   // Extract the first image, description, and link from the post content
-  function extractContentElements() {
+  const extractContentElements = () => {
     const parser = new DOMParser();
     const htmlDoc = parser.parseFromString(post.content, 'text/html');
 
@@ -101,64 +98,12 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
     const linkText = firstLink ? firstLink.textContent || 'Read More' : '';
 
     return { imageSrc, description, linkUrl, linkText };
-  }
+  };
 
-  // Extract content elements after defining the required functions
-  const { imageSrc, description, linkUrl, linkText } = extractContentElements();
-
-  // Dynamically adjust font size based on container and text
-  useEffect(() => {
-    if (!descriptionRef.current || !containerRef.current || !isHovered) return;
-
-    // Function to check if text fits within container
-    const adjustFontSize = () => {
-      const container = containerRef.current;
-      const paragraph = descriptionRef.current;
-      
-      if (!container || !paragraph) return;
-      
-      // Get container dimensions, accounting for padding and the button if present
-      const containerHeight = container.clientHeight;
-      const buttonHeight = linkUrl ? 48 : 0; // Approximate height of button + margin
-      const availableHeight = containerHeight - buttonHeight - 40; // 40px for padding
-      
-      // Set a fixed size for better readability - START with at least 1rem
-      let testSize = 1;
-      const minSize = 0.9; // Higher minimum font size
-      const decrementAmount = 0.05; // How much to reduce each step
-      
-      // Set initial font size
-      paragraph.style.fontSize = `${testSize}rem`;
-      
-      // Only reduce font size if absolutely necessary
-      if (paragraph.scrollHeight > availableHeight) {
-        // Reduce font size until content fits or we reach minimum size
-        while (
-          paragraph.scrollHeight > availableHeight && 
-          testSize > minSize
-        ) {
-          testSize -= decrementAmount;
-          paragraph.style.fontSize = `${testSize}rem`;
-        }
-      }
-      
-      // Store the final size
-      setFontSize(`${testSize}rem`);
-    };
-    
-    // Adjust font size initially and on window resize
-    adjustFontSize();
-    const handleResize = () => adjustFontSize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isHovered, linkUrl, description]);
-
-  // Get description style with the dynamically calculated font size
-  const getDescriptionStyle = (): React.CSSProperties => {
-    return {
+  // Add this function in your component
+  const getDescriptionStyle = () => {
+    // Define the style with React.CSSProperties type
+    const style: React.CSSProperties = {
       margin: '0',
       textAlign: 'center',
       color: '#000',
@@ -166,13 +111,25 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
       overflow: 'hidden',
       display: '-webkit-box',
       WebkitBoxOrient: 'vertical',
-      WebkitLineClamp: 8,
-      maxHeight: '250px',
-      fontSize: fontSize || '1rem', // Ensure a reasonable default
-      lineHeight: '1.5', // Improved line height for readability
-      transition: 'font-size 0.2s ease'
+      WebkitLineClamp: 8, // Show more lines of text
+      maxHeight: '250px' // Allow more height for the description
     };
+
+    // Conditionally set fontSize
+    if (description.length > 200) {
+      style.fontSize = '0.875rem'; // Slightly larger for readability
+    } else if (description.length > 150) {
+      style.fontSize = '1rem';
+    } else if (description.length > 100) {
+      style.fontSize = '1.125rem';
+    } else {
+      style.fontSize = '1.25rem';
+    }
+
+    return style;
   };
+
+  const { imageSrc, description, linkUrl, linkText } = extractContentElements();
 
   // Sort the tags by usage count (highest first)
   const sortedTags = [...post.tags]
@@ -281,7 +238,6 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
         {/* Description and link overlay (visible on hover) */}
         {!showTags && (
           <div
-            ref={containerRef}
             style={{
               position: 'absolute',
               top: '0',
@@ -298,12 +254,10 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
               transition: 'opacity 0.3s ease',
               pointerEvents: isHovered ? 'auto' : 'none',
               zIndex: 3,
-              overflowY: 'auto',
-              boxSizing: 'border-box'
+              overflowY: 'auto'
             }}
           >
             <p
-              ref={descriptionRef}
               className="description"
               style={getDescriptionStyle()}
             >
