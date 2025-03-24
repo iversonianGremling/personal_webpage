@@ -25,7 +25,7 @@ const RecommendationsPage: React.FC = () => {
   // The pre-defined sections/categories (renamed to Medium)
   const mediums = [
     'Music',
-    'Movie',
+    'Movies',
     'Book',
     'Game',
     'Anime',
