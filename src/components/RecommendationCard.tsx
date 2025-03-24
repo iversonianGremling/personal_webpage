@@ -42,56 +42,6 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
     };
   }, []);
 
-  // Extract content elements first so we can use description in our effect
-  const { imageSrc, description, linkUrl, linkText } = extractContentElements();
-
-  // Dynamically adjust font size based on container and text
-  useEffect(() => {
-    if (!descriptionRef.current || !containerRef.current || !isHovered) return;
-
-    // Function to check if text fits within container
-    const adjustFontSize = () => {
-      const container = containerRef.current;
-      const paragraph = descriptionRef.current;
-      
-      if (!container || !paragraph) return;
-      
-      // Get container dimensions, accounting for padding and the button if present
-      const containerHeight = container.clientHeight;
-      const buttonHeight = linkUrl ? 48 : 0; // Approximate height of button + margin
-      const availableHeight = containerHeight - buttonHeight - 40; // 40px for padding
-      
-      // Start with a large font size and reduce until it fits
-      let testSize = 1.25;
-      const minSize = 0.65; // Minimum font size in rem
-      const decrementAmount = 0.05; // How much to reduce each step
-      
-      // Set initial font size
-      paragraph.style.fontSize = `${testSize}rem`;
-      
-      // Reduce font size until content fits or we reach minimum size
-      while (
-        paragraph.scrollHeight > availableHeight && 
-        testSize > minSize
-      ) {
-        testSize -= decrementAmount;
-        paragraph.style.fontSize = `${testSize}rem`;
-      }
-      
-      // Store the final size
-      setFontSize(`${testSize}rem`);
-    };
-    
-    // Adjust font size initially and on window resize
-    adjustFontSize();
-    const handleResize = () => adjustFontSize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isHovered, linkUrl, description]);
-
   // Helper function to check if a URL is external
   const isExternalUrl = (url: string): boolean => {
     if (!url) return false;
@@ -153,6 +103,59 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
     return { imageSrc, description, linkUrl, linkText };
   }
 
+  // Extract content elements after defining the required functions
+  const { imageSrc, description, linkUrl, linkText } = extractContentElements();
+
+  // Dynamically adjust font size based on container and text
+  useEffect(() => {
+    if (!descriptionRef.current || !containerRef.current || !isHovered) return;
+
+    // Function to check if text fits within container
+    const adjustFontSize = () => {
+      const container = containerRef.current;
+      const paragraph = descriptionRef.current;
+      
+      if (!container || !paragraph) return;
+      
+      // Get container dimensions, accounting for padding and the button if present
+      const containerHeight = container.clientHeight;
+      const buttonHeight = linkUrl ? 48 : 0; // Approximate height of button + margin
+      const availableHeight = containerHeight - buttonHeight - 40; // 40px for padding
+      
+      // Set a fixed size for better readability - START with at least 1rem
+      let testSize = 1;
+      const minSize = 0.9; // Higher minimum font size
+      const decrementAmount = 0.05; // How much to reduce each step
+      
+      // Set initial font size
+      paragraph.style.fontSize = `${testSize}rem`;
+      
+      // Only reduce font size if absolutely necessary
+      if (paragraph.scrollHeight > availableHeight) {
+        // Reduce font size until content fits or we reach minimum size
+        while (
+          paragraph.scrollHeight > availableHeight && 
+          testSize > minSize
+        ) {
+          testSize -= decrementAmount;
+          paragraph.style.fontSize = `${testSize}rem`;
+        }
+      }
+      
+      // Store the final size
+      setFontSize(`${testSize}rem`);
+    };
+    
+    // Adjust font size initially and on window resize
+    adjustFontSize();
+    const handleResize = () => adjustFontSize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isHovered, linkUrl, description]);
+
   // Get description style with the dynamically calculated font size
   const getDescriptionStyle = (): React.CSSProperties => {
     return {
@@ -165,7 +168,8 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
       WebkitBoxOrient: 'vertical',
       WebkitLineClamp: 8,
       maxHeight: '250px',
-      fontSize: fontSize,
+      fontSize: fontSize || '1rem', // Ensure a reasonable default
+      lineHeight: '1.5', // Improved line height for readability
       transition: 'font-size 0.2s ease'
     };
   };
@@ -294,7 +298,8 @@ const RecommendationCard: React.FC<RecommendationCardProps> = ({
               transition: 'opacity 0.3s ease',
               pointerEvents: isHovered ? 'auto' : 'none',
               zIndex: 3,
-              overflowY: 'auto'
+              overflowY: 'auto',
+              boxSizing: 'border-box'
             }}
           >
             <p
