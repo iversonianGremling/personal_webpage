@@ -5,6 +5,7 @@ import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../../assets/env-var';
 import insideIntestineImage from '../../../assets/images/inside_intestine.webp';
+import { useTranslation } from 'react-i18next';
 
 type Post = {
   id: number;
@@ -15,6 +16,7 @@ type Post = {
 };
 
 const NonFiction: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
@@ -29,17 +31,20 @@ const NonFiction: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/non-fiction');
+      const response = await fetch(apiUrl + '/posts/tag/non-fiction');
       const data = await response.json();
       console.log(data);
       setPosts(data);
     };
     fetchPosts();
-  });
+  }, []); // Added dependency array to prevent infinite re-renders
+
+  const title = t('nonfictionPage.title');
+  const backButtonText = t('nonfictionPage.backButton');
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <div className="container-non-fiction">
         <img
           src={insideIntestineImage}
@@ -64,7 +69,7 @@ const NonFiction: React.FC = () => {
             left: '15px',
           }}
         >
-          {Array.from('Return  to  my  body').map((char, index) => {
+          {Array.from(backButtonText).map((char, index) => {
             if (char === ' ') {
               return <span key={index}>&nbsp;</span>;
             } else {
@@ -72,12 +77,14 @@ const NonFiction: React.FC = () => {
                 <span
                   key={index}
                   className="wobble-letter"
-                  style={{
-                    '--char-index': index,
-                    '--random-x': Math.random() * 0.5 ,
-                    '--random-y': Math.random() * 0.5 ,
-                    '--random-duration': `${Math.random() + 1}s`,
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      '--char-index': index,
+                      '--random-x': Math.random() * 0.5,
+                      '--random-y': Math.random() * 0.5,
+                      '--random-duration': `${Math.random() + 1}s`,
+                    } as React.CSSProperties
+                  }
                 >
                   {char}
                 </span>
@@ -85,14 +92,19 @@ const NonFiction: React.FC = () => {
             }
           })}
         </button>
-        <div className={`${isMobile ? 'text-6xl' : 'text-9xl'} header-non-fiction wobble-letter`}
-          style={{
-            '--random-x': Math.random() * 0.5 + 1,
-            '--random-y': Math.random() * 0.5 + 1,
-            '--random-duration': `${Math.random() * 1 + 1}s`,
-            'cursor': 'default'
-          } as React.CSSProperties}
-        >NonFiction</div>
+        <div
+          className={`${isMobile ? 'text-6xl' : 'text-9xl'} header-non-fiction wobble-letter`}
+          style={
+            {
+              '--random-x': Math.random() * 0.5 + 1,
+              '--random-y': Math.random() * 0.5 + 1,
+              '--random-duration': `${Math.random() * 1 + 1}s`,
+              cursor: 'default',
+            } as React.CSSProperties
+          }
+        >
+          {title}
+        </div>
         <div className="posts-container-non-fiction">
           {posts.map((post) => (
             <PostCard

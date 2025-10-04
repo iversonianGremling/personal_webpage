@@ -1,0 +1,6 @@
+ENV=local
+VITE_API_URL=http://localhost:3000
+OMDB_API_KEY = 'ebfa6ed2'; // Replace with your actual API key
+DISCOGS_API_KEY = 'ukWRtnJlEEjeRaMRNYaj'; // Replace with your actual API key
+DISCOGS_API_SECRET = 'oiOARihzktuoHYoTmWyHgxzbFJMzoAwo'; // Replace with your actual API secret
+RAWG_API_KEY = '11b7a229736b40ad8e94d61d571371e0'; // Replace with your actual API key

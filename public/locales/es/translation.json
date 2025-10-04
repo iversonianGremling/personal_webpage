@@ -1,0 +1,269 @@
+{
+  "general": {
+    "home": "Inicio",
+    "topics": "Temas",
+    "about": "About",
+    "back": "Volver",
+    "loading": "Cargando...",
+    "error": "Error",
+    "search": "Buscar",
+    "share": "Compartir",
+    "support": "Apoyar",
+    "zenMode": "Modo Zen (clic para colores más amigables)",
+    "tableOfContents": "Tabla de Contenidos (haz clic)",
+    "similarPosts": "Posts Similares",
+    "noSimilarPosts": "No se encontraron publicaciones similares."
+  },
+  "nav": {
+    "home": "Inicio",
+    "topics": "Temas",
+    "about": "About",
+    "allPosts": "Todos los Posts"
+  },
+  "categories": {
+    "music": "Música",
+    "gaming": "Videojuegos",
+    "philosophy": "Filosofía",
+    "writings": "Escritos",
+    "articles": "Artículos",
+    "politics": "Política",
+    "programming": "Programación",
+    "thoughts": "Pensamientos",
+    "reviews": "Reseñas"
+  },
+  "social": {
+    "github": "GitHub",
+    "email": "Correo",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "youtube": "YouTube",
+    "bandcamp": "Bandcamp",
+    "soundcloud": "SoundCloud",
+    "twitch": "Twitch",
+    "bluesky": "Bluesky",
+    "aboutMe": "Sobre Mí"
+  },
+  "posts": {
+    "latestPosts": "ÚLTIMOS POSTS",
+    "createPost": "Crear Publicación",
+    "createThought": "Crear Pensamiento",
+    "createRecommendation": "Crear Recomendación",
+    "seeAllPosts": "Ver Todas las Publicaciones",
+    "editPost": "Editar Sangre",
+    "deletePost": "Eliminar Sangre",
+    "areYouFree": "¿Eres libre?",
+    "tags": "Etiquetas",
+    "type": "Tipo",
+    "visibility": "Visibilidad",
+    "date": "Fecha",
+    "title": "Título",
+    "content": "Contenido",
+    "featuredImage": "URL de Imagen Destacada",
+    "postType": "Tipo de Publicación",
+    "blog": "Blog",
+    "thought": "Pensamiento",
+    "recommendation": "Recomendación",
+    "public": "Público",
+    "private": "Privado",
+    "preview": "Vista Previa",
+    "submit": "Enviar",
+    "submitting": "Enviando...",
+    "allMyBlood": "Toda mi sangre (haz clic en los títulos para navegar a mi sangre)",
+    "needToGoBack": "Necesito volver",
+    "searchBlood": "Buscar sangre..."
+  },
+  "quality": {
+    "masterpiece": "Obra maestra",
+    "indispensable": "Indispensable",
+    "mediumDefining": "Define el medio",
+    "cultClassic": "Clásico de culto",
+    "worthExperiencing": "Vale la pena experimentar"
+  },
+  "share": {
+    "twitter": "X (Twitter)",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "reddit": "Reddit",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "email": "Correo",
+    "copyLink": "Copiar Enlace",
+    "linkCopied": "¡Enlace copiado al portapapeles!"
+  },
+  "errors": {
+    "failedToFetchPosts": "Error al obtener publicaciones",
+    "failedToSearchPosts": "Error al buscar publicaciones",
+    "failedToDeletePost": "Error al eliminar publicación",
+    "postNotFound": "Publicación no encontrada",
+    "uploadFailed": "Error de carga",
+    "onlyImageFiles": "Solo se permiten archivos de imagen",
+    "failedToInsertImage": "Error al insertar imagen"
+  },
+  "about": {
+    "whyThisExists": "¿Por qué esta página?",
+    "myBlood": "Mi sangre",
+    "methodologiesIrrelevant": "Las metodologías y mecanismos internos son",
+    "completelyIrrelevant": "completamente irrelevantes pero incluyen:",
+    "egoDeath": "Muerte del ego",
+    "digitalBrutalism": "Brutalismo digital",
+    "philosophicalFragments": "Fragmentos filosóficos",
+    "softwareDemonicRituals": "Rituales demoníacos de software",
+    "asEverythingWithLife": "Como todo lo que tiene vida",
+    "itsUnpolished": "no está pulido",
+    "asEverySoftware": "Como cada programa informático",
+    "foreverUnfinished": "nunca está terminado",
+    "websitePreexists": "este sitio web preexiste",
+    "modernWebDev": "al desarrollo web moderno",
+    "oopPatternsUsed": "Patrones OOP utilizados",
+    "noSpookyCookies": "Sin cookies chungas",
+    "noTimeStealingAds": "Sin anuncios que roban tiempo",
+    "emptinessAsConcept": "El vacío como concepto",
+    "bloodComponents": "Componentes de la Sangre",
+    "reanimatedCorpse": "El cadáver reanimado de mi",
+    "trauma": "Trauma",
+    "lovePassion": "Amor, pasión, romanticismo",
+    "stolenTime": "Tiempo robado",
+    "fingerBleeding": "Tecleos con sangre"
+  },
+  "confirmations": {
+    "deletePost": "¿Estás seguro de que quieres eliminar esta publicación?"
+  },
+  "aboutPage": {
+    "textArray": [
+      "Ola",
+      "No tengo un nombge todabia",
+      "No puezo sendir nada aun",
+      "O aser pregundas",
+      "Lo siendo",
+      "Algun dia pordemos albar",
+      "Aidos"
+    ]
+  },
+  "thoughtsPage": {
+    "wheresMyHead": "¿Dónde tengo la cabeza?..."
+  },
+  "reviewsPage": {
+    "music": "Música",
+    "movies": "Peliculas",
+    "videogames": "Videojuegos",
+    "literature": "literatura",
+    "non-fiction": "no-ficción",
+    "art": "Arte",
+    "software": "Software",
+    "recommendations": "Recomendaciones"
+  },
+  "philosophyPage": {
+    "title": "Filosofía",
+    "recentPosts": "Posts recientes"
+  },
+  "musicPage": {
+    "title": "¿Esculturas de tiempo hechas de sonido? Supongo...",
+    "description": "Nada que ocultar, quiero que se escuchen todas mis pistas fallidas para que la gente pueda ver lo que realmente se necesita para alcanzar cierto nivel de producción. Si buscas lo suficiente en cada plataforma, verás lo que consideré en su día digno de publicar. La música sin terminar también está ahí, todo, quiero estar completamente desnudo. Estoy trabajando en un proyecto más serio ahora, publicaré los resultados aquí.",
+    "platform1": "Plataforma 1",
+    "platform2": "Plataforma 2",
+    "platform3": "Plataforma 3",
+    "bandcampLink": "Bandcamp"
+  },
+    "gamingPage": {
+    "title": "Bienvenido a la Zona Definitiva de Gaming",
+    "searchPlaceholder": "Buscar posts gamers épicos ...",
+    "recentPostsTitle": "Posts Recientes",
+    "noPostsFound": "No se encontraron posts. ¡Intenta con otra búsqueda!",
+    "footer": "© 2000 GamingZone. Todos los derechos reservados. Banda sonora de la página web compuesta por Tommy Tallarico",
+    "marqueeText": "🎮LA LUDONARRATIVA NO EXISTE🎮",
+    "consoles": {
+      "PC": "PC",
+      "Nintendo": "Nintendo",
+      "Sega": "Sega",
+      "Chess": "Ajedrez",
+      "Atari2600": "Atari 2600",
+      "Bondage": "Bondage"
+    },
+    "alerts": {
+      "Atari2600": "La gente solía tomar LSD mientras hacía mis juegos. También inventé el concepto de tener contratos con empresas para que no pudieran ser desarrollados por otras compañías, ¡de nada blyaaaaaaaat! 🎮",
+      "PC": "O tienes una 4090GTX para jugar Marvel Rivals en 4k en 3 monitores en ultra a 1000fps o la estás usando para minar bitcoins, de cualquier manera, los adictos a los juegos y las apuestas encontraron en el mismo hardware una forma útil de alimentar su adicción 🎮",
+      "Nintendo": "Sí, me encanta tratar mal a mis empleados mientras hago juegos para niños, por cierto, ¿en Zelda II Link recuperaba salud al dormir con prostitutas? 🎮",
+      "Sega": "Hace lo que Nintendon't, es decir, la mundialmente reconocida mascota del autismo 🎮",
+      "Chess": "El ajedrez es el dark souls de las colonoscopias",
+      "Bondage": "Por mucho que los juegos de cama sean un tema divertido, este es un sitio web serio y aquí separamos las cosas correctamente, esta parte no es para *ese* tipo de juegos, por favor, consulta la sección de sexualidad, esta sección es EXCLUSIVAMENTE para juegos épicos 🎮",
+      "default": "¡Eres un verdadero fan de {consoleName}! 🎮"
+    },
+    "quotes": {
+      "quote1": "\"Creo que abordar la cuarta pared tan directamente es algo de mal gusto en el mundo moderno.\" - Entidad dentro del Poliedro, Pathologic",
+      "quote2": "\"Cualquier elección es correcta siempre que sea deseada.\" - Artemy Burakh, Pathologic",
+      "quote3": "\"¡DISPÁRAME EN LA CARA! ¡EN LA CAAAAAAAARA! ¡HAZLO! ¡DISPÁRAME EN LA CARA! ¡CARA CARACARACARACARA! ¡AHORA! ¡BALAS EN LA CARA! ¡LAS QUIERO! ¡LAS NECESITO! ¡DAMELASDAMELASDAMELAS! ¡AL SONIDO DE LA CAMPANA SERÁ LA HORA DE DISPAROS EN LA CARA! ¡BONGGGGG! ¡TOC TOC QUIÉN ES DISPÁRAME EN LA CARA! ¡FIN DEL CHISTE! ¡VOY A CANTAR UNA CANCIÓN! ¡DISPÁRAME AL FINAL DE ELLA! ¡DA DA DA DA DA DA DA! ¡¡BONG!! ...¡NOTO QUE NO ME HAS DISPARADO EN LA CARA! ¡CURIOSO POR QUÉ! Tal vez estés sopesando los pros y contras morales, pero déjame asegurarte que ¡OH DIOS MÍO, DISPÁRAME EN LA MALDITA CARA!! ¡¿QUÉ ESTÁS ESPERANDO!?!?\" - Face McShooty, Borderlands 2",
+      "quote4": "\"Todo lo que no se guarda se perderá.\" - Nelson Mandela"
+    }
+  },
+  "articlesPage": {
+    "latestArticles": "Ultimos artículos"
+  },
+
+  "programmingPage": {
+    "title": "Programación",
+    "quote": "printf(\"Y gente, seamos honestos. Sturgeon era un optimista. Mucho más del 90% del código es basura.\") – Al viro",
+    "recentPosts": "Posts recientes",
+    "terminal": {
+      "prompt": "body@velavelucci:~$",
+      "command": "ls -lha latest-posts"
+    },
+    "loading": "Cargando posts...",
+    "programmingSidebar": {
+      "searchPlaceholder": "Buscar publicaciones o carpetas...",
+      "folderName": "Programación",
+      "loading": "Cargando...",
+      "noResults": "No se encontraron resultados"
+    } 
+  },
+    "politicsPage": {
+    "title": "💖 lA PoLiTiCa No eXisTe sI jOdeR!!!! 💖",
+    "subtitle": "¡¡¡100% menos política 100% MÁS FACTS AND LOGIC!!! 🌈✨",
+    "disclaimer": "No se puede escapar, sorry",
+    "postsSection": "🌟 ÚLTIMOS POSTS 🌟",
+    "loading": "Cargando posts fabulosos... ✨🌈",
+    "noPosts": "Aún no hay posts fabulosos. ¡Sé el primero en publicar algo! 🌈✨"
+  },
+  "writingsPage": {
+    "title": "ESCRITOS",
+    "categories": {
+      "poetry": {
+        "title": "POESÍA",
+        "description": "A través de cada contracción un mundo se destruye, se crea movimiento, los flujos pierden su estasis. Como un corazón que ha sido roto muchas veces, la sangre, en solidaridad fractal, se vuelve cada vez más corrupta, hasta que todo lo que queda es un fluido pútrido que nunca se detiene. El corazón se mueve como una máquina de movimiento perpetuo, persistiendo en los abismos más profundos de los excesos de la realidad"
+      },
+      "fiction": {
+        "title": "FICCIÓN",
+        "description": "Compuesto principalmente de tejido graso y agua, el cerebro sirve como el núcleo del cuerpo, capaz de traducir picos de corriente eléctrica a través de su superficie e interior en experiencias fenomenológicas, sus maquinaciones, ya sean conscientes o inconscientes, le otorgan el título del gran dictador del cuerpo, controlando: parálisis, aceleración, síntesis... etc. La máquina definitiva basada en proteínas con la mayor eficiencia eléctrica, capaz de crear realidades completamente nuevas."
+      },
+      "nonFiction": {
+        "title": "NO FICCIÓN",
+        "description": "Los intestinos sostienen, retraen, vomitan, responden a los caprichos viciosos del cuerpo ansioso mientras se desmoronan de dolor. Extraen tanta información de lo que ya no debería llamarse comida para transformarla en energía, son un traductor que resta, restan todo hasta que solo quedan heces. Una transformación interminable que ofrece el reflejo de la realidad"
+      }
+    },
+    "footer": "Fuente Lithops por Anne-Dauphine Borione. Distribuida por"
+  },
+  "poetryPage": {
+    "title": "POESÍA",
+    "backButton": "Volver  a  mi  cuerpo"
+  },
+    "fictionPage": {
+    "title": "FICCIÓN",
+    "backButton": "Volver  a  mi  cuerpo"
+  },
+    "nonfictionPage": {
+    "title": "No Ficción",
+    "backButton": "Volver  a  mi  cuerpo"
+  },
+    "searchBar": {
+    "placeholder": "Buscar publicaciones por título, contenido, etiquetas...",
+    "categories": {
+      "full": "Coincidencias Completas",
+      "title": "Coincidencias en Título",
+      "content": "Coincidencias en Contenido",
+      "tags": "Coincidencias en Etiquetas",
+      "other": "Otras Coincidencias"
+    }
+  },
+  "app_create_post": "Crear post",
+  "app_see_all_posts": "Ver todos los posts",
+  "moving_title_latest_posts_all_caps": "ULTIMOS POSTS"
+}

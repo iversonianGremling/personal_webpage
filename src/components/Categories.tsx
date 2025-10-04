@@ -9,8 +9,8 @@ import articlesIcon from '../assets/icons/articles.svg';
 import intersectionalityIcon from '../assets/icons/intersectionality.svg';
 import programmingIcon from '../assets/icons/programming.svg';
 import thoughtsIcon from '../assets/icons/thoughts.svg';
-
-
+import reviewsIcon from '../assets/icons/reviews.svg';
+import { useTranslation } from 'react-i18next';
 
 const Categories = () => {
   const radius = 120; // Radius of the circle
@@ -21,16 +21,18 @@ const Categories = () => {
   const [prevAngle, setPrevAngle] = useState<number | null>(null); // Previous angle of the mouse relative to the center
   const [isInside, setIsInside] = useState(false); // Whether the mouse is inside the interactive zone
   const circleRef = useRef<HTMLDivElement | null>(null); // Ref for the circle container
+  const { t } = useTranslation();
 
   const categories = [
-    { to: '/music', imgSrc: musicIcon, alt: 'Music', label: 'Music' },
-    { to: '/gaming', imgSrc: gamingIcon, alt: 'Gaming', label: 'Gaming' },
-    { to: '/philosophy', imgSrc: philosophyIcon, alt: 'Philosophy', label: 'Philosophy' },
-    { to: '/writings', imgSrc: writingsIcon, alt: 'Writings', label: 'Writings' },
-    { to: '/articles', imgSrc: articlesIcon, alt: 'Articles', label: 'Articles' },
-    { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: 'Politics', label: 'Politics' },
-    { to: '/programming', imgSrc: programmingIcon, alt: 'Programming', label: 'Programming' },
-    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' }
+    { to: '/music', imgSrc: musicIcon, alt: t('categories.music'), label: t('categories.music') },
+    { to: '/gaming', imgSrc: gamingIcon, alt: t('categories.gaming'), label: t('categories.gaming') },
+    { to: '/philosophy', imgSrc: philosophyIcon, alt: t('categories.philosophy'), label: t('categories.philosophy') },
+    { to: '/writings', imgSrc: writingsIcon, alt: t('categories.writings'), label: t('categories.writings') },
+    { to: '/articles', imgSrc: articlesIcon, alt: t('categories.articles'), label: t('categories.articles') },
+    { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: t('categories.politics'), label: t('categories.politics') },
+    { to: '/programming', imgSrc: programmingIcon, alt: t('categories.programming'), label: t('categories.programming') },
+    { to: '/thoughts', imgSrc: thoughtsIcon, alt: t('categories.thoughts'), label: t('categories.thoughts') },
+    { to: '/reviews', imgSrc: reviewsIcon, alt: t('categories.reviews'), label: t('categories.reviews') }
   ];
 
 
@@ -128,7 +130,7 @@ const Categories = () => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <SaladFingersText enableHoverEffect={true} text='All posts' textSize='2.1rem' linkTo='/posts' />
+          <SaladFingersText enableHoverEffect={true} text={t('nav.allPosts')} textSize='2.1rem' linkTo='/posts' />
         </div>
       </div>
     </div>

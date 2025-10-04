@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/styles/salad-fingers.css'; // CSS for styles
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const fonts = [
   '\'Shadows Into Light\', cursive',
@@ -18,7 +19,8 @@ interface SaladFingersTextProps {
 }
 
 const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect = false, text = 'About', textSize = '2.5rem', linkTo = '/' }) => {
-  const textArray = ['Henlo', 'I don\'t has a name yed', 'I can\'t feel anyfing iet', 'Or asg guestions', 'I\'m sordy', 'Some day we\'ll bee able to talg', 'Bie'];
+  const { t } = useTranslation();
+  const textArray = t('aboutPage.textArray', { returnObjects: true });
 
   const [index, setIndex] = useState(0);
   const [letters, setLetters] = useState<string[]>([]);
@@ -31,8 +33,8 @@ const SaladFingersText: React.FC<SaladFingersTextProps> = ({ enableHoverEffect =
   }, [index]);
 
   const handleClick = () => {
-    setIndex((prevIndex) => (prevIndex + 1) % textArray.length);
-    if (index === textArray.length - 2) navigate('/');
+    setIndex((prevIndex) => (prevIndex + 1) % (textArray as string[]).length);
+    if (index === (textArray as string[]).length - 2) navigate('/');
   };
 
   const handleMouseEnter = () => {

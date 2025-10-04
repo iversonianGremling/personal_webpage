@@ -1,14 +1,14 @@
 # Stage 1: Build the frontend
-FROM node:18 AS builder
+FROM node:20 AS builder
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json package-lock.json ./
-RUN npm install
+COPY package.json yarn.lock* ./
+RUN yarn install
 
 # Copy the entire project and build
 COPY . .
-RUN npm run build
+RUN yarn build
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine

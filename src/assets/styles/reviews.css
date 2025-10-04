@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'LinealVF';
+  src: url('../fonts/LinealVF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.linealVF-text {
+  font-family: 'LinealVF', sans-serif;
+}

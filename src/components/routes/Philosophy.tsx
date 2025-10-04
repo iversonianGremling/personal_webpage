@@ -3,19 +3,21 @@ import NavBar from '../NavBar';
 import Post from '../../types';
 import PostCard from '../PostCard';
 import { apiUrl } from '../../assets/env-var';
+import { useTranslation } from 'react-i18next';
 
 const PhilosophyBlog: React.FC = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [latestPosts, setLatestPosts] = React.useState<Post[]>([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/philosophy');
+      const response = await fetch(apiUrl + '/posts/tag/philosophy');
       const data = await response.json();
       console.log(data);
       setPosts(data);
     };
     const fetchLatestPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/philosophy/latest');
+      const response = await fetch(apiUrl + '/posts/tag/philosophy/latest');
       const data = await response.json();
       console.log(data);
       setLatestPosts(data);
@@ -25,7 +27,6 @@ const PhilosophyBlog: React.FC = () => {
   }, []);
   return (
     <>
-
       <NavBar />
       <div
         className="min-h-screen bg-black text-gray-300 p-8"
@@ -34,9 +35,10 @@ const PhilosophyBlog: React.FC = () => {
           lineHeight: '1.8',
         }}
       >
-
         <header className="pb-6 mb-12 mt-12">
-          <h1 className="text-5xl font-bold text-white text-center tracking-wide">Philosophy</h1>
+          <h1 className="text-5xl font-bold text-white text-center tracking-wide">
+            {t('philosophyPage.title')}
+          </h1>
           {/* <div className="flex flex-row justify-center gap-6">
           <div className='flex flex-col'>
             <p className="text-center text-gray-500 text-lg mt-2">
@@ -63,12 +65,11 @@ const PhilosophyBlog: React.FC = () => {
             </p>
           </div>
         </div> */}
-
         </header>
 
         <main className="max-w-4xl mx-auto">
           <section className="mb-16">
-            {posts.length > 0 && (
+            {posts.length > 0 &&
               posts.map((post) => (
                 <PostCard
                   key={post.id}
@@ -78,38 +79,35 @@ const PhilosophyBlog: React.FC = () => {
                   tags={post.tags}
                   date={post.date}
                   type={post.type}
-                  variant='philosophy'
+                  variant="philosophy"
                   // basePath={post.basePath}
                   // index={post.index}
                 />
-              ))
-            )}
+              ))}
           </section>
           {/* Recent Posts */}
           <section className="border-gray-700 pt-8">
             <h3 className="text-2xl font-semibold text-gray-400 mb-6">
-            Recent Posts
+              {t('philosophyPage.recentPosts')}
             </h3>
-            <div >
-              <ul className='space-y-6'>
-                {latestPosts.length > 0 && (
+            <div>
+              <ul className="space-y-6">
+                {latestPosts.length > 0 &&
                   latestPosts.map((post) => (
-
                     <li key={post.id}>
-                      <a href="#"
-                        className="text-xl font-semibold text-white hover:text-gray-400 transition">
+                      <a
+                        href="#"
+                        className="text-xl font-semibold text-white hover:text-gray-400 transition"
+                      >
                         {post.title}
                       </a>
                       <p className="text-gray-500 mt-1">{post.content}</p>
                     </li>
-                  ))
-                )}
+                  ))}
               </ul>
             </div>
-
           </section>
         </main>
-
       </div>
     </>
   );

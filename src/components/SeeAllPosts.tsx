@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; // Add this import
 import Post from '../types';
 import { apiUrl } from '../assets/env-var';
+import { useAuth } from './AuthContext';
 
 interface SeeAllPostsProps {
   admin?: boolean;
 }
 
-const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
+const SeeAllPosts: React.FC<SeeAllPostsProps> = ({ admin = false }) => {
+  const { t } = useTranslation(); // Add this hook
   const [posts, setPosts] = useState<Post[]>();
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const { isAdmin } = useAuth();
 
   // Fetch all posts on component mount
   useEffect(() => {
@@ -20,15 +25,19 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   }, []);
 
   const fetchPosts = async () => {
+    console.log(`Admin: ${admin}`);
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(admin ? apiUrl + 'posts/admin' : apiUrl + 'posts/', {
-        method: 'GET',
-        credentials: 'include', // Ensures cookies are sent with the request
-      });
+      const response = await fetch(
+        isAdmin ? apiUrl + '/posts/admin' : apiUrl + '/posts/',
+        {
+          method: 'GET',
+          credentials: 'include', // Ensures cookies are sent with the request
+        },
+      );
       if (!response.ok) {
-        throw new Error('Failed to fetch posts');
+        throw new Error(t('errors.failedToFetchPosts'));
       }
       const data = await response.json();
       setPosts(data);
@@ -45,15 +54,16 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
     setError(null);
     try {
       const response = await fetch(
-        admin ? apiUrl + `posts/search/admin?q=${encodeURIComponent(searchQuery)}`
-          : apiUrl + `posts/search?q=${encodeURIComponent(searchQuery)}`,
+        isAdmin
+          ? apiUrl + `/posts/search/admin?q=${encodeURIComponent(searchQuery)}`
+          : apiUrl + `/posts/search?q=${encodeURIComponent(searchQuery)}`,
         {
           method: 'GET',
           credentials: 'include',
-        }
+        },
       );
       if (!response.ok) {
-        throw new Error('Failed to search posts');
+        throw new Error(t('errors.failedToSearchPosts'));
       }
       const data = await response.json();
       setPosts(data);
@@ -65,14 +75,14 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
   };
 
   const handleDelete = async (postId: number) => {
-    if (!window.confirm('Are you sure you want to delete this post?')) return;
+    if (!window.confirm(t('confirmations.deletePost'))) return;
     try {
-      const response = await fetch(apiUrl + `posts/${postId}`, {
+      const response = await fetch(apiUrl + `/posts/${postId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
       if (!response.ok) {
-        throw new Error('Failed to delete post');
+        throw new Error(t('errors.failedToDeletePost'));
       }
       setPosts(posts?.filter((post) => post.id !== postId)); // Remove deleted post from state
     } catch (error) {
@@ -86,13 +96,18 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
 
   return (
     <div className="min-h-screen bg-gray-800 text-white p-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">All my blood</h1>
-      <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4" onClick={() => navigate(-1)}>I need to go back</button>
+      <h1 className="text-4xl font-bold mb-6 text-center">{t('posts.allMyBlood')}</h1>
+      <button
+        className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4"
+        onClick={() => navigate(-1)}
+      >
+        {t('posts.needToGoBack')}
+      </button>
 
       <form onSubmit={handleSearch} className="mb-6">
         <input
           type="text"
-          placeholder="Search blood..."
+          placeholder={t('posts.searchBlood')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-2 mb-4 bg-gray-600 text-white rounded-lg"
@@ -101,44 +116,54 @@ const SeeAllPosts: React.FC<SeeAllPostsProps> = ({admin = false}) => {
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
         >
-          Search
+          {t('general.search')}
         </button>
       </form>
 
-      {loading && <p className="text-center">Loading...</p>}
+      {loading && <p className="text-center">{t('general.loading')}</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
 
       <div className="grid grid-cols-1 gap-6">
-        {posts?.map((post) => (
-          <Link key={post.id} to={`/posts/${post.id}`}>
-            <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-              <p className="text-sm text-gray-400 mb-2">Date: {post.date}</p>
-              <p className="mb-4" dangerouslySetInnerHTML={{ __html: post.content }}></p>
-              <p className="mb-4">
-                <strong>Tags:</strong> {post.tags.join(', ')}
-              </p>
-              <p className="mb-4">
-                <strong>Type:</strong> {post.type}
-              </p>
-              <p className="mb-4">
-                <strong>Visibility:</strong> {post.visibility}
-              </p>
+        {posts?.reverse().map((post) => (
+          <div key={post.id} className="bg-gray-700 p-6 rounded-lg shadow-lg">
+
+            <Link key={post.id} to={`/posts${isAdmin ? '/admin/' : '/'}${post.id}`}>
+              <h2 className="text-2xl font-bold mb-2 hover:text-red-600">{post.title}</h2>
+            </Link>
+            <p className="text-sm text-gray-400 mb-2">{t('posts.date')}: {post.date}</p>
+            {admin &&
+            <>
               <button
                 onClick={() => handleEdit(post.id)}
                 className="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600"
               >
-              Edit Blood
+                {t('posts.editPost')}
               </button>
               <button
                 onClick={() => handleDelete(post.id)}
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
               >
-              Delete Blood
+                {t('posts.deletePost')}
               </button>
-              <div className="mt-2 font-extrabold font-mono font-serif"> ↑ Are you free?</div>
-            </div>
-          </Link>
+            </>
+            }
+            <p
+              className="mb-4 line-clamp-5"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            ></p>
+            <p className="mb-4">
+              <strong>{t('posts.tags')}:</strong> {post.tags.join(', ')}
+            </p>
+            <p className="mb-4">
+              <strong>{t('posts.type')}:</strong> {post.type}
+            </p>
+            {admin && (
+              <p className="mb-4">
+                <strong>{t('posts.visibility')}:</strong> {post.visibility}
+              </p>
+            )}
+
+          </div>
         ))}
       </div>
     </div>

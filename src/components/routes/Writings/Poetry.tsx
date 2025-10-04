@@ -5,6 +5,7 @@ import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../../assets/env-var';
 import insideHeartImage from '../../../assets/images/inside_heart.webp';
+import { useTranslation } from 'react-i18next';
 
 type Post = {
   id: number;
@@ -15,6 +16,7 @@ type Post = {
 };
 
 const Poetry: React.FC = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Poetry: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/poetry');
+      const response = await fetch(apiUrl + '/posts/tag/poetry');
       const data = await response.json();
       console.log(data);
       setPosts(data);
@@ -37,10 +39,12 @@ const Poetry: React.FC = () => {
     fetchPosts();
   }, []);
 
+  const title = t('poetryPage.title');
+  const backButtonText = t('poetryPage.backButton');
+
   return (
     <>
-      <NavBar/>
-
+      <NavBar />
 
       <div className="container-poetry">
         <button
@@ -52,7 +56,7 @@ const Poetry: React.FC = () => {
             left: '15px',
           }}
         >
-          {Array.from('Return  to  my  body').map((char, index) => {
+          {Array.from(backButtonText).map((char, index) => {
             if (char === ' ') {
               return <span key={index}>&nbsp;</span>;
             } else {
@@ -60,12 +64,14 @@ const Poetry: React.FC = () => {
                 <span
                   key={index}
                   className="wobble-letter"
-                  style={{
-                    '--char-index': index,
-                    '--random-x': Math.random() * 0.5 + 1,
-                    '--random-y': Math.random() * 0.5 + 1,
-                    '--random-duration': `${Math.random() * 1 + 1}s`,
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      '--char-index': index,
+                      '--random-x': Math.random() * 0.5 + 1,
+                      '--random-y': Math.random() * 0.5 + 1,
+                      '--random-duration': `${Math.random() * 1 + 1}s`,
+                    } as React.CSSProperties
+                  }
                 >
                   {char}
                 </span>
@@ -73,25 +79,39 @@ const Poetry: React.FC = () => {
             }
           })}
         </button>
-        <img src={insideHeartImage} alt="poetry" className="poetry-image" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: -1 }}/>
+        <img
+          src={insideHeartImage}
+          alt="poetry"
+          className="poetry-image"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: -1,
+          }}
+        />
         <div className={`${isMobile ? 'text-7xl' : 'text-9xl'} header-poetry`}>
-          {Array.from('POETRY').map((char, index) => (
+          {Array.from(title).map((char, index) => (
             <span
               key={index}
               className="wobble-letter"
-              style={{
-                cursor: 'default',
-                fontFamily: 'Lithops, sans-serif',
-                '--char-index': index,
-                '--random-x': Math.random() * 2 + 1,
-                '--random-y': Math.random() * 2 + 1,
-                '--random-duration': `${Math.random() * 1 + 1}s`,
-              } as React.CSSProperties}
+              style={
+                {
+                  cursor: 'default',
+                  fontFamily: 'Lithops, sans-serif',
+                  '--char-index': index,
+                  '--random-x': Math.random() * 2 + 1,
+                  '--random-y': Math.random() * 2 + 1,
+                  '--random-duration': `${Math.random() * 1 + 1}s`,
+                } as React.CSSProperties
+              }
             >
               {char}
             </span>
           ))}
-
         </div>
         <div className="posts-container-poetry">
           {posts.map((post) => (

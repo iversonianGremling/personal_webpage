@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import SearchBar from './SearchBar';
 import '../App.css';
 import { SelectLanguage } from './SelectLanguage';
-import ThemeSwitcher from './SelectStyle';
 import Categories from './Categories';
 import About from './About';
 
@@ -17,18 +17,19 @@ import intersectionalityIcon from '../assets/icons/intersectionality.svg';
 import programmingIcon from '../assets/icons/programming.svg';
 import thoughtsIcon from '../assets/icons/thoughts.svg';
 import githubIcon from '../assets/icons/github.svg';
-import linkedinIcon from '../assets/icons/linkedin.svg';
 import instagramIcon from '../assets/icons/instagram.svg';
-import twitterIcon from '../assets/icons/twitter.svg';
 import youtubeIcon from '../assets/icons/youtube.svg';
 import bandcampIcon from '../assets/icons/bandcamp.svg';
 import soundcloudIcon from '../assets/icons/soundcloud.svg';
 import twitchIcon from '../assets/icons/twitch.svg';
 import mailIcon from '../assets/icons/mail.svg';
 import tiktokIcon from '../assets/icons/tiktok.svg';
+import reviewsIcon from '../assets/icons/reviews.svg';
+import blueskyIcon from '../assets/icons/bluesky.svg';
 import SaladFingersText from './SaladFingers';
 
 function NavBar() {
+  const { t } = useTranslation();
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const dropdownRefCategories = useRef<HTMLDivElement>(null);
@@ -37,27 +38,29 @@ function NavBar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
 
   const categories = [
-    { to: '/music', imgSrc: musicIcon, alt: 'Music', label: 'Music' },
-    { to: '/gaming', imgSrc: gamingIcon, alt: 'Gaming', label: 'Gaming' },
-    { to: '/philosophy', imgSrc: philosophyIcon, alt: 'Philosophy', label: 'Philosophy' },
-    { to: '/writings', imgSrc: writingsIcon, alt: 'Writings', label: 'Writings' },
-    { to: '/articles', imgSrc: articlesIcon, alt: 'Articles', label: 'Articles' },
-    { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: 'Politics', label: 'Politics' },
-    { to: '/programming', imgSrc: programmingIcon, alt: 'Programming', label: 'Programming' },
-    { to: '/thoughts', imgSrc: thoughtsIcon, alt: 'Thoughts', label: 'Thoughts' }
+    { to: '/music', imgSrc: musicIcon, alt: t('categories.music'), label: t('categories.music') },
+    { to: '/gaming', imgSrc: gamingIcon, alt: t('categories.gaming'), label: t('categories.gaming') },
+    { to: '/philosophy', imgSrc: philosophyIcon, alt: t('categories.philosophy'), label: t('categories.philosophy') },
+    { to: '/writings', imgSrc: writingsIcon, alt: t('categories.writings'), label: t('categories.writings') },
+    { to: '/articles', imgSrc: articlesIcon, alt: t('categories.articles'), label: t('categories.articles') },
+    { to: '/intersectionality', imgSrc: intersectionalityIcon, alt: t('categories.politics'), label: t('categories.politics') },
+    { to: '/programming', imgSrc: programmingIcon, alt: t('categories.programming'), label: t('categories.programming') },
+    { to: '/thoughts', imgSrc: thoughtsIcon, alt: t('categories.thoughts'), label: t('categories.thoughts') },
+    { to: '/reviews', imgSrc: reviewsIcon, alt: t('categories.reviews'), label: t('categories.reviews') }
   ];
 
   const socialMediaLinks = [
-    { href: 'https://github.com/yourprofile', imgSrc: githubIcon, alt: 'GitHub', label: 'GitHub' },
-    { href: 'https://linkedin.com/in/yourprofile', imgSrc: linkedinIcon, alt: 'LinkedIn', label: 'LinkedIn' },
-    { href: 'mailto:your-email@example.com', imgSrc: mailIcon, alt: 'Email', label: 'Email' },
-    { href: 'https://instagram.com/yourprofile', imgSrc: instagramIcon, alt: 'Instagram', label: 'Instagram' },
-    { href: 'https://tiktok.com/@yourprofile', imgSrc: tiktokIcon, alt: 'TikTok', label: 'TikTok' },
-    { href: 'https://youtube.com/yourchannel', imgSrc: youtubeIcon, alt: 'YouTube', label: 'YouTube' },
-    { href: 'https://bandcamp.com/yourprofile', imgSrc: bandcampIcon, alt: 'Bandcamp', label: 'Bandcamp' },
-    { href: 'https://soundcloud.com/yourprofile', imgSrc: soundcloudIcon, alt: 'SoundCloud', label: 'SoundCloud' },
-    { href: 'https://twitch.tv/yourprofile', imgSrc: twitchIcon, alt: 'Twitch', label: 'Twitch' },
+    { href: 'https://github.com/iversonianGremling', imgSrc: githubIcon, alt: t('social.github'), label: t('social.github') },
+    { href: 'mailto:velavelucci@proton.me', imgSrc: mailIcon, alt: t('social.email'), label: t('social.email') },
+    { href: 'https://instagram.com/velavelucci', imgSrc: instagramIcon, alt: t('social.instagram'), label: t('social.instagram') },
+    { href: 'https://www.tiktok.com/@velavelucci?lang=en', imgSrc: tiktokIcon, alt: t('social.tiktok'), label: t('social.tiktok') },
+    { href: 'https://www.youtube.com/@VelaVelucci', imgSrc: youtubeIcon, alt: t('social.youtube'), label: t('social.youtube') },
+    { href: 'https://velavelucci.bandcamp.com/', imgSrc: bandcampIcon, alt: t('social.bandcamp'), label: t('social.bandcamp') },
+    { href: 'https://soundcloud.com/vela-velucci', imgSrc: soundcloudIcon, alt: t('social.soundcloud'), label: t('social.soundcloud') },
+    { href: 'https://www.twitch.tv/velavelucci', imgSrc: twitchIcon, alt: t('social.twitch'), label: t('social.twitch') },
+    { href: 'https://bsky.app/profile/velavelucci.bsky.social', imgSrc: blueskyIcon, alt: t('social.bluesky'), label: t('social.bluesky') }
   ];
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -126,13 +129,13 @@ function NavBar() {
       </div>
       <ul className={`flex gap-4 relative nav-links p-2 ${isMenuOpen ? 'active' : ''} ${isMobile ? 'mobile text-white relative top-8' : ''} mt-2`}>
         <li className='py-4'>
-          <Link to="/" className={`${isMobile? 'text-white' : ''}`}>Home</Link>
+          <Link to="/" className={`${isMobile? 'text-white' : ''}`}>{t('nav.home')}</Link>
         </li>
 
         {/* Categories Dropdown */}
         <li className="relative py-4" onClick={handleCategoriesClick}>
           <button className={`cursor-pointer hover:text-gray-300 transition-colors ${isMobile ? 'ml-4' : ''}`}>
-    Categories
+            {t('nav.topics')}
           </button>
           {isMobile ? (
             <div className='pl-8 max-h-[60vh] overflow-y-auto'>
@@ -160,7 +163,7 @@ function NavBar() {
                   <Link
                     to="/posts"
                   >
-                    <SaladFingersText textSize="1.5rem" linkTo='/posts' text='All Posts'/>
+                    <SaladFingersText textSize="1.5rem" linkTo='/posts' text={t('nav.allPosts')}/>
                   </Link>
                 </li>
               </ul>
@@ -195,7 +198,7 @@ function NavBar() {
             aria-haspopup="true"
             aria-expanded={isAboutOpen}
           >
-            About
+            {t('nav.about')}
           </button>
           {isMobile ? (
             <div className='pl-4 max-h-[60vh] overflow-y-auto'>
@@ -224,7 +227,7 @@ function NavBar() {
                   <Link
                     to='/about'
                   >
-                    <SaladFingersText textSize="1.5rem" linkTo='/about' text='About Me'/>
+                    <SaladFingersText textSize="1.5rem" linkTo='/about' text={t('social.aboutMe')}/>
                   </Link>
                 </li>
               </ul>
@@ -246,8 +249,8 @@ function NavBar() {
         <div className="search-bar-li">
           <SearchBar />
         </div>
-        {/* <SelectLanguage />
-        <ThemeSwitcher /> */}
+        <SelectLanguage />
+        {/* <ThemeSwitcher /> */}
       </ul>
     </nav>
   );

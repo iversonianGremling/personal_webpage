@@ -1,20 +1,19 @@
-import { defineConfig } from "vite";
-
+/* eslint-disable quotes */
+import { defineConfig } from "vite"; // Import Plugin type
 import react from "@vitejs/plugin-react-swc";
-
-// https://vite.dev/config/
 
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
       "/api": {
-        target: process.env.VITE_API_URL, // Base URL (no /api)
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""), // Remove /api prefix
-        secure: true, // Add if targeting HTTPS in development
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        secure: true,
       },
     },
+    cors: true,
   },
   build: {
     rollupOptions: {

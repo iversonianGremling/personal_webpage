@@ -68,6 +68,11 @@
 .prose-invert p {
   margin: 0.5rem 0;
   line-height: 1.6;
+  /* min-height: 20rem; */
+}
+
+.text-editor-preview p{
+  min-height: 20rem;
 }
 
 .prose-invert ul {

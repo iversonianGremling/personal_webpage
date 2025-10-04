@@ -1,18 +1,20 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useTransition } from 'react';
 import NavBar from '../NavBar';
 import Post from '../../types';
 import { useDebounce } from 'use-debounce';
 import { apiUrl } from '../../assets/env-var';
+import { useTranslation } from 'react-i18next';
 
 const ThoughtsPage: React.FC = () => {
   const [thoughts, setThoughts] = useState<Post[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch] = useDebounce(searchQuery, 500);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t } = useTranslation();
 
   const fetchThoughts = useCallback(async (query = '') => {
     try {
-      const url = new URL(apiUrl + 'posts/tag/thoughts/search');
+      const url = new URL(apiUrl + '/posts/tag/thoughts/search');
       if (query) {
         url.searchParams.append('search', query);
       }
@@ -94,7 +96,7 @@ const ThoughtsPage: React.FC = () => {
         ></canvas>
         <input
           type="text"
-          placeholder="Where's my head at?..."
+          placeholder={t('thoughtsPage.wheresMyHead')}
           className="mb-4 w-full text-2xl"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -104,27 +106,52 @@ const ThoughtsPage: React.FC = () => {
             <div
               key={thought.id}
               className="relative group transform transition-transform hover:scale-[1.02] ease-linear duration-500"
-              style={{ rotate: `${Math.sin(index) * 5}deg`, width: `${100 + Math.sin(index) * 5}%` }}
+              style={{
+                rotate: `${Math.sin(index) * 5}deg`,
+                width: `${100 + Math.sin(index) * 5}%`,
+              }}
             >
-              <div className="p-8 backdrop-blur-lg border-2 h-full" style={{ background: 'white', borderColor: 'white', fontFamily: index % 2 === 0 ? '"Comic Neue", cursive' : '"Shadows Into Light", cursive' }}>
+              <div
+                className="p-8 backdrop-blur-lg border-2 h-full"
+                style={{
+                  background: 'white',
+                  borderColor: 'white',
+                  fontFamily:
+                    index % 2 === 0
+                      ? '"Comic Neue", cursive'
+                      : '"Shadows Into Light", cursive',
+                }}
+              >
                 <div className="text-2xl leading-relaxed space-y-4 text-black">
                   {thought.content === '⠀⠀⠀⠀⠀⠀⠀⠀⠀' ? (
-                    <div className="text-4xl animate-pulse text-center">🧠🌫️⋯ {thought.title} ⋯🌌🫧</div>
+                    <div className="text-4xl animate-pulse text-center">
+                      🧠🌫️⋯ {thought.title} ⋯🌌🫧
+                    </div>
                   ) : (
                     <>
-                      <div className="opacity-80 font-light" dangerouslySetInnerHTML={{ __html: thought.content }}></div>
+                      <div
+                        className="opacity-80 font-light"
+                        dangerouslySetInnerHTML={{ __html: thought.content }}
+                      ></div>
                     </>
                   )}
                 </div>
                 <div className="mt-6 flex justify-between items-center opacity-50 text-sm">
-                  <div>{new Date(thought.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                  <div>
+                    {new Date(thought.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
         {thoughts.length === 0 && debouncedSearch && (
-          <div className="text-center text-white/50 mt-20 text-xl">No neural patterns match "{debouncedSearch}"</div>
+          <div className="text-center text-white/50 mt-20 text-xl">
+            No neural patterns match "{debouncedSearch}"
+          </div>
         )}
       </div>
     </>

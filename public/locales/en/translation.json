@@ -1,0 +1,268 @@
+{
+  "general": {
+    "home": "Home",
+    "topics": "Topics",
+    "about": "About",
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "Error",
+    "search": "Search",
+    "share": "Share",
+    "support": "Support",
+    "zenMode": "Zen Mode (click for eye friendly colors)",
+    "tableOfContents": "Table of Contents (clickable)",
+    "similarPosts": "Similar Posts",
+    "noSimilarPosts": "No similar posts found."
+  },
+  "nav": {
+    "home": "Home",
+    "topics": "Topics",
+    "about": "About",
+    "allPosts": "All Posts"
+  },
+  "categories": {
+    "music": "Music",
+    "gaming": "Gaming",
+    "philosophy": "Philosophy",
+    "writings": "Writings",
+    "articles": "Articles",
+    "politics": "Politics",
+    "programming": "Programming",
+    "thoughts": "Thoughts",
+    "reviews": "Reviews"
+  },
+  "social": {
+    "github": "GitHub",
+    "email": "Email",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "youtube": "YouTube",
+    "bandcamp": "Bandcamp",
+    "soundcloud": "SoundCloud",
+    "twitch": "Twitch",
+    "bluesky": "Bluesky",
+    "aboutMe": "About Me"
+  },
+  "posts": {
+    "latestPosts": "LATEST POSTS",
+    "createPost": "Create Post",
+    "createThought": "Create Thought",
+    "createRecommendation": "Create Recommendation",
+    "seeAllPosts": "See All Posts",
+    "editPost": "Edit Blood",
+    "deletePost": "Delete Blood",
+    "areYouFree": "Are you free?",
+    "tags": "Tags",
+    "type": "Type",
+    "visibility": "Visibility",
+    "date": "Date",
+    "title": "Title",
+    "content": "Content",
+    "featuredImage": "Featured Image URL",
+    "postType": "Post Type",
+    "blog": "Blog",
+    "thought": "Thought",
+    "recommendation": "Recommendation",
+    "public": "Public",
+    "private": "Private",
+    "preview": "Preview",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "allMyBlood": "All my blood (click on titles to navigate to my blood)",
+    "needToGoBack": "I need to go back",
+    "searchBlood": "Search blood..."
+  },
+  "quality": {
+    "masterpiece": "Masterpiece",
+    "indispensable": "Indispensable",
+    "mediumDefining": "Medium defining",
+    "cultClassic": "Cult classic",
+    "worthExperiencing": "Worth experiencing"
+  },
+  "share": {
+    "twitter": "X (Twitter)",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn",
+    "reddit": "Reddit",
+    "whatsapp": "WhatsApp",
+    "telegram": "Telegram",
+    "email": "Email",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied to clipboard!"
+  },
+  "errors": {
+    "failedToFetchPosts": "Failed to fetch posts",
+    "failedToSearchPosts": "Failed to search posts",
+    "failedToDeletePost": "Failed to delete post",
+    "postNotFound": "Post not found",
+    "uploadFailed": "Upload failed",
+    "onlyImageFiles": "Only image files are allowed",
+    "failedToInsertImage": "Failed to insert image"
+  },
+    "about": {
+    "whyThisExists": "Why This Exists",
+    "myBlood": "My blood",
+    "methodologiesIrrelevant": "The methodologies and inner mechanisms are",
+    "completelyIrrelevant": "completely irrelevant but include:",
+    "egoDeath": "Ego death",
+    "digitalBrutalism": "Digital brutalism",
+    "philosophicalFragments": "Philosophical fragments",
+    "softwareDemonicRituals": "Software demonic rituals",
+    "asEverythingWithLife": "As everything that has life",
+    "itsUnpolished": "it's unpolished",
+    "asEverySoftware": "As every piece of software",
+    "foreverUnfinished": "it's forever-unfinished",
+    "websitePreexists": "this website preexists",
+    "modernWebDev": "modern web development",
+    "oopPatternsUsed": "OOP Patterns used",
+    "noSpookyCookies": "No spooky cookies",
+    "noTimeStealingAds": "No ads that steal time",
+    "emptinessAsConcept": "Emptiness as a concept",
+    "bloodComponents": "Blood Components",
+    "reanimatedCorpse": "The reanimated corpse of my",
+    "trauma": "Trauma",
+    "lovePassion": "Love, passion, romanticism",
+    "stolenTime": "Stolen time",
+    "fingerBleeding": "Finger bleeding keystrokes"
+  },
+  "confirmations": {
+    "deletePost": "Are you sure you want to delete this post?"
+  },
+  "aboutPage": {
+    "textArray": [
+      "Henlo",
+      "I don't has a name yed",
+      "I can't feel anyfing iet",
+      "Or asg guestions",
+      "I'm sordy",
+      "Some day we'll bee able to talg",
+      "Bie"
+    ]
+  }, 
+  "thoughtsPage": {
+    "wheresMyHead": "Where's my head?..."
+  },  
+  "reviewsPage": {
+    "music": "Music",
+    "movies": "Movies",
+    "videogames": "Videogames",
+    "literature": "Literature",
+    "non-fiction": "Non-fiction",
+    "art": "Art",
+    "software": "Software",
+    "recommendations": "Recommendations"
+  },
+  "philosophyPage": {
+    "title": "Philosophy",
+    "recentPosts": "Recent Posts"
+  },
+    "musicPage": {
+    "title": "Time sculptures made of sound? I guess...",
+    "description": "Nothing to hide, I want all of my failed tracks to be heard so people can see what actually takes for reaching a certain level of production, if you dig enough into each platform you'll see what I considered back in the day worthy of publishing, unfinished music is also there, everything, I want to be fully naked. Working on a more serious project rn, will publish the results here.",
+    "platform1": "Platform 1",
+    "platform2": "Platform 2",
+    "platform3": "Platform 3",
+    "bandcampLink": "Bandcamp"
+  },
+    "gamingPage": {
+    "title": "Welcome to the Ultimate Gaming Zone",
+    "searchPlaceholder": "Search for epic gamer posts...",
+    "recentPostsTitle": "Recent Posts",
+    "noPostsFound": "No posts found. Try another search!",
+    "footer": "© 2000 GamingZone. All Rights Reserved. Soundtrack of the webpage composed by Tommy Tallarico",
+    "marqueeText": "🎮LUDONARRATIVE DOESN'T EXIST🎮",
+    "consoles": {
+      "PC": "PC",
+      "Nintendo": "Nintendo",
+      "Sega": "Sega",
+      "Chess": "Chess",
+      "Atari2600": "Atari 2600",
+      "Bondage": "Bondage"
+    },
+    "alerts": {
+      "Atari2600": "People used to take LSD while making my games. Also I invented the concept of having contracts with companies so they couldn't be developed by other companies, you are welcome blyaaaaaaaat! 🎮",
+      "PC": "You either get a 4090GTX for playing marvel rivals in 4k in 3 monitors in ultra at 1000fps or you are using it for mining bitcoins, either way, gaming and gambling addicts found the same piece of hardware as a useful way for feeding their addiction 🎮",
+      "Nintendo": "Yeah, I love treating my employees like shit while making games for children, btw in Zelda II Link recovered health when sleeping with prostitutes?? 🎮",
+      "Sega": "Does what nintendon't, aka, the mascot of autistic people all over the world 🎮",
+      "Chess": "Chess is the dark souls of colonoscopies",
+      "Bondage": "As much as bed gaming is a fun topic this is a serious website and here, we separate stuff properly, this part is not for *that* kind of games, please, refer yourself to the sexuality section, this section is EXCLUSIVELY for epic games 🎮",
+      "default": "You are a true {consoleName} fan! 🎮"
+    },
+    "quotes": {
+      "quote1": "\"I think tackling the fourth wall so directly is kind of tasteless in the modern world.\" - Entity inside the Polyhedron, Pathologic",
+      "quote2": "\"Any choice is right as long as it's willed.\" - Artemy Burakh, Pathologic",
+      "quote3": "\"SHOOT ME IN THE FACE! IN THE FAAAAAAAACE! DO IT! SHOOT ME IN THE FACE! FACE FACEFACEFACEFACE! NOW! BULLETS IN THE FACE! WANT EM! NEED EM! GIMMEGIMMEGIMME! AT THE SOUND OF THE BELL IT WILL BE FACESHOOTING O'CLOCK! BONGGGGG! KNOCK KNOCK WHO'S THERE SHOOT ME IN THE FACE! END OF JOKE! I'M GONNA SING A SONG! SHOOT ME AT THE END OF IT! DA DA DA DA DA DA DA! BONG!! ...I NOTICE YOU HAVEN'T SHOT ME IN THE FACE! CURIOUS AS TO WHY! Maybe you're weighing the moral pros and cons but let me assure you that OH MY GOD SHOOT ME IN THE GODDAMNED FACE!! WHAT ARE YOU WAITING FOR!?!?\" - Face McShooty, Borderlands 2",
+      "quote4": "\"Anything not saved will be lost.\" - Nelson Mandela"
+    }
+  },
+  "articlesPage": {
+    "latestArticles": "Latest Articles"
+  },
+  "programmingPage": {
+    "title": "Programming",
+    "quote": "printf(\"And folks, let's be honest. Sturgeon was an optimist. Way more than 90% of code is crap.\") – Al viro",
+    "recentPosts": "Recent posts",
+    "terminal": {
+      "prompt": "body@velavelucci:~$",
+      "command": "ls -lha latest-posts"
+    },
+    "loading": "Loading posts...",
+    "programmingSidebar": {
+      "searchPlaceholder": "Search posts or folders...",
+      "folderName": "Programming",
+      "loading": "Loading...",
+      "noResults": "No results found"
+    }
+  },
+    "politicsPage": {
+    "title": "💖 pOliTics DoN't exiSt fuCk yEah!!!! 💖",
+    "subtitle": "100% less politics 100% MORE FACTS AND LOGIC!!! 🌈✨",
+    "disclaimer": "Can't escape, sorry",
+    "postsSection": "🌟 LAST POSTS 🌟",
+    "loading": "Loading fabulous posts... ✨🌈",
+    "noPosts": "No fabulous posts yet. Be the first to post something! 🌈✨"
+  },
+  "writingsPage": {
+    "title": "WRITINGS",
+    "categories": {
+      "poetry": {
+        "title": "POETRY",
+        "description": "Through each contraction a world is shattered, movement is created, flows lose their stasis. As a heart that has been broken many times the blood, in fractal solidarity, becomes more and more corrupted, until everything that is left is a putrid fluid that never stops. The heart moves as a perpetual motion machine, lingering in the deepest abysses of the excesses of reality"
+      },
+      "fiction": {
+        "title": "FICTION",
+        "description": "Mainly composed of fat tissue and water, the brain serves as the core of the body, capable of translating spikes of electrical current across its surface and inside into phenomenological experiences, its machinations, whether conscious or unconscious, earn it the title of the great dictator of the body, controling: paralysis, acceleration, synthesis...etc. The ultimate protein based machine with the outermost electrical efficiency, capable of creating entirely new realities."
+      },
+      "nonFiction": {
+        "title": "NON FICTION",
+        "description": "The intestines hold, retract, puke, respond to the vicious whims of the anxious body as they crumble in pain. They extract as much information from what should not be called food at this point to transform it into energy, they are a translator that subtracts, they subtract everything until all that is left is feces. An everlasting transformation that offers the reflection of reality"
+      }
+    },
+    "footer": "Font Lithops by Anne-Dauphine Borione. Distributed by"
+  },
+  "poetryPage": {
+    "title": "POETRY",
+    "backButton": "Return  to  my  body"
+  },
+    "fictionPage": {
+    "title": "FICTION",
+    "backButton": "Return  to  my  body"
+  },
+    "nonfictionPage": {
+    "title": "NonFiction",
+    "backButton": "Return  to  my  body"
+  },
+    "searchBar": {
+    "placeholder": "Search posts by title, content, tags...",
+    "categories": {
+      "full": "Full Matches",
+      "title": "Title Matches",
+      "content": "Content Matches",
+      "tags": "Tag Matches",
+      "other": "Other Matches"
+    }
+  },
+  "app_create_post": "Create Post",
+  "app_see_all_posts": "See all Posts",
+  "moving_title_latest_posts_all_caps": "LATEST POSTS"
+}

@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'KarrikRegular';
+  src: url('../fonts/Karrik-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.karrik-regular-text {
+  font-family: 'KarrikRegular', sans-serif;
+}

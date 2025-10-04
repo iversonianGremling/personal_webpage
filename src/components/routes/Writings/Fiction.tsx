@@ -5,6 +5,7 @@ import PostCard from '../../PostCard';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../../assets/env-var';
 import insideBrainImage from '../../../assets/images/inside_brain.webp';
+import { useTranslation } from 'react-i18next';
 
 type Post = {
   id: number;
@@ -15,6 +16,7 @@ type Post = {
 };
 
 const Fiction: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 720);
@@ -29,17 +31,20 @@ const Fiction: React.FC = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(apiUrl + 'posts/tag/fiction');
+      const response = await fetch(apiUrl + '/posts/tag/fiction');
       const data = await response.json();
       console.log(data);
       setPosts(data);
     };
     fetchPosts();
-  });
+  }, []); // Added dependency array to prevent infinite re-renders
+
+  const title = t('fictionPage.title');
+  const backButtonText = t('fictionPage.backButton');
 
   return (
     <>
-      <NavBar/>
+      <NavBar />
       <div className="container-fiction">
         <img
           src={insideBrainImage}
@@ -64,7 +69,7 @@ const Fiction: React.FC = () => {
             left: '15px',
           }}
         >
-          {Array.from('Return  to  my  body').map((char, index) => {
+          {Array.from(backButtonText).map((char, index) => {
             if (char === ' ') {
               return <span key={index}>&nbsp;</span>;
             } else {
@@ -72,12 +77,14 @@ const Fiction: React.FC = () => {
                 <span
                   key={index}
                   className="wobble-letter"
-                  style={{
-                    '--char-index': index,
-                    '--random-x': Math.random() * 0.5 + 1,
-                    '--random-y': Math.random() * 0.5 + 1,
-                    '--random-duration': `${Math.random() * 1 + 1}s`,
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      '--char-index': index,
+                      '--random-x': Math.random() * 0.5 + 1,
+                      '--random-y': Math.random() * 0.5 + 1,
+                      '--random-duration': `${Math.random() * 1 + 1}s`,
+                    } as React.CSSProperties
+                  }
                 >
                   {char}
                 </span>
@@ -86,22 +93,21 @@ const Fiction: React.FC = () => {
           })}
         </button>
 
-
         <div className={`${isMobile ? 'text-7xl' : 'text-9xl'} header-fiction`}>
-
-          {Array.from('FICTION').map((char, index) => {
+          {Array.from(title).map((char, index) => {
             return (
               <span
                 key={index}
                 className="wobble-letter"
-
-                style={{
-                  fontFamily: 'Lithops, sans-serif',
-                  '--char-index': index,
-                  '--random-x': Math.random() * 2 + 1,
-                  '--random-y': Math.random() * 2 + 1,
-                  '--random-duration': `${Math.random() * 1 + 1}s`,
-                } as React.CSSProperties}
+                style={
+                  {
+                    fontFamily: 'Lithops, sans-serif',
+                    '--char-index': index,
+                    '--random-x': Math.random() * 2 + 1,
+                    '--random-y': Math.random() * 2 + 1,
+                    '--random-duration': `${Math.random() * 1 + 1}s`,
+                  } as React.CSSProperties
+                }
               >
                 {char}
               </span>
@@ -123,7 +129,6 @@ const Fiction: React.FC = () => {
           ))}
         </div>
       </div>
-
     </>
   );
 };

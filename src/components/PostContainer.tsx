@@ -22,6 +22,8 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
   });
 
   useEffect(() => {
+    if (true) return;
+    if (isMobile) return;
     let scrollVelocity = 0;
     let isScrolling = true;
 
@@ -41,12 +43,8 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         scrollVelocity = 0;
       }
     };
-
-
-
     const animateScroll = () => {
       if (!containerRef.current || !isScrolling) return;
-
       containerRef.current.scrollBy({
         top: scrollVelocity * 10,
         behavior: 'auto'
@@ -65,7 +63,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
       }
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isMobile]);
 
   const handleResize = () => {
     const mobile = window.innerWidth < 720;
@@ -81,8 +79,7 @@ const PostContainer: React.FC<Props> = ({ posts, className }) => {
         overflowY: 'auto',
         scrollBehavior: 'smooth',
         position: 'relative',
-        // border: '2px solid #000',
-        scrollbarWidth: 'none',
+        scrollbarWidth: 'auto',
         msOverflowStyle: 'none',
         marginTop: isMobile ? '8rem' : ''
       }}
