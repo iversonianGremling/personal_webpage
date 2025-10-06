@@ -469,28 +469,37 @@ const PostDetail: React.FC<PostDetailProps> = ({ variant, admin }) => {
   });
 
   useEffect(() => {
-    console.log('History length: ', window.history.length);
     const fetchPost = async () => {
       try {
-        const response = await fetch(
-          admin ? `${apiUrl}/posts/admin/${id}` : `${apiUrl}/posts/${id}`
-          , {
-            method: 'GET',
-            credentials: 'include',
-          });
-        if (!response.ok) throw new Error('Post not found');
+        const url = admin ? `${apiUrl}/posts/admin/${id}` : `${apiUrl}/posts/${id}`;
+        console.log('Fetching post from:', url);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text(); // Declare errorText here
+          console.error('Error response:', errorText);
+          throw new Error('Post not found');
+        }
+        
         const data = await response.json();
         setPost(data);
       } catch (err) {
+        console.error('Fetch error:', err);
         setError((err as Error).message);
       } finally {
         setIsLoading(false);
       }
     };
-
+  
     fetchPost();
-  }, [id]);
-
+  }, [id, admin]);
+    
   const handleDelete = async (postId: number) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
     try {
